@@ -86,7 +86,7 @@
                             <asp:TextBox ID="txtNumeroHab" runat="server" Width="90%"></asp:TextBox>
                         </td>
                         <td>
-                            <asp:Button ID="btnCargarHab" runat="server" CssClass="btnForm" Text="Cargar" />
+                            <asp:Button ID="btnBuscarHab" runat="server" CssClass="btnForm" Text="Buscar" />
                         </td>
                     </tr>
                     <tr>
