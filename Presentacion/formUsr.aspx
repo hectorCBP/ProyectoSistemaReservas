@@ -2,9 +2,16 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style type="text/css">
-        .style1
+        .style2
         {
-            height: 44px;
+        }
+        .style6
+        {
+            width: 25%;
+        }
+        .style7
+        {
+            width: 29%;
         }
     </style>
 </asp:Content>
@@ -30,15 +37,16 @@
     </tr>
     <tr>
             <td colspan="3" class="formulario">
-                <asp:Label ID="lblUsr" runat="server" Text="Usuarios" CssClass="subtitulo"></asp:Label>
+                <asp:Label ID="lblUsr" runat="server" Text="Usuarios" CssClass="subtitulo" 
+                    ForeColor="#47D363"></asp:Label>
                 <hr />
                 <table style="width: 100%;">
                     <tr>
-                        <td width="33%">
+                        <td class="style7">
                 <asp:Label ID="lblSelectUsr0" runat="server" Text="Seleccione el tipo de usuario:" 
-                                CssClass="subtitulo"></asp:Label>
+                                CssClass="subtitulo" Font-Size="Small"></asp:Label>
                         </td>
-                        <td width="33%">
+                        <td class="style6">
                             <asp:DropDownList ID="cboTipoUsr" runat="server" Height="100%" Width="304px" 
                                 onselectedindexchanged="cboTipoUsr_SelectedIndexChanged" 
                                 AutoPostBack="True">
@@ -47,20 +55,31 @@
                                 <asp:ListItem>Clientes</asp:ListItem>
                             </asp:DropDownList>
                         </td>
-                        <td width="33%">
+                        <td class="style6">
+                            &nbsp;</td>
+                        <td class="style2">
                             &nbsp;</td>
                     </tr>
                     <tr>
-                        <td colspan="3">
-                            <asp:Panel ID="pnlModificacion" runat="server">
-                            </asp:Panel>
+                        <td class="style7">
+                            <asp:Button ID="btnEliminaUsr" runat="server" CssClass="boton" 
+                                Text="Eliminar" />
                         </td>
+                        <td class="style6">
+                            <asp:Button ID="btnModificaUsr" runat="server" CssClass="boton" 
+                                Text="Modificar" />
+                        </td>
+                        <td class="style6">
+                            &nbsp;</td>
+                        <td class="style2">
+                            &nbsp;</td>
                     </tr>
                     <tr>
-                        <td colspan="3">
+                        <td colspan="2">
                             <asp:GridView ID="gvUsers" runat="server" 
                                 BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" 
-                                CellPadding="4" ForeColor="Black" GridLines="Horizontal" Width="100%">
+                                CellPadding="4" ForeColor="Black" GridLines="Horizontal" Width="100%" 
+                                Font-Size="X-Small">
                                 <Columns>
                                     <asp:CommandField ShowSelectButton="True" />
                                 </Columns>
@@ -75,9 +94,11 @@
                                 <SortedDescendingHeaderStyle BackColor="#242121" />
                             </asp:GridView>
                         </td>
+                        <td colspan="2">
+                            &nbsp;</td>
                     </tr>
                     <tr>
-                        <td colspan="3">
+                        <td colspan="4">
                             &nbsp;</td>
                     </tr>
                 </table>

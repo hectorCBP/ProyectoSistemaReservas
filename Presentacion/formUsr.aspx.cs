@@ -25,6 +25,8 @@ public partial class formCli : System.Web.UI.Page
     }
     protected void cboTipoUsr_SelectedIndexChanged(object sender, EventArgs e)
     {
+        gvUsers.SelectedIndex = -1;
+
         if (cboTipoUsr.Text == "Administradores")
         {
             gvUsers.DataSource = LogicaAdministrador.ListarAdmins();
