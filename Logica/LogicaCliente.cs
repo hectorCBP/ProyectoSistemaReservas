@@ -24,5 +24,11 @@ namespace Logica
             }
             */
         }
+
+        public static object ListarClientes()
+        {
+            List<Cliente> lista = PersistenciaCliente.ListarClientes();
+            return lista;
+        }
     }
 }
