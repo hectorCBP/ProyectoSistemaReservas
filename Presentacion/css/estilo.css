@@ -1,0 +1,185 @@
+﻿body 
+{
+    font-family: Segoe UI Light; 
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin: 0;
+    padding: 0
+}
+/************************************/
+/*          Pagina de inicio        */
+/************************************/
+.header
+{ 
+    margin: 0 auto;
+    max-width: 1000px;
+    height: 40px;
+    line-height: 40px;
+    padding: 0;
+    width: 80%
+}
+.btnHeader
+{
+    border-style: none;
+    background-color: #e86f65;
+    color: white;
+    cursor: pointer;   
+    font-family: Segoe UI; 
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin: 0;
+    padding: 0;
+    width: 120px;
+    height: 80%;
+}
+.btnHeader:hover
+{ background-color: #47d363; }
+.foto
+{
+    margin: 5px;
+    width: 300px; 
+}
+/************************************/
+/*     Formulario de Registro       */
+/************************************/
+.contenedorReg
+{
+    margin: 0 auto;
+    width: 800px;
+    padding: 0
+}
+.regFrom
+{width: 40%}
+.lblReg
+{ margin-right: 2%}
+.txtBoxReg
+{
+    background-color: transparent;
+    border-style: none;
+    border-bottom: 1px solid #1a1a1a;
+    height: 20px;
+    width: 80%;    
+}
+
+/************************************/
+/*      Master Pages Content        */
+/************************************/
+.contenedor
+{
+    margin: 0 auto;
+    max-width: 1000px;
+    width: 80%;
+    padding: 0
+}
+table{ width:80px; }
+.userForm
+{background-color:#fafafa}
+.hideForm
+{display: none;}
+.formulario
+{ 
+    border: 1px solid #1a1a1a;
+    width: 100%; 
+}
+.botonera
+{
+}
+.boton
+{
+    background-color: #e86f65;
+    border-style: none;
+    color: #FFF;
+    cursor: pointer;
+    font-family: Segoe UI; 
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin: 0;
+    height: 40px;
+    width: 100%;
+}
+.boton:hover
+{background-color:#47d363}
+.subtitulo
+{ margin-left: 2%; }
+.btnForm
+{
+    border-style: none;
+    cursor: pointer;
+    font-family: Segoe UI; 
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin: 0;
+    height: 40px;
+    width: 100%;    
+}
+.btnForm:hover
+{
+    color: White;
+    background-color:#47d363;
+}
+/*******************************************/
+/*               Slider                    */
+/*******************************************/
+@import "compass/css3";
+.slider {
+  display:block;
+  position:relative;
+  margin: 1% auto;
+  line-height:600px;
+  height: 100%;
+  width: 80%;
+  max-height: 600px;
+  overflow:hidden;
+}
+
+.image-container {
+  position:relative;
+  left:0;
+  -webkit-transition:left 0.5s;
+  -moz-transition:left 0.5s;
+  -ms-transition:left 0.5s;
+  transition:left 0.5s;
+  animation: slider 20s infinite;
+}
+
+.image-container {
+  position:relative;
+  left:0;
+  -webkit-transition:left 0.5s;
+  -moz-transition:left 0.5s;
+  -ms-transition:left 0.5s;
+  transition:left 0.5s;
+  animation: slider 20s infinite;
+}
+
+.image-container {
+  position:relative;
+  left:0;
+  -webkit-transition:left 0.5s;
+  -moz-transition:left 0.5s;
+  -ms-transition:left 0.5s;
+  transition:left 0.5s;
+  animation: slider 20s infinite;
+}
+
+.image-container img{
+  display:block;
+  float:left;
+}
+
+.four-images {
+  width:400%;
+}
+
+.four-images img 
+{
+  height: 100%;
+  width:25%;
+}
+
+@keyframes slider {
+  20%{left: 0%;}
+  25%,45%{left:-100%;}
+  50%,70%{left:-200%;}
+  75%,95%{left:-300%;}
+}

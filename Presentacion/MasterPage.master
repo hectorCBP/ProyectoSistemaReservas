@@ -1,0 +1,51 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <link href="css/estilo.css" type="text/css" rel="Stylesheet" />
+
+    <title>MasterPage</title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+
+        <table class="header">
+            <tr>
+                <td class="botonera">
+                    <asp:Label ID="lblTitulo" runat="server" Text="RESERVAS UY" Font-Bold="True" 
+                        ForeColor="#E86F65"></asp:Label>
+                </td>
+                <td class="botonera" align="center">
+                    <asp:Label ID="lblTxtUsr" runat="server" Text="Usuario: "></asp:Label>
+                    <asp:Label ID="lblNombre" runat="server"></asp:Label>
+                </td>
+                <td class="botonera" align="right">
+                    <asp:Button ID="btnSalir" runat="server" Text="Cerrar Sesión" BackColor="White" 
+                        BorderStyle="None" Font-Underline="True" ForeColor="Black" 
+                        style="cursor: pointer" onclick="btnSalir_Click"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <hr />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+
+        <asp:ContentPlaceHolder id="contenedor" runat="server">
+        
+        </asp:ContentPlaceHolder>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+    </form>
+</body>
+</html>
