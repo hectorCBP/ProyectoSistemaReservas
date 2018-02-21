@@ -1,13 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="formHot.aspx.cs" Inherits="formHot" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <style type="text/css">
-        .style1
-        {
-            height: 44px;
-        }
-    </style>
-</asp:Content>
+    </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="contenedor" Runat="Server">
     <table style="width: 100%; margin-left: 0px;" id="formMaster" class="userForm">
         <tr>
@@ -76,14 +70,14 @@
                             <asp:Label ID="lblHotel" runat="server" Text="Hotel"></asp:Label>
                         </td>
                         <td align="center" width="33%">
-                            <asp:Label ID="lblCategoriaH" runat="server" Text="Categoría"></asp:Label>
+                            <asp:TextBox ID="txtHotel" runat="server" Width="90%"></asp:TextBox>
                         </td>
                         <td align="center" width="33%">
                             &nbsp;</td>
                     </tr>
                     <tr>
                         <td align="center" width="33%">
-                            <asp:TextBox ID="txtHotel" runat="server" Width="90%"></asp:TextBox>
+                            <asp:Label ID="lblCategoriaH" runat="server" Text="Categoría"></asp:Label>
                         </td>
                         <td align="center" width="33%">
                             <asp:TextBox ID="txtCategoriaH" runat="server" Width="90%" MaxLength="1"></asp:TextBox>
@@ -97,63 +91,54 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="center" 
-                            style="border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: #000000" 
-                            width="33%">
-                            <asp:Label ID="lblUbicacionH" runat="server" ForeColor="#47D363" 
-                                Text="Ubicación"></asp:Label>
-                        </td>
-                        <td align="center" width="33%">
-                            &nbsp;</td>
-                        <td align="center" width="33%">
-                            &nbsp;</td>
-                    </tr>
-                    <tr>
                         <td align="center" width="33%">
                             <asp:Label ID="lblCalle" runat="server" Text="calle"></asp:Label>
                         </td>
                         <td align="center" width="33%">
-                            <asp:Label ID="lblNumeroH" runat="server" Text="nº puerta"></asp:Label>
+                            <asp:TextBox ID="txtCalleH" runat="server" Width="90%"></asp:TextBox>
                         </td>
                         <td align="center" width="33%">
-                            <asp:Label ID="lblCiudadH" runat="server" Text="ciudad"></asp:Label>
-                        </td>
+                            &nbsp;</td>
                     </tr>
                     <tr>
                         <td align="center" width="33%">
-                            <asp:TextBox ID="txtCalleH" runat="server" Width="90%"></asp:TextBox>
+                            <asp:Label ID="lblNumeroH" runat="server" Text="nº puerta"></asp:Label>
                         </td>
                         <td align="center" width="33%">
                             <asp:TextBox ID="txtNumeroH" runat="server" Width="90%" MaxLength="10"></asp:TextBox>
                         </td>
                         <td align="center" width="33%">
-                            <asp:TextBox ID="txtCuidadH" runat="server" Width="90%"></asp:TextBox>
-                        </td>
+                            &nbsp;</td>
                     </tr>
                     <tr>
-                        <td align="center" width="33%" 
-                            style="border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: #000000">
-                            <asp:Label ID="lblContactoH" runat="server" ForeColor="#47D363" 
-                                Text="Contacto"></asp:Label>
+                        <td align="center" width="33%">
+                            <asp:Label ID="lblCiudadH" runat="server" Text="ciudad"></asp:Label>
+                        </td>
+                        <td align="center" width="33%">
+                            <asp:TextBox ID="txtCuidadH" runat="server" Width="90%"></asp:TextBox>
                         </td>
                         <td align="center" width="33%">
                             &nbsp;</td>
-                        <td align="center" width="33%">
-                            &nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center" 
+                            style="width: 66%;" colspan="3">
+                            <hr />
+                        </td>
                     </tr>
                     <tr>
                         <td align="center" width="33%">
                             <asp:Label ID="lblTelH" runat="server" Text="Teléfono"></asp:Label>
                         </td>
                         <td align="center" width="33%">
-                            <asp:Label ID="lblFaxH" runat="server" Text="Fax"></asp:Label>
+                            <asp:TextBox ID="txtTelH" runat="server" MaxLength="10" Width="90%"></asp:TextBox>
                         </td>
                         <td align="center" width="33%">
                             &nbsp;</td>
                     </tr>
                     <tr>
                         <td align="center" width="33%">
-                            <asp:TextBox ID="txtTelH" runat="server" MaxLength="10" Width="90%"></asp:TextBox>
+                            <asp:Label ID="lblFaxH" runat="server" Text="Fax"></asp:Label>
                         </td>
                         <td align="center" width="33%">
                             <asp:TextBox ID="txtFaxH" runat="server" MaxLength="10" Width="90%"></asp:TextBox>
@@ -167,26 +152,20 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="center" 
-                            style="border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: #000000" 
-                            width="33%">
-                            <asp:Label ID="lblCaracteristicasH" runat="server" ForeColor="#47D363" 
-                                Text="Características"></asp:Label>
+                        <td align="center" width="33%">
+                            <asp:Label ID="lblPiscinaH" runat="server" Text="piscina"></asp:Label>
                         </td>
                         <td align="center" width="33%">
-                            &nbsp;</td>
+                            <asp:CheckBox ID="chkPiscinaH" runat="server" />
+                        </td>
                         <td align="center" width="33%">
                             &nbsp;</td>
                     </tr>
                     <tr>
                         <td align="center" width="33%">
-                            <asp:Label ID="lblPiscinaH" runat="server" Text="piscina"></asp:Label>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <asp:CheckBox ID="chkPiscinaH" runat="server" />
+                            <asp:Label ID="lblPlayaH" runat="server" Text="playa"></asp:Label>
                         </td>
                         <td align="center" width="33%">
-                            <asp:Label ID="lblPlayaH" runat="server" Text="playa"></asp:Label>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <asp:CheckBox ID="chkPlayaH" runat="server" />
                         </td>
                         <td align="center" width="33%">
