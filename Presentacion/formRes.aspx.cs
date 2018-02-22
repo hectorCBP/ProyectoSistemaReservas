@@ -5,15 +5,11 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class formCliente : System.Web.UI.Page
+public partial class formRes : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        
-    }
-    protected void btnCrearRes_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("formRes.aspx");
+        btnCrearRes.Enabled = false;
     }
     protected void btnLstRes_Click(object sender, EventArgs e)
     {

@@ -13,15 +13,18 @@ public partial class formCli : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         btnUsr.Enabled = false;
-
     }
-    protected void btnHab_Click1(object sender, EventArgs e)
+    protected void btnHab_Click(object sender, EventArgs e)
     {
         Response.Redirect("formHab.aspx");
     }
     protected void btnHot_Click(object sender, EventArgs e)
     {
         Response.Redirect("formHot.aspx");
+    }
+    protected void btnReserva_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("formResAdmin.aspx");
     }
     protected void cboTipoUsr_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -40,4 +43,5 @@ public partial class formCli : System.Web.UI.Page
         }
 
     }
+
 }

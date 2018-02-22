@@ -15,7 +15,6 @@ public partial class formAdmin : System.Web.UI.Page
     {
 
     }
-
     protected void btnHab_Click(object sender, EventArgs e)
     {
         Response.Redirect("formHab.aspx");
@@ -27,5 +26,9 @@ public partial class formAdmin : System.Web.UI.Page
     protected void btnUsr_Click(object sender, EventArgs e)
     {
         Response.Redirect("formUsr.aspx");
+    }
+    protected void btnReserva_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("formResAdmin.aspx");
     }
 }
