@@ -344,7 +344,7 @@ go
 /*			Consultas de prueba			  */
 /******************************************/
 -- exec agregarAdministrador 'pepe','clave','pepe gonzales','administrativo'
--- exec agregarCliente 'tito','titoclave','tito perez','direccion tito',1234567890,11122233
+-- exec agregarCliente 'Maria','mariaclave','maria rodriguez','direccion maria',5221283915454775
 -- exec buscarAdministrador 'pepe', 'clave'
 -- exec buscarCliente 'tito','titoclave'
 -- select * from Usuarios
