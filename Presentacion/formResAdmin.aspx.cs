@@ -8,23 +8,24 @@ using System.Web.UI.WebControls;
 using EntidadesCompartidas;
 using Logica;
 
-public partial class formHab : System.Web.UI.Page
+public partial class formResAdmin : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         try
         {
+            btnReserva.Enabled = false;
             btnHab.Enabled = false;
-            foreach (Hotel h in LogicaHotel.ListaHoteles())
-            {
-                lstHoteles.Items.Add(h.Nombre);
-            }
+            gvHabActivas.DataSource = LogicaHabitacion.ConReservasActivas();
+            gvHabActivas.DataBind();
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
-
     }
-
+    protected void btnHab_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("formHab.aspx");
+    }
     protected void btnHot_Click(object sender, EventArgs e)
     {
         Response.Redirect("formHot.aspx");
@@ -32,9 +33,5 @@ public partial class formHab : System.Web.UI.Page
     protected void btnUsr_Click(object sender, EventArgs e)
     {
         Response.Redirect("formUsr.aspx");
-    }
-    protected void btnReserva_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("formResAdmin.aspx");
     }
 }

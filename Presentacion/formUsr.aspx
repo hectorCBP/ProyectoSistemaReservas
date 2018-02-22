@@ -18,25 +18,35 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="contenedor" Runat="Server">
     <table style="width: 100%; margin-left: 0px;" id="formMaster" class="userForm">
     <tr>
-        <td class="botonera" width="33%">
+        <td align="center">
+    <table style="width: 100%; margin-left: 0px;" id="formMaster0" class="userForm">
+        <tr>
+        <td width="25%">
             <asp:Button ID="btnHab" runat="server" CssClass="boton" Text="Habitaciones" 
-                onclick="btnHab_Click1" />
+                onclick="btnHab_Click" />
         </td>
-        <td class="botonera" width="33%">
+        <td width="25%">
             <asp:Button ID="btnHot" runat="server" CssClass="boton" Text="Hoteles" 
-                onclick="btnHot_Click" />
+                onclick="btnHot_Click"  />
         </td>
-        <td class="botonera" width="33%">
+        <td width="25%">
             <asp:Button ID="btnUsr" runat="server" CssClass="boton" Text="Usuarios" />
         </td>
-    </tr>
-    <tr>
-        <td colspan="3" align="center">
+        <td width="25%">
+            <asp:Button ID="btnReserva" runat="server" CssClass="boton" Text="Reservas" 
+                onclick="btnReserva_Click"  />
+        </td>
+        </tr>
+        <tr>
+        <td colspan="4" align="center">
             <asp:Label ID="lblMsj" runat="server"></asp:Label>
+        </td>
+        </tr>
+        </table>
         </td>
     </tr>
     <tr>
-            <td colspan="3" class="formulario">
+            <td class="formulario">
                 <asp:Label ID="lblUsr" runat="server" Text="Usuarios" CssClass="subtitulo" 
                     ForeColor="#47D363"></asp:Label>
                 <hr />
@@ -62,11 +72,11 @@
                     </tr>
                     <tr>
                         <td class="style7">
-                            <asp:Button ID="btnEliminaUsr" runat="server" CssClass="boton" 
+                            <asp:Button ID="btnEliminaUsr" runat="server" CssClass="btnForm" 
                                 Text="Eliminar" />
                         </td>
                         <td class="style6">
-                            <asp:Button ID="btnModificaUsr" runat="server" CssClass="boton" 
+                            <asp:Button ID="btnModificaUsr" runat="server" CssClass="btnForm" 
                                 Text="Modificar" />
                         </td>
                         <td class="style6">
