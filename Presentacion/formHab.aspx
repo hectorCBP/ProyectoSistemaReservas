@@ -5,33 +5,20 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="contenedor" Runat="Server">
     <table style="width: 100%; margin-left: 0px;" id="formMaster" class="userForm">
     <tr>
-        <td width="25%">
-            <asp:Button ID="btnHab" runat="server" CssClass="boton" Text="Habitaciones" />
-        </td>
-        <td width="25%">
-            <asp:Button ID="btnHot" runat="server" CssClass="boton" Text="Hoteles" 
-                onclick="btnHot_Click" />
-        </td>
-        <td width="25%">
-            <asp:Button ID="btnUsr" runat="server" CssClass="boton" Text="Usuarios" 
-                onclick="btnUsr_Click" />
-        </td>
-        <td width="25%">
-            <asp:Button ID="btnReserva" runat="server" CssClass="boton" Text="Reservas" 
-                onclick="btnReserva_Click"/>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="4" align="center">
-            <asp:Label ID="lblMsj" runat="server"></asp:Label>
-        </td>
-    </tr>
-    <tr>
-        <td id="formHab"  class="formulario" colspan="4">
+        <td id="formHab"  class="formulario" align="center">
+                <asp:Label ID="lblMsj" runat="server"></asp:Label>
+                <table style="width: 100%;">
+                    <tr>
+                        <td align="left" colspan="3" style="width: 66%">
                 <asp:Label ID="lblHab" runat="server" Text="Mantenimiento de Habitaciones" 
                     CssClass="subtitulo" ForeColor="#47D363"></asp:Label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" colspan="3" style="width: 66%">
                 <hr />
-                <table style="width: 100%;">
+                        </td>
+                    </tr>
                     <tr>
                         <td align="center" width="33%">
                             <asp:Label ID="lblNomHotel" runat="server" Text="Nombre de hotel"></asp:Label>

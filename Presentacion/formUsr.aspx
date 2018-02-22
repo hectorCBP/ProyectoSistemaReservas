@@ -1,62 +1,29 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="formUsr.aspx.cs" Inherits="formCli" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <style type="text/css">
-        .style2
-        {
-        }
-        .style6
-        {
-            width: 25%;
-        }
-        .style7
-        {
-            width: 29%;
-        }
-    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="contenedor" Runat="Server">
     <table style="width: 100%; margin-left: 0px;" id="formMaster" class="userForm">
     <tr>
-        <td align="center">
-    <table style="width: 100%; margin-left: 0px;" id="formMaster0" class="userForm">
-        <tr>
-        <td width="25%">
-            <asp:Button ID="btnHab" runat="server" CssClass="boton" Text="Habitaciones" 
-                onclick="btnHab_Click" />
-        </td>
-        <td width="25%">
-            <asp:Button ID="btnHot" runat="server" CssClass="boton" Text="Hoteles" 
-                onclick="btnHot_Click"  />
-        </td>
-        <td width="25%">
-            <asp:Button ID="btnUsr" runat="server" CssClass="boton" Text="Usuarios" />
-        </td>
-        <td width="25%">
-            <asp:Button ID="btnReserva" runat="server" CssClass="boton" Text="Reservas" 
-                onclick="btnReserva_Click"  />
-        </td>
-        </tr>
-        <tr>
-        <td colspan="4" align="center">
-            <asp:Label ID="lblMsj" runat="server"></asp:Label>
-        </td>
-        </tr>
-        </table>
-        </td>
-    </tr>
-    <tr>
             <td class="formulario">
+                <table style="width: 100%;">
+                    <tr>
+                        <td align="center">
+                            <asp:Label ID="lblMsj" runat="server"></asp:Label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                 <asp:Label ID="lblUsr" runat="server" Text="Usuarios" CssClass="subtitulo" 
                     ForeColor="#47D363"></asp:Label>
                 <hr />
                 <table style="width: 100%;">
                     <tr>
-                        <td class="style7">
+                        <td>
                 <asp:Label ID="lblSelectUsr0" runat="server" Text="Seleccione el tipo de usuario:" 
                                 CssClass="subtitulo" Font-Size="Small"></asp:Label>
                         </td>
-                        <td class="style6">
+                        <td>
                             <asp:DropDownList ID="cboTipoUsr" runat="server" Height="100%" Width="304px" 
                                 onselectedindexchanged="cboTipoUsr_SelectedIndexChanged" 
                                 AutoPostBack="True">
@@ -65,27 +32,19 @@
                                 <asp:ListItem>Clientes</asp:ListItem>
                             </asp:DropDownList>
                         </td>
-                        <td class="style6">
-                            &nbsp;</td>
-                        <td class="style2">
-                            &nbsp;</td>
                     </tr>
                     <tr>
-                        <td class="style7">
+                        <td>
                             <asp:Button ID="btnEliminaUsr" runat="server" CssClass="btnForm" 
                                 Text="Eliminar" />
                         </td>
-                        <td class="style6">
+                        <td>
                             <asp:Button ID="btnModificaUsr" runat="server" CssClass="btnForm" 
                                 Text="Modificar" />
                         </td>
-                        <td class="style6">
-                            &nbsp;</td>
-                        <td class="style2">
-                            &nbsp;</td>
                     </tr>
                     <tr>
-                        <td colspan="2">
+                        <td>
                             <asp:GridView ID="gvUsers" runat="server" 
                                 BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" 
                                 CellPadding="4" ForeColor="Black" GridLines="Horizontal" Width="100%" 
@@ -104,12 +63,11 @@
                                 <SortedDescendingHeaderStyle BackColor="#242121" />
                             </asp:GridView>
                         </td>
-                        <td colspan="2">
+                        <td>
                             &nbsp;</td>
                     </tr>
-                    <tr>
-                        <td colspan="4">
-                            &nbsp;</td>
+                    </table>
+                        </td>
                     </tr>
                 </table>
             </td>

@@ -23,4 +23,20 @@ public partial class MasterPage : System.Web.UI.MasterPage
         Session.Clear();
         Response.Redirect("Default.aspx");
     }
+    protected void btnHab_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("formHab.aspx");
+    }
+    protected void btnHot_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("formHot.aspx");
+    }
+    protected void btnUsr_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("formUsr.aspx");
+    }
+    protected void btnReserva_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("formResAdmin.aspx");
+    }
 }
