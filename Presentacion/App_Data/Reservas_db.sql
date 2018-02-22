@@ -337,12 +337,29 @@ create proc eliminarHotel
 as
 begin
 	declare @respuesta int
-	delete from Hoteles where name = @name
+	delete from Hoteles where nombre = @nombre
 	set @respuesta = @@ERROR
 	if @respuesta <> 0
 		return -1 /*ERROR SQL*/
 end
 go
+
+create proc ListarAdmins
+--alter proc ListarAdmins
+as
+begin
+	select u.nombre as 'nombre',u.clave as 'clave',u.nombre_completo as 'nombre_completo',a.cargo as 'cargo' from usuarios u join administradores a on (u.nombre = a.nombre)
+end
+go
+
+create proc ListarClientes
+--alter proc ListarClientes
+as
+begin
+	select u.nombre as 'nombre',u.clave as 'clave',u.nombre_completo as 'nombre_completo', c.direccion as 'direccion', c.numero_tarjeta_credito as 'tarjeta de credito' from usuarios u join Clientes c on (u.nombre = c.nombre)
+end
+go
+
 /******************************************/
 /*			Consultas de prueba			  */
 /******************************************/
