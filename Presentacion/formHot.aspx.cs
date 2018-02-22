@@ -37,7 +37,6 @@ public partial class formHot : System.Web.UI.Page
     {
         try
         {
-            btnHot.Enabled = false;
             txtBuscarH.Attributes.Add("placeholder", "Ingrese el nombre de un Hotel");
         }
         catch (Exception ex)

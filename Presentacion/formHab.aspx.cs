@@ -14,7 +14,6 @@ public partial class formHab : System.Web.UI.Page
     {
         try
         {
-            btnHab.Enabled = false;
             foreach (Hotel h in LogicaHotel.ListaHoteles())
             {
                 lstHoteles.Items.Add(h.Nombre);
