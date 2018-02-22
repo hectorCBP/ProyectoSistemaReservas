@@ -107,5 +107,29 @@ namespace Persistencia
             finally { cnn.Close(); }         
         }
         */
+
+        public static List<Cliente> ListarClientes()
+        {
+            List<Cliente> resp = new List<Cliente>(); //creo una lista para guardar los clientes que saque de la base
+            Cliente a;
+            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlCommand cmd = new SqlCommand("ListarClientes", cnn); //le digo al comando que quiero traer ese sp
+            cmd.CommandType = CommandType.StoredProcedure; // es un sp
+            try
+            {
+                cnn.Open();
+                SqlDataReader dr = cmd.ExecuteReader(); //ejecuto 
+                while (dr.Read()) //leo
+                {
+                    a = new Cliente((string)dr[0], (string)dr[2], (string)dr[1], (string)dr[3], (string)dr[4]); // creo un admin con los datos del reader
+
+                    resp.Add(a);
+
+                }
+            }
+            catch (Exception ex) { throw ex; }
+
+            return resp;
+        }
     }
 }
