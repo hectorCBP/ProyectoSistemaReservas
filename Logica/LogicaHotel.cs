@@ -41,6 +41,8 @@ namespace Logica
         }
 
         public static void Eliminar(string nombre)
-        { }
+        {
+            PersistenciaHotel.Eliminar(nombre);
+        }
     }
 }
