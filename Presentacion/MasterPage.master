@@ -39,26 +39,37 @@
                 <td colspan="3">
     <table style="width: 100%; margin-left: 0px;" id="formMaster" class="userForm">
         <tr>
-        <td width="25%">
-            <asp:Button ID="btnHab" runat="server" CssClass="boton" Text="Habitaciones" 
-                onclick="btnHab_Click"/>
-        </td>
-        <td width="25%">
-            <asp:Button ID="btnHot" runat="server" CssClass="boton" Text="Hoteles" 
-                onclick="btnHot_Click" />
-        </td>
-        <td width="25%">
-            <asp:Button ID="btnUsr" runat="server" CssClass="boton" Text="Usuarios" 
-                onclick="btnUsr_Click" />
-        </td>
-        <td width="25%">
-            <asp:Button ID="btnReserva" runat="server" CssClass="boton" Text="Reservas" 
-                onclick="btnReserva_Click"/>
+        <td align="center" colspan="4">
+            <asp:Label ID="lblMsj" runat="server"></asp:Label>
         </td>
         </tr>
         <tr>
-        <td colspan="4" align="center">
-            &nbsp;</td>
+        <td width="25%">
+            <asp:Button ID="btnHab" runat="server" CssClass="boton" Text="Habitaciones" 
+                onclick="btnHab_Click" Visible="False"/>
+        </td>
+        <td width="25%">
+            <asp:Button ID="btnHot" runat="server" CssClass="boton" Text="Hoteles" 
+                onclick="btnHot_Click" Visible="False" />
+        </td>
+        <td width="25%">
+            <asp:Button ID="btnUsr" runat="server" CssClass="boton" Text="Usuarios" 
+                onclick="btnUsr_Click" Visible="False" />
+        </td>
+        <td width="25%">
+            <asp:Button ID="btnReserva" runat="server" CssClass="boton" Text="Reservas" 
+                onclick="btnReserva_Click" Visible="False"/>
+        </td>
+        </tr>
+        <tr>
+        <td colspan="2" align="center">
+                <asp:Button ID="btnCrearRes" runat="server" CssClass="boton" 
+                    onclick="btnCrearRes_Click" Text="Crear reserva" Visible="False" />
+            </td>
+        <td colspan="2" align="center">
+                <asp:Button ID="btnLstRes" runat="server" CssClass="boton" 
+                    onclick="btnLstRes_Click" Text="Listado de reservas" Visible="False" />
+            </td>
         </tr>
         </table>
                 </td>

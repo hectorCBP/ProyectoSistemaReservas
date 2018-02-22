@@ -34,17 +34,17 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td width="50%">
                             <asp:Button ID="btnEliminaUsr" runat="server" CssClass="btnForm" 
                                 Text="Eliminar" />
                         </td>
-                        <td>
+                        <td width="50%">
                             <asp:Button ID="btnModificaUsr" runat="server" CssClass="btnForm" 
                                 Text="Modificar" />
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td colspan="2">
                             <asp:GridView ID="gvUsers" runat="server" 
                                 BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" 
                                 CellPadding="4" ForeColor="Black" GridLines="Horizontal" Width="100%" 
@@ -63,8 +63,6 @@
                                 <SortedDescendingHeaderStyle BackColor="#242121" />
                             </asp:GridView>
                         </td>
-                        <td>
-                            &nbsp;</td>
                     </tr>
                     </table>
                         </td>
