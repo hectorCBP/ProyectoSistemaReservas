@@ -5,18 +5,41 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="contenedor" Runat="Server">
     <table style="width:100%;" class="userForm">
         <tr>
-            <td class="botonera" width="50%">
-                <asp:Button ID="btnCrearRes" runat="server" CssClass="boton" 
-                    onclick="btnCrearRes_Click" Text="Crear reserva" />
-            </td>
-            <td class="botonera" width="50%">
-                <asp:Button ID="btnLstRes" runat="server" CssClass="boton" 
-                    onclick="btnLstRes_Click" Text="Listado de reservas" />
+            <td align="center" class="style1">
+                <asp:Label ID="lblMsj" runat="server" Text="[lblMsj]"></asp:Label>
             </td>
         </tr>
         <tr>
-            <td colspan="2" align="center" class="style1">
-                <asp:Label ID="lblMsj" runat="server" Text="[lblMsj]"></asp:Label>
+             <td id="formRegistrada"  class="formulario">
+                <asp:Label ID="lblCrearRes" runat="server" Text="Creación de reserva" 
+                    CssClass="subtitulo" ForeColor="#47D363"></asp:Label>
+                <hr />
+                <table style="width: 100%;">
+                    <tr>
+                        <td>
+                            crear aqui formulario</td>
+                        <td>
+                            &nbsp;</td>
+                        <td>
+                            &nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;</td>
+                        <td>
+                            &nbsp;</td>
+                        <td>
+                            &nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;</td>
+                        <td>
+                            &nbsp;</td>
+                        <td>
+                            &nbsp;</td>
+                    </tr>
+                </table>
             </td>
         </tr>
         </table>

@@ -28,7 +28,7 @@ public partial class _Default : System.Web.UI.Page
             else
             {
                 Session["usuario"] = usuario.Nombre;
-
+                Session["tipoUsuario"] = usuario is Cliente ? "cliente" : "administrador";
                 if (usuario is Cliente)
                     Response.Redirect("formCliente.aspx");
                 else
