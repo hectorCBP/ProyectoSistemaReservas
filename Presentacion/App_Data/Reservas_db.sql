@@ -108,6 +108,9 @@ go
 /******************************************/
 insert into Usuarios values('adm','adm','adm_uno')
 insert into Administradores values('adm','super_adm')
+insert into Usuarios values('usr','usr','usr_hard')
+insert into Clientes values('usr','direccion','0123456789012345')
+insert into Telefono_Clientes values('usr','1122334455')
 insert into Hoteles values('hotel','calleH',123,'ciudadH',3,'123456789','012345678','imagenes/uno.jpg',1,1)
 insert into Hoteles values('hotel2','calleH2',321,'ciudadH2',5,'987654321','123456789','imagenes/dos.jpg',0,1)
 insert into Habitaciones values(100,'hotel','descripcionH1',2,2000,1,'activa')
