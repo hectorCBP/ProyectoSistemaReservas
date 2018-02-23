@@ -10,38 +10,36 @@ using EntidadesCompartidas;
 
 namespace Persistencia
 {
-    public class PersistenciaHabitacion
+    public class PersistenciaReserva
     {
-        public static List<Habitacion> ListadoHabitaciones(string nombreHotel)
+        public static List<Reserva> Listado()
         {
-            List<Habitacion> lstHab = new List<Habitacion>();
+            List<Reserva> lstRes = new List<Reserva>();
             SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
-            SqlCommand cmd = new SqlCommand("listarHabitacionesDeHotel", cnn);
+            SqlCommand cmd = new SqlCommand("reservasActivas", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@nombre", nombreHotel);
-
             try
             {
                 cnn.Open();
                 SqlDataReader lector = cmd.ExecuteReader();
                 while (lector.Read())
                 {
-                    Habitacion habitacion = new Habitacion(
+                    Reserva reserva = new Reserva(
                         (int)lector["numero"],
+                        (DateTime)lector["fecha_inicio"],
+                        (DateTime)lector["fecha_final"],
+                        (string)lector["nombre_cliente"],
+                        (int)lector["numero_hab"],
                         (string)lector["nombre_hotel"],
-                        (string)lector["descripcion"],
-                        (int)lector["cant_huesped"],
-                        (decimal)lector["costo"],
-                        (int)lector["piso"]);
-                    lstHab.Add(habitacion);
+                        (string)lector["estado_reserva"]);
+                    lstRes.Add(reserva);
                 }
             }
             catch (Exception ex)
             { throw ex; }
             finally
             { cnn.Close(); }
-
-            return lstHab;
+            return lstRes;
         }
     }
 }

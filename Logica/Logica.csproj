@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="LogicaHabitacion.cs" />
     <Compile Include="LogicaHotel.cs" />
+    <Compile Include="LogicaReserva.cs" />
     <Compile Include="LogicaUsuario.cs" />
     <Compile Include="LogicaAdministrador.cs" />
     <Compile Include="LogicaCliente.cs" />

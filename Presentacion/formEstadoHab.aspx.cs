@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 using EntidadesCompartidas;
 using Logica;
 
-public partial class formHab : System.Web.UI.Page
+public partial class formEstadoHab : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -24,10 +24,15 @@ public partial class formHab : System.Web.UI.Page
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
-
     }
-    protected void btnEstadoHab_Click(object sender, EventArgs e)
+    protected void btnCargarHab_Click(object sender, EventArgs e)
     {
-        Response.Redirect("formEstadoHab.aspx");
+        try
+        {
+            gvEstadoHab.DataSource = LogicaHabitacion.ListadoHabitaciones(lstHoteles.Text);
+            gvEstadoHab.DataBind();
+        }
+        catch (Exception ex)
+        { lblMsj.Text = ex.Message; }
     }
 }

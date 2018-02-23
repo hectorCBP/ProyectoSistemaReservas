@@ -25,11 +25,12 @@
                     </tr>
                     <tr>
             <td>
-                <asp:GridView ID="gvHabActivas" runat="server" Width="100%" BackColor="White" 
+                <asp:GridView ID="gvResActivas" runat="server" Width="100%" BackColor="White" 
                     BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" 
-                    ForeColor="Black" GridLines="Horizontal">
+                    ForeColor="Black" GridLines="Horizontal" Visible="False">
                     <Columns>
-                        <asp:ButtonField HeaderText="Acción" ShowHeader="True" Text="Finalizar">
+                        <asp:ButtonField HeaderText="Estado de reserva" ShowHeader="True" 
+                            Text="Finalizar">
                         <ItemStyle HorizontalAlign="Center" />
                         </asp:ButtonField>
                     </Columns>
