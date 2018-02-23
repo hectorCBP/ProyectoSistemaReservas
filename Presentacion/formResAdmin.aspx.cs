@@ -14,8 +14,8 @@ public partial class formResAdmin : System.Web.UI.Page
     {
         try
         {
-            gvHabActivas.DataSource = LogicaHabitacion.ConReservasActivas();
-            gvHabActivas.DataBind();
+            gvResActivas.DataSource = LogicaReserva.Listado();
+            gvResActivas.DataBind();
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }

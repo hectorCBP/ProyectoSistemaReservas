@@ -9,13 +9,17 @@
                 <asp:Label ID="lblMsj" runat="server"></asp:Label>
                 <table style="width: 100%;">
                     <tr>
-                        <td align="left" colspan="3" style="width: 66%">
+                        <td align="left" colspan="2" width="50%">
                 <asp:Label ID="lblHab" runat="server" Text="Mantenimiento de Habitaciones" 
                     CssClass="subtitulo" ForeColor="#47D363"></asp:Label>
                         </td>
+                        <td align="left" colspan="2" width="50%">
+                            <asp:Button ID="btnEstadoHab" runat="server" CssClass="btnForm" 
+                                onclick="btnEstadoHab_Click" Text="Estado de habitaciones" />
+                        </td>
                     </tr>
                     <tr>
-                        <td align="center" colspan="3" style="width: 66%">
+                        <td align="center" colspan="4" style="width: 66%">
                 <hr />
                         </td>
                     </tr>
@@ -23,7 +27,7 @@
                         <td align="center" width="33%">
                             <asp:Label ID="lblNomHotel" runat="server" Text="Nombre de hotel"></asp:Label>
                         </td>
-                        <td align="center" width="33%">
+                        <td align="center" width="33%" colspan="2">
                             <asp:DropDownList ID="lstHoteles" runat="server" Width="90%">
                                 <asp:ListItem Selected="True" Value="-1">Seleccione un Hotel</asp:ListItem>
                             </asp:DropDownList>
@@ -35,7 +39,7 @@
                         <td align="center">
                             <asp:Label ID="lblNumHab" runat="server" Text="Nº de Habitación"></asp:Label>
                         </td>
-                        <td align="center">
+                        <td align="center" colspan="2">
                             <asp:TextBox ID="txtNumeroHab" runat="server" Width="90%"></asp:TextBox>
                         </td>
                         <td>
@@ -43,7 +47,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="center" colspan="3">
+                        <td align="center" colspan="4">
                             <hr />
                         </td>
                     </tr>
@@ -51,7 +55,7 @@
                         <td align="center">
                             <asp:Label ID="lblHuespedHab" runat="server" Text="Nº de Huespedes"></asp:Label>
                         </td>
-                        <td align="center">
+                        <td align="center" colspan="2">
                             <asp:TextBox ID="txtHuespedHab" runat="server" Width="90%"></asp:TextBox>
                         </td>
                         <td>
@@ -61,7 +65,7 @@
                         <td align="center" class="style1">
                             <asp:Label ID="lblPisoHab" runat="server" Text="Nº de piso"></asp:Label>
                         </td>
-                        <td align="center" class="style1">
+                        <td align="center" class="style1" colspan="2">
                             <asp:TextBox ID="txtPisoHab" runat="server" Width="90%"></asp:TextBox>
                         </td>
                         <td class="style1">
@@ -71,7 +75,7 @@
                         <td align="center">
                             <asp:Label ID="lblCostoHab" runat="server" Text="Costo por noche"></asp:Label>
                         </td>
-                        <td align="center">
+                        <td align="center" colspan="2">
                             <asp:TextBox ID="txtCosto" runat="server" Width="90%"></asp:TextBox>
                         </td>
                         <td>
@@ -81,14 +85,14 @@
                         <td align="center">
                             <asp:Label ID="lblDescirpcionHab" runat="server" Text="Breve descripción"></asp:Label>
                         </td>
-                        <td align="center">
+                        <td align="center" colspan="2">
                             <asp:TextBox ID="txtDescripcionHab" runat="server" Width="90%"></asp:TextBox>
                         </td>
                         <td>
                             &nbsp;</td>
                     </tr>
                     <tr>
-                        <td align="center" colspan="3">
+                        <td align="center" colspan="4">
                             <hr />
                         </td>
                     </tr>
@@ -97,7 +101,7 @@
                             <asp:Button ID="btnEliminarHab" runat="server" CssClass="btnForm" 
                                 Text="Eliminar" />
                         </td>
-                        <td align="center">
+                        <td align="center" colspan="2">
                             <asp:Button ID="btnModificarHab" runat="server" CssClass="btnForm" 
                                 Text="Modificar" />
                         </td>
