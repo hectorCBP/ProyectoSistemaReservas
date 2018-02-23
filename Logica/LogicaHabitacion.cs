@@ -19,5 +19,15 @@ namespace Logica
 
             return lstHab;
         }
+
+        public static Habitacion ObtenerHabitacion(string nomHotel, string numeroHab) 
+        {
+            Habitacion habitacion = PersistenciaHabitacion.ObtenerHabitacion(nomHotel, numeroHab);
+
+            if (habitacion == null)
+                throw new Exception("No existe número de habitación");
+
+            return habitacion;
+        }
     }
 }

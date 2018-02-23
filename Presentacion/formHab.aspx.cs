@@ -30,4 +30,21 @@ public partial class formHab : System.Web.UI.Page
     {
         Response.Redirect("formEstadoHab.aspx");
     }
+    protected void btnBuscarHab_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            if(String.IsNullOrEmpty(txtNumeroHab.Text))
+                throw new Exception("Número de habitación no puede ser vacío");
+
+            Habitacion habitacion = LogicaHabitacion.ObtenerHabitacion(lstHoteles.Text, txtNumeroHab.Text);
+
+            txtHuespedHab.Text = habitacion.CantHuesped.ToString();
+            txtPisoHab.Text = habitacion.Piso.ToString();
+            txtDescripcionHab.Text = habitacion.Descripcion;
+            txtCosto.Text = habitacion.Costo.ToString();
+        }
+        catch (Exception ex)
+        { lblMsj.Text = ex.Message; }
+    }
 }
