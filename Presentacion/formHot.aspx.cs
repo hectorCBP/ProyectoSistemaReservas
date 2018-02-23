@@ -139,7 +139,7 @@ public partial class formHot : System.Web.UI.Page
     {
         try
         {
-
+            LogicaHotel.Eliminar(txtHotel.Text);
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }

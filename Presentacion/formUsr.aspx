@@ -41,7 +41,21 @@
                         </td>
                     </tr>
                     <tr>
+<<<<<<< HEAD
                         <td class="style1" style="border-right-style: inset" valign="top" width="60%">
+=======
+                        <td width="50%">
+                            <asp:Button ID="btnEliminaUsr" runat="server" CssClass="btnForm" 
+                                Text="Eliminar" />
+                        </td>
+                        <td width="50%">
+                            <asp:Button ID="btnModificaUsr" runat="server" CssClass="btnForm" 
+                                Text="Modificar" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+>>>>>>> e9e14bc88768846ae93724ca0e835e46749380de
                             <asp:GridView ID="gvUsers" runat="server" 
                                 CellPadding="4" ForeColor="#333333" GridLines="None" Width="100%" 
                                 Font-Size="X-Small" CaptionAlign="Top" ClientIDMode="AutoID" Height="100%" 
@@ -63,6 +77,7 @@
                                 <SortedDescendingHeaderStyle BackColor="#820000" />
                             </asp:GridView>
                         </td>
+<<<<<<< HEAD
                         <td valign="top" width="50%">
                             <asp:Panel ID="pnlModificar" runat="server" Visible="False">
                                 <table style="width:100%;">
@@ -135,6 +150,8 @@
                                 </table>
                             </asp:Panel>
                         </td>
+=======
+>>>>>>> e9e14bc88768846ae93724ca0e835e46749380de
                     </tr>
                     </table>
                         </td>
