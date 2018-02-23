@@ -43,7 +43,8 @@
                             <asp:TextBox ID="txtNumeroHab" runat="server" Width="90%"></asp:TextBox>
                         </td>
                         <td>
-                            <asp:Button ID="btnBuscarHab" runat="server" CssClass="btnForm" Text="Buscar" />
+                            <asp:Button ID="btnBuscarHab" runat="server" CssClass="btnForm" Text="Buscar" 
+                                onclick="btnBuscarHab_Click" />
                         </td>
                     </tr>
                     <tr>

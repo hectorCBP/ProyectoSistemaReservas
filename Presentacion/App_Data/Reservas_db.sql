@@ -360,7 +360,17 @@ begin
 	and ha.nombre_hotel = @nombre
 end
 go
-
+create proc obtenerHabitacionDeHotel
+@nombreHotel varchar(100),
+@numeroHabitacion varchar(100)
+as
+begin
+	select ha.* from Habitaciones ha join Hoteles ho
+	on ho.nombre = @nombreHotel
+	and ha.nombre_hotel = nombre_hotel
+	and ha.numero = @numeroHabitacion
+end
+go
 
 /************************
 	SP DE RESERVAS
