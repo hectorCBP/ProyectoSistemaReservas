@@ -1,6 +1,15 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="formUsr.aspx.cs" Inherits="formCli" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    <style type="text/css">
+        .style1
+        {
+        }
+        .style2
+        {
+            height: 44px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="contenedor" Runat="Server">
     <table style="width: 100%; margin-left: 0px;" id="formMaster" class="userForm">
@@ -19,12 +28,10 @@
                 <hr />
                 <table style="width: 100%;">
                     <tr>
-                        <td>
+                        <td align="center" class="style1" colspan="2" width="50%">
                 <asp:Label ID="lblSelectUsr0" runat="server" Text="Seleccione el tipo de usuario:" 
-                                CssClass="subtitulo" Font-Size="Small"></asp:Label>
-                        </td>
-                        <td>
-                            <asp:DropDownList ID="cboTipoUsr" runat="server" Height="100%" Width="304px" 
+                                CssClass="subtitulo"></asp:Label>
+                            <asp:DropDownList ID="cboTipoUsr" runat="server" Height="100%" Width="217px" 
                                 onselectedindexchanged="cboTipoUsr_SelectedIndexChanged" 
                                 AutoPostBack="True">
                                 <asp:ListItem Selected="True"></asp:ListItem>
@@ -34,37 +41,100 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <asp:Button ID="btnEliminaUsr" runat="server" CssClass="btnForm" 
-                                Text="Eliminar" />
-                        </td>
-                        <td>
-                            <asp:Button ID="btnModificaUsr" runat="server" CssClass="btnForm" 
-                                Text="Modificar" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
+                        <td class="style1" style="border-right-style: inset" valign="top" width="60%">
                             <asp:GridView ID="gvUsers" runat="server" 
-                                BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" 
-                                CellPadding="4" ForeColor="Black" GridLines="Horizontal" Width="100%" 
-                                Font-Size="X-Small">
+                                CellPadding="4" ForeColor="#333333" GridLines="None" Width="100%" 
+                                Font-Size="X-Small" CaptionAlign="Top" ClientIDMode="AutoID" Height="100%" 
+                                onselectedindexchanged="gvUsers_SelectedIndexChanged">
+                                <AlternatingRowStyle BackColor="White" />
                                 <Columns>
-                                    <asp:CommandField ShowSelectButton="True" />
+                                    <asp:CommandField ShowSelectButton="True" SelectText="Selec." />
                                 </Columns>
-                                <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
-                                <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
-                                <PagerStyle BackColor="White" ForeColor="Black" HorizontalAlign="Right" />
-                                <RowStyle HorizontalAlign="Center" />
-                                <SelectedRowStyle BackColor="#CC3333" Font-Bold="True" ForeColor="White" />
-                                <SortedAscendingCellStyle BackColor="#F7F7F7" />
-                                <SortedAscendingHeaderStyle BackColor="#4B4B4B" />
-                                <SortedDescendingCellStyle BackColor="#E5E5E5" />
-                                <SortedDescendingHeaderStyle BackColor="#242121" />
+                                <FooterStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
+                                <HeaderStyle BackColor="#DDDDDD" Font-Bold="True" Font-Size="Medium" 
+                                    ForeColor="Black" Height="0px" />
+                                <PagerStyle BackColor="#FFCC66" ForeColor="#333333" HorizontalAlign="Center" />
+                                <RowStyle HorizontalAlign="Center" BackColor="#FAFAFA" ForeColor="#333333" 
+                                    Height="0px" />
+                                <SelectedRowStyle BackColor="#47D363" Font-Bold="True" ForeColor="White" />
+                                <SortedAscendingCellStyle BackColor="#FDF5AC" />
+                                <SortedAscendingHeaderStyle BackColor="#4D0000" />
+                                <SortedDescendingCellStyle BackColor="#FCF6C0" />
+                                <SortedDescendingHeaderStyle BackColor="#820000" />
                             </asp:GridView>
                         </td>
-                        <td>
-                            &nbsp;</td>
+                        <td valign="top" width="50%">
+                            <asp:Panel ID="pnlModificar" runat="server" Visible="False">
+                                <table style="width:100%;">
+                                    <tr>
+                                        <td align="right">
+                                            <asp:Button ID="btnEliminar" runat="server" CssClass="btnForm" 
+                                                Text="Eliminar" />
+                                        </td>
+                                        <td align="left">
+                                            <asp:Button ID="Button2" runat="server" CssClass="btnForm" 
+                                                Text="Convertir en Admin" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">
+                                            <asp:Label ID="Label1" runat="server" Font-Size="Small" Text="Nombre:"></asp:Label>
+                                        </td>
+                                        <td align="left">
+                                            <asp:TextBox ID="txtNombre" runat="server" Font-Size="Small"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">
+                                            <asp:Label ID="Label2" runat="server" 
+                Text="Nombre Completo:" Font-Size="Small"></asp:Label>
+                                        </td>
+                                        <td align="left">
+                                            <asp:TextBox ID="txtNomCompleto" runat="server" Font-Size="Small"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">
+                                            <asp:Label ID="Label3" runat="server" Text="Clave:" Font-Size="Small"></asp:Label>
+                                        </td>
+                                        <td align="left">
+                                            <asp:TextBox ID="txtClave" runat="server" Font-Size="Small"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">
+                                            <asp:Label ID="lblCargoDire" runat="server" Font-Size="Small" Text="Cargo" 
+                                                Visible="False"></asp:Label>
+                                        </td>
+                                        <td align="left">
+                                            <asp:TextBox ID="txtCargoDire" runat="server" Font-Size="Small" Visible="False"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right" class="style2">
+                                            <asp:Label ID="lblTarj" runat="server" Font-Size="Small" 
+                                                Text="Tarjeta de credito:" Visible="False"></asp:Label>
+                                        </td>
+                                        <td align="left" class="style2">
+                                            <asp:TextBox ID="txtTarjeta" runat="server" Font-Size="Small" Visible="False"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">
+                                            &nbsp;</td>
+                                        <td align="left">
+                                            &nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">
+                                            &nbsp;</td>
+                                        <td align="left">
+                                            <asp:Button ID="btnGuardar" runat="server" CssClass="btnForm" Text="Guardar" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </asp:Panel>
+                        </td>
                     </tr>
                     </table>
                         </td>
