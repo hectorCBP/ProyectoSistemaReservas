@@ -371,6 +371,53 @@ begin
 	and ha.numero = @numeroHabitacion
 end
 go
+create proc agregarHabitacion
+@numero int,
+@nombreHotel varchar(100),
+@descripcion varchar(100),
+@cantHespesd int,
+@costo decimal,
+@piso int
+as 
+begin
+	declare @resultado int
+	 
+	if exists (select nombre_hotel from Habitaciones where nomber_hotel = @nombreHotel and numero = @numero)
+		return -1 /*ERROR habitacion ya existe*/
+
+	insert into Habitaciones
+	values(@numero, @nombreHotel, @descriptcion, @cantHuesped, @costo, @piso)
+	set @resultado = @@ERROR
+	if @resultado <> 0
+		return -2 /*ERROR SQL*/
+end 
+go
+create proc modificarHabitacion
+@numero int,
+@nombreHotel varchar(100),
+@descripcion varchar(100),
+@cantHespesd int,
+@costo decimal,
+@piso int
+as 
+begin
+	declare @resultado int
+	if not exists (select nombre_hotel from Habitaciones where nomber_hotel = @nombreHotel and numero = @numero)
+		return -1 /*ERROR habitacion no existe*/
+
+	update Habitaciones 
+	set descripcion = @descripcion, 
+		cant_huesped = @cantHuesped,
+		costo = @costo,
+		piso = @piso
+	where numero = @numero
+	and nombre_hotel = @nombreHotel
+	set @resultado = @@ERROR
+	if @resultado <> 0
+		return -2 /*ERROR SQL*/
+end
+go
+
 
 /************************
 	SP DE RESERVAS

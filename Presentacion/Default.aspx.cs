@@ -24,19 +24,25 @@ public partial class _Default : System.Web.UI.Page
             Usuario usuario = LogicaUsuario.Logueo(user, pass);
 
             if (usuario == null)
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('El usuario y/o la contraseña no son correctas');</script>");
+                Response.Write("<script>alert('El usuario y/o la contraseña no son correctas');</script>");
             else
             {
                 Session["usuario"] = usuario.Nombre;
-                Session["tipoUsuario"] = usuario is Cliente ? "cliente" : "administrador";
+                
                 if (usuario is Cliente)
+                {
+                    Session["tipoUsuario"] = "cliente";
                     Response.Redirect("formCliente.aspx");
+                }
                 else
+                {
+                    Session["tipoUsuario"] = "administrador";
                     Response.Redirect("formAdmin.aspx");
+                }
             }
         }
         catch (Exception ex)
-        { Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('"+ex.Message+"');</script>"); }
+        { Response.Write("<script>alert('" + ex.Message + "');</script>"); }
     }
     protected void btnRegistro_Click(object sender, EventArgs e)
     {
