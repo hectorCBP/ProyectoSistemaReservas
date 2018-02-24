@@ -29,5 +29,16 @@ namespace Logica
 
             return habitacion;
         }
+
+        public static void Agregar(Habitacion habitacion)
+        {
+            PersistenciaHabitacion.Agregar(habitacion);
+        }
+
+        public static void Modificar(Habitacion habitacion)
+        {
+            PersistenciaHabitacion.Modificar(habitacion);
+        }
+
     }
 }

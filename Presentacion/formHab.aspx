@@ -104,11 +104,11 @@
                         </td>
                         <td align="center" colspan="2">
                             <asp:Button ID="btnModificarHab" runat="server" CssClass="btnForm" 
-                                Text="Modificar" />
+                                Text="Modificar" onclick="btnModificarHab_Click" />
                         </td>
                         <td>
                             <asp:Button ID="btnAgregarHab" runat="server" CssClass="btnForm" 
-                                Text="Agregar" />
+                                Text="Agregar" onclick="btnAgregarHab_Click" />
                         </td>
                     </tr>
                     </table>
