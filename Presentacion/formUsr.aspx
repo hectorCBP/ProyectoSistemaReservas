@@ -89,7 +89,7 @@
                                             <asp:Label ID="Label1" runat="server" Font-Size="Small" Text="Nombre:"></asp:Label>
                                         </td>
                                         <td align="left" width="50%">
-                                            <asp:TextBox ID="txtNombre" runat="server" Font-Size="Small"></asp:TextBox>
+                                            <asp:TextBox ID="txtNombre" runat="server" Font-Size="Small" Enabled="False"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -129,7 +129,8 @@
                                                 onclick="btnEliminar_Click" Text="Eliminar" />
                                         </td>
                                         <td align="left" width="50%">
-                                            <asp:Button ID="btnGuardar" runat="server" CssClass="btnForm" Text="Guardar" />
+                                            <asp:Button ID="btnGuardar" runat="server" CssClass="btnForm" Text="Guardar" 
+                                                onclick="btnGuardar_Click" />
                                         </td>
                                     </tr>
                                 </table>

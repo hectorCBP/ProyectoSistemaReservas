@@ -15,5 +15,15 @@ namespace Logica
             return lista;
         }
 
+
+        public static bool AgregarAdmin(Administrador a)
+        {
+            return PersistenciaAdministrador.AgregarAdmin(a);
+        }
+
+        public static bool ModificarAdmin(Administrador a)
+        {
+            return PersistenciaAdministrador.ModificarAdmin(a);
+        }
     }
 }

@@ -71,5 +71,45 @@ namespace Persistencia
 
             return resp;
         }
+
+        public static bool AgregarAdmin(Administrador a)
+        {
+            bool resp = false;
+
+            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlCommand cmd = new SqlCommand("AgregarAdmin", cnn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            //le paso como parametros la devolucion de las propiedades del cliente que recibe
+            cmd.Parameters.AddWithValue("Nombre", a.Nombre);
+            cmd.Parameters.AddWithValue("NombreCompleto", a.NombreCompleto);
+            cmd.Parameters.AddWithValue("Clave", a.Clave);
+            cmd.Parameters.AddWithValue("Cargo", a.Cargo);
+
+            SqlParameter pReturn = new SqlParameter(); //para capturar el retorno
+            pReturn.Direction = ParameterDirection.ReturnValue;
+            cmd.Parameters.Add(pReturn);
+            try
+            {
+                cnn.Open();
+                cmd.ExecuteNonQuery();
+                int ret = (int)pReturn.Value; //paso el retorno a un int para tenerlo mas facil
+                if (ret == 1) //si es 1 se agrego correctamente
+                    resp = true; //cambio el bool de respuesta a true
+                else if (ret == -1)
+                    throw new Exception("Ya existe un Administrador con ese nombre.");
+                else if (ret == -2)
+                    throw new Exception("Error con la base de datos");
+
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cnn.Close(); }
+
+            return resp;
+        }
+
+        public static bool ModificarAdmin(Administrador a)
+        {
+            return false;
+        }
     }
 }
