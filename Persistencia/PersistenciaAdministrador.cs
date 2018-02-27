@@ -77,13 +77,13 @@ namespace Persistencia
             bool resp = false;
 
             SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
-            SqlCommand cmd = new SqlCommand("AgregarAdmin", cnn);
+            SqlCommand cmd = new SqlCommand("agregarAdministrador", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             //le paso como parametros la devolucion de las propiedades del cliente que recibe
-            cmd.Parameters.AddWithValue("Nombre", a.Nombre);
-            cmd.Parameters.AddWithValue("NombreCompleto", a.NombreCompleto);
-            cmd.Parameters.AddWithValue("Clave", a.Clave);
-            cmd.Parameters.AddWithValue("Cargo", a.Cargo);
+            cmd.Parameters.AddWithValue("nombre", a.Nombre);
+            cmd.Parameters.AddWithValue("nombreCompleto", a.NombreCompleto);
+            cmd.Parameters.AddWithValue("clave", a.Clave);
+            cmd.Parameters.AddWithValue("cargo", a.Cargo);
 
             SqlParameter pReturn = new SqlParameter(); //para capturar el retorno
             pReturn.Direction = ParameterDirection.ReturnValue;

@@ -95,12 +95,19 @@ public partial class formCli : System.Web.UI.Page
         Administrador a = new Administrador(txtNombre.Text,txtNomCompleto.Text,txtClave.Text,txtCargo.Text);
         if (gvUsers.SelectedIndex == -1)
         {
-            LogicaAdministrador.AgregarAdmin(a);
+            if (LogicaAdministrador.AgregarAdmin(a))
+            {
+                lblMsj.Text = "Usuario agregado correctamente";
+                vaciarCampos();
+            }
         }
         else
         {
-            LogicaAdministrador.ModificarAdmin(a);
+            if (LogicaAdministrador.ModificarAdmin(a))
+                lblMsj.Text = "Usuario modificado correctamente";
         }
+        gvUsers.DataSource = LogicaAdministrador.ListarAdmins();
+        gvUsers.DataBind();
         }
         catch (Exception ex) { lblMsj.Text = ex.Message; }
     }
