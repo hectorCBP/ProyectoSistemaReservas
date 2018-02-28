@@ -23,12 +23,6 @@ namespace EntidadesCompartidas
             get { return descripcion; }
             set { descripcion = value; }
         }
-        public string Estado
-        {
-            get { return estado; }
-            set { estado = value; }
-        }// TO DO valor restingido (activo, cancelado, finalizado)
-
         public int Numero
         {
             get { return numero; }
@@ -53,7 +47,7 @@ namespace EntidadesCompartidas
 
         // constructor
         public Habitacion(  int pNumero, string pNombreHotel, string pDescripcion, 
-                            int pCantHuesped, decimal pCosto, int pPiso, string pEstado ) 
+                            int pCantHuesped, decimal pCosto, int pPiso) 
         {
             Numero = pNumero;
             NombreHotel = pNombreHotel;
@@ -61,7 +55,6 @@ namespace EntidadesCompartidas
             CantHuesped = pCantHuesped;
             Costo = pCosto;
             Piso = pPiso;
-            Estado = pEstado;
         }
     }
 }

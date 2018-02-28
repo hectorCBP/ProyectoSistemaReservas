@@ -71,7 +71,8 @@
     width: 80%;
     padding: 0
 }
-table{ width:80px; }
+table{
+}
 .userForm
 {background-color:#fafafa}
 .hideForm
@@ -80,9 +81,6 @@ table{ width:80px; }
 { 
     border: 1px solid #1a1a1a;
     width: 100%; 
-}
-.botonera
-{
 }
 .boton
 {
@@ -93,9 +91,11 @@ table{ width:80px; }
     font-family: Segoe UI; 
     font-weight: bold;
     letter-spacing: 1px;
-    margin: 0;
     height: 40px;
     width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
 }
 .boton:hover
 {background-color:#47d363}

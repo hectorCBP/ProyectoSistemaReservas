@@ -37,19 +37,23 @@ public partial class formHot : System.Web.UI.Page
     {
         try
         {
-            btnHot.Enabled = false;
             txtBuscarH.Attributes.Add("placeholder", "Ingrese el nombre de un Hotel");
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
     }
-    protected void btnHab_Click1(object sender, EventArgs e)
+    
+    protected void btnHab_Click(object sender, EventArgs e)
     {
         Response.Redirect("formHab.aspx");
     }
-    protected void btnUsr_Click1(object sender, EventArgs e)
+    protected void btnUsr_Click(object sender, EventArgs e)
     {
-        Response.Redirect("~/formUsr.aspx");
+        Response.Redirect("formUsr.aspx");
+    }
+    protected void btnReserva_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("formResAdmin.aspx");
     }
 
     /** BUSCAR HOTEL */
@@ -135,10 +139,9 @@ public partial class formHot : System.Web.UI.Page
     {
         try
         {
-
+            LogicaHotel.Eliminar(txtHotel.Text);
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
     }
-
 }

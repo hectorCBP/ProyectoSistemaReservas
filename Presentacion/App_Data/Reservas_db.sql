@@ -44,7 +44,7 @@ create table Clientes
 (
 	nombre					varchar (100) not null,
 	direccion				varchar (100),
-	numero_tarjeta_credito	varchar (100), 
+	numero_tarjeta_credito	varchar (100),/*TO DO debe ser unico y de 16 caracteres*/ 
 	primary key (nombre),
 	foreign key (nombre) references Usuarios(nombre)
 )
@@ -82,8 +82,7 @@ create table Habitaciones
 	descripcion		varchar(250),
 	cant_huesped	int,
 	costo			decimal,
-	piso			int,
-	estado_reserva	varchar(100),
+	piso			int
 	primary key(numero, nombre_hotel),
 	foreign key(nombre_hotel)references Hoteles(nombre)
 )
@@ -91,15 +90,27 @@ go
 
 create table Reservas
 (
+<<<<<<< HEAD
 	numero			bigint identity not null,
 	estado			varchar(100) constraint CHK_estado check (estado ='ACTIVA' OR estado='CANCELADA' or estado='FINALIZADA'),
 	fecha_inicio	date,
 	fecha_final		date,
 	nombre_cli		varchar(100),
+=======
+	numero			int not null,/*TO DO autogenerado por sistema*/
+	fecha_inicio	date,
+	fecha_final		date,
+	nombre_cliente	varchar(100),
+>>>>>>> 2c11da65585d17e43e106af338fa85f4028d97ab
 	numero_hab		int,
 	nombre_hotel	varchar(100),
+	estado_reserva	varchar(100),/*TO DO restriccion estado (activa, cancelada, finalizada)*/
 	primary key (numero),
+<<<<<<< HEAD
 	foreign key (nombre_cli) references Clientes(nombre),
+=======
+	foreign key (nombre_cliente) references Usuarios(nombre),
+>>>>>>> 2c11da65585d17e43e106af338fa85f4028d97ab
 	foreign key (numero_hab, nombre_hotel) references Habitaciones(numero, nombre_hotel)
 )
 go
@@ -109,17 +120,26 @@ go
 insert into Usuarios values('adm','adm','adm_uno')
 insert into Usuarios values('cli','cli','adm_uno')
 insert into Administradores values('adm','super_adm')
+<<<<<<< HEAD
 insert into Clientes values('cli','jujuy',1234567891011123)
+=======
+insert into Usuarios values('usr','usr','usr_hard')
+insert into Clientes values('usr','direccion','0123456789012345')
+insert into Telefono_Clientes values('usr','1122334455')
+>>>>>>> 2c11da65585d17e43e106af338fa85f4028d97ab
 insert into Hoteles values('hotel','calleH',123,'ciudadH',3,'123456789','012345678','imagenes/uno.jpg',1,1)
 insert into Hoteles values('hotel2','calleH2',321,'ciudadH2',5,'987654321','123456789','imagenes/dos.jpg',0,1)
-insert into Habitaciones values(100,'hotel','descripcionH1',2,2000,1,'activa')
-insert into Habitaciones values(101,'hotel2','descripcionH2',3,2200,1,'activa')
-insert into Habitaciones values(102,'hotel','descripcionH3',1,1400,1,'activa')
+insert into Habitaciones values(100,'hotel','descripcionH1',2,2000,1)
+insert into Habitaciones values(101,'hotel2','descripcionH2',3,2200,1)
+insert into Habitaciones values(102,'hotel','descripcionH3',1,1400,1)
 go
 /******************************************/
 /*		Procedimientos de almacenado	  */
 /******************************************/
 
+/***********************
+	SP DE USUARIO
+************************/
 create proc buscarUsuario
 @nombre varchar(100),
 @clave	varchar(100)
@@ -131,7 +151,6 @@ begin
 	and	clave = @clave		
 end
 go
-
 create proc agregarAdministrador
 @nombre			varchar (100), 
 @clave			varchar (100),
@@ -170,7 +189,6 @@ begin
 		end
 end
 go
-
 create proc agregarTelefonosCliente
 @nombre varchar(100),
 @telefono varchar(100)
@@ -182,7 +200,6 @@ begin
 	insert into Telefono_Clientes values (@nombre,@telefono)
 end
 go
-
 create proc agregarCliente
 @nombre varchar(100),
 @clave	varchar(100),
@@ -225,7 +242,6 @@ begin
 		end
 end
 go
-
 create proc buscarAdministrador
 @nombre varchar(100),
 @clave	varchar(100)
@@ -237,7 +253,6 @@ begin
 	and u.nombre = a.nombre
 end
 go
-
 create proc buscarCliente
 --alter proc buscarCliente
 @nombre varchar(100),
@@ -254,22 +269,31 @@ begin
 	*/
 end
 go
-
-create proc listarHabitacionesActivas
+create proc ListarAdmins
+--alter proc ListarAdmins
 as
-begin 
-	select * from Habitaciones
-	where estado_reserva = 'activa'
+begin
+	select u.nombre as 'nombre',u.clave as 'clave',u.nombre_completo as 'nombre_completo',a.cargo as 'cargo' from usuarios u join administradores a on (u.nombre = a.nombre)
+end
+go
+create proc ListarClientes
+--alter proc ListarClientes
+as
+begin
+	select u.nombre as 'nombre',u.clave as 'clave',u.nombre_completo as 'nombre_completo', c.direccion as 'direccion', c.numero_tarjeta_credito as 'tarjeta de credito' from usuarios u join Clientes c on (u.nombre = c.nombre)
 end
 go
 
+
+/***********************
+	SP DE HOTELES
+***********************/
 create proc obtenerHoteles
 as
 begin
 	select * from Hoteles
 end 
 go
-
 create proc buscarHotel
 @nombre varchar(100)
 as
@@ -277,7 +301,6 @@ begin
 	select * from Hoteles where nombre = @nombre;
 end
 go
-
 create proc agregarHotel
 @nombre varchar(100),
 @calle varchar(100),
@@ -299,7 +322,6 @@ begin
 	values(@nombre, @calle, @numero, @ciudad, @categoria, @telefono, @fax, @url_foto, @playa, @piscina)
 end
 go
-
 create proc modificarHotel
 @nombre varchar(100),
 @calle varchar(100),
@@ -330,7 +352,6 @@ begin
 		return -1 /*ERROR SQL*/
 end 
 go
-
 create proc eliminarHotel
 @nombre varchar(100)
 as
@@ -344,6 +365,7 @@ end
 go
 
 
+<<<<<<< HEAD
 --RESERVAS:
 
 
@@ -423,11 +445,96 @@ ELSE IF @resp<0 AND @resp<>-1 AND @resp<>-2 AND @resp<>-3
 ELSE IF @resp>0
 	PRINT '¡Habitacion reservada correctamente!' 
 GO
+=======
+/**************************
+	SP DE HABITACIONES
+***************************/
+create proc listarHabitacionesDeHotel
+@nombre varchar(100)
+as
+begin 
+	select ha.* from Habitaciones ha join Hoteles ho
+	on ho.nombre = @nombre
+	and ha.nombre_hotel = @nombre
+end
+go
+create proc obtenerHabitacionDeHotel
+@nombreHotel varchar(100),
+@numeroHabitacion varchar(100)
+as
+begin
+	select ha.* from Habitaciones ha join Hoteles ho
+	on ho.nombre = @nombreHotel
+	and ha.nombre_hotel = nombre_hotel
+	and ha.numero = @numeroHabitacion
+end
+go
+create proc agregarHabitacion
+@numero int,
+@nombreHotel varchar(100),
+@descripcion varchar(100),
+@cantHespesd int,
+@costo decimal,
+@piso int
+as 
+begin
+	declare @resultado int
+	 
+	if exists (select nombre_hotel from Habitaciones where nomber_hotel = @nombreHotel and numero = @numero)
+		return -1 /*ERROR habitacion ya existe*/
+
+	insert into Habitaciones
+	values(@numero, @nombreHotel, @descriptcion, @cantHuesped, @costo, @piso)
+	set @resultado = @@ERROR
+	if @resultado <> 0
+		return -2 /*ERROR SQL*/
+end 
+go
+create proc modificarHabitacion
+@numero int,
+@nombreHotel varchar(100),
+@descripcion varchar(100),
+@cantHespesd int,
+@costo decimal,
+@piso int
+as 
+begin
+	declare @resultado int
+	if not exists (select nombre_hotel from Habitaciones where nomber_hotel = @nombreHotel and numero = @numero)
+		return -1 /*ERROR habitacion no existe*/
+
+	update Habitaciones 
+	set descripcion = @descripcion, 
+		cant_huesped = @cantHuesped,
+		costo = @costo,
+		piso = @piso
+	where numero = @numero
+	and nombre_hotel = @nombreHotel
+	set @resultado = @@ERROR
+	if @resultado <> 0
+		return -2 /*ERROR SQL*/
+end
+go
+
+
+/************************
+	SP DE RESERVAS
+*************************/
+create proc reservasActivas
+as
+begin 
+	select * from Reservas
+	where estado_reserva = 'activa'
+end
+go
+
+
+>>>>>>> 2c11da65585d17e43e106af338fa85f4028d97ab
 /******************************************/
 /*			Consultas de prueba			  */
 /******************************************/
 -- exec agregarAdministrador 'pepe','clave','pepe gonzales','administrativo'
--- exec agregarCliente 'tito','titoclave','tito perez','direccion tito',1234567890,11122233
+-- exec agregarCliente 'braddy','braddyclave','brad pit','direccion braddy',5225283915454785
 -- exec buscarAdministrador 'pepe', 'clave'
 -- exec buscarCliente 'tito','titoclave'
 -- select * from Usuarios
@@ -436,4 +543,5 @@ GO
 -- select * from Telefono_Clientes
 -- select * from Hoteles
 -- select * from Habitaciones
+-- exec ListarAdmins
 

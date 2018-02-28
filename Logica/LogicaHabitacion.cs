@@ -10,14 +10,35 @@ namespace Logica
 {
     public class LogicaHabitacion
     {
-        public static List<Habitacion> ConReservasActivas()
+        public static List<Habitacion> ListadoHabitaciones(string nombreHotel)
         {
-            List<Habitacion> listHab = PersistenciaHabitacion.ConReservasActivas();
+            List<Habitacion> lstHab = PersistenciaHabitacion.ListadoHabitaciones(nombreHotel);
 
-            if (listHab.Count() == 0)
-                throw new Exception("No existen habitaciones con reservas activas");
+            if (lstHab.Count == 0)
+                throw new Exception("No existen habitaciones registradas");
 
-            return listHab;
+            return lstHab;
         }
+
+        public static Habitacion ObtenerHabitacion(string nomHotel, string numeroHab) 
+        {
+            Habitacion habitacion = PersistenciaHabitacion.ObtenerHabitacion(nomHotel, numeroHab);
+
+            if (habitacion == null)
+                throw new Exception("No existe número de habitación");
+
+            return habitacion;
+        }
+
+        public static void Agregar(Habitacion habitacion)
+        {
+            PersistenciaHabitacion.Agregar(habitacion);
+        }
+
+        public static void Modificar(Habitacion habitacion)
+        {
+            PersistenciaHabitacion.Modificar(habitacion);
+        }
+
     }
 }

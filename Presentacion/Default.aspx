@@ -37,7 +37,6 @@
                 </td>
             </tr>
         </table>
-
     </form>
     <div class="slider">
         <div class="image-container four-images">

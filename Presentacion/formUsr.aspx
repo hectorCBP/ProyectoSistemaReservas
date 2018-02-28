@@ -4,58 +4,141 @@
     <style type="text/css">
         .style1
         {
+        }
+        .style2
+        {
             height: 44px;
+        }
+        .style4
+        {
+            height: 44px;
+            width: 242px;
+        }
+        .style5
+        {
+            width: 242px;
+        }
+        .style6
+        {
+            height: 48px;
         }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="contenedor" Runat="Server">
     <table style="width: 100%; margin-left: 0px;" id="formMaster" class="userForm">
     <tr>
-        <td class="botonera" width="33%">
-            <asp:Button ID="btnHab" runat="server" CssClass="boton" Text="Habitaciones" 
-                onclick="btnHab_Click1" />
-        </td>
-        <td class="botonera" width="33%">
-            <asp:Button ID="btnHot" runat="server" CssClass="boton" Text="Hoteles" 
-                onclick="btnHot_Click" />
-        </td>
-        <td class="botonera" width="33%">
-            <asp:Button ID="btnUsr" runat="server" CssClass="boton" Text="Usuarios" />
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3" align="center">
-            <asp:Label ID="lblMsj" runat="server"></asp:Label>
-        </td>
-    </tr>
-    <tr>
-            <td colspan="3" class="formulario">
-                <asp:Label ID="lblUsr" runat="server" Text="Usuarios" CssClass="subtitulo"></asp:Label>
+            <td class="formulario">
+                <table style="width: 100%;">
+                    <tr>
+                        <td align="center">
+                            <asp:Label ID="lblMsj" runat="server"></asp:Label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                <asp:Label ID="lblUsr" runat="server" Text="Usuarios" CssClass="subtitulo" 
+                    ForeColor="#47D363"></asp:Label>
                 <hr />
                 <table style="width: 100%;">
                     <tr>
-                        <td>
-                            &nbsp;</td>
-                        <td>
-                            &nbsp;</td>
-                        <td>
-                            &nbsp;</td>
+                        <td class="style1" style="border-right-style: inset" valign="top" width="60%" 
+                            rowspan="2">
+                            <asp:GridView ID="gvUsers" runat="server" 
+                                CellPadding="4" ForeColor="#333333" GridLines="None" Width="100%" 
+                                Font-Size="X-Small" CaptionAlign="Top" ClientIDMode="AutoID" Height="100%" 
+                                onselectedindexchanged="gvUsers_SelectedIndexChanged" 
+                                AutoGenerateColumns="False">
+                                <AlternatingRowStyle BackColor="White" />
+                                <Columns>
+                                    <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                                    <asp:BoundField DataField="NombreCompleto" HeaderText="Nombre Completo" />
+                                    <asp:BoundField DataField="Clave" HeaderText="Contraseña" />
+                                    <asp:BoundField DataField="Cargo" HeaderText="Cargo" />
+                                    <asp:CommandField ShowSelectButton="True" SelectText="Selec." />
+                                </Columns>
+                                <FooterStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
+                                <HeaderStyle BackColor="#DDDDDD" Font-Bold="True" Font-Size="Medium" 
+                                    ForeColor="Black" Height="0px" />
+                                <PagerStyle BackColor="#FFCC66" ForeColor="#333333" HorizontalAlign="Center" />
+                                <RowStyle HorizontalAlign="Center" BackColor="#FAFAFA" ForeColor="#333333" 
+                                    Height="0px" />
+                                <SelectedRowStyle BackColor="#47D363" Font-Bold="True" ForeColor="White" />
+                                <SortedAscendingCellStyle BackColor="#FDF5AC" />
+                                <SortedAscendingHeaderStyle BackColor="#4D0000" />
+                                <SortedDescendingCellStyle BackColor="#FCF6C0" />
+                                <SortedDescendingHeaderStyle BackColor="#820000" />
+                            </asp:GridView>
+                        </td>
+                        <td valign="top" width="50%" class="style6">
+                            <asp:Button ID="btnCancelAgreg" runat="server" CssClass="btnForm" Height="100%" 
+                                onclick="btnCancelar_Click" Text="Nuevo Administrador" />
+                        </td>
                     </tr>
                     <tr>
-                        <td>
-                            &nbsp;</td>
-                        <td>
-                            &nbsp;</td>
-                        <td>
-                            &nbsp;</td>
+                        <td valign="top" width="50%">
+                            <asp:Panel ID="pnlModificar" runat="server" Visible="False">
+                                <table style="width:100%;">
+                                    <tr>
+                                        <td align="right" class="style5" width="50%">
+                                            &nbsp;</td>
+                                        <td align="left" width="50%">
+                                            &nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right" class="style5" width="50%">
+                                            <asp:Label ID="Label1" runat="server" Font-Size="Small" Text="Nombre:"></asp:Label>
+                                        </td>
+                                        <td align="left" width="50%">
+                                            <asp:TextBox ID="txtNombre" runat="server" Font-Size="Small" Enabled="False"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right" class="style5" width="50%">
+                                            <asp:Label ID="Label2" runat="server" 
+                Text="Nombre Completo:" Font-Size="Small"></asp:Label>
+                                        </td>
+                                        <td align="left" width="50%">
+                                            <asp:TextBox ID="txtNomCompleto" runat="server" Font-Size="Small"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right" class="style5" width="50%">
+                                            <asp:Label ID="Label3" runat="server" Text="Clave:" Font-Size="Small"></asp:Label>
+                                        </td>
+                                        <td align="left" width="50%">
+                                            <asp:TextBox ID="txtClave" runat="server" Font-Size="Small"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right" class="style5" width="50%">
+                                            <asp:Label ID="lblCargo" runat="server" Font-Size="Small" Text="Cargo"></asp:Label>
+                                        </td>
+                                        <td align="left" width="50%">
+                                            <asp:TextBox ID="txtCargo" runat="server" Font-Size="Small"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right" class="style5" width="50%">
+                                            &nbsp;</td>
+                                        <td align="left" width="50%">
+                                            &nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right" class="style5" width="50%">
+                                            <asp:Button ID="btnEliminar" runat="server" CssClass="btnForm" 
+                                                onclick="btnEliminar_Click" Text="Eliminar" />
+                                        </td>
+                                        <td align="left" width="50%">
+                                            <asp:Button ID="btnGuardar" runat="server" CssClass="btnForm" Text="Guardar" 
+                                                onclick="btnGuardar_Click" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </asp:Panel>
+                        </td>
                     </tr>
-                    <tr>
-                        <td>
-                            &nbsp;</td>
-                        <td>
-                            &nbsp;</td>
-                        <td>
-                            &nbsp;</td>
+                    </table>
+                        </td>
                     </tr>
                 </table>
             </td>
