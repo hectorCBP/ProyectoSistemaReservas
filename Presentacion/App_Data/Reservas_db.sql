@@ -65,7 +65,7 @@ create table Hoteles
 	calle		varchar(100),
 	numero		int,
 	ciudad		varchar(100),
-	categoria	int, /*TO DO restriccion categirias (1 a 5)*/
+	categoria	int constraint CHK_categoria check (categoria like '[1-5]'),
 	telefono	varchar(100),
 	fax			varchar(100),
 	url_foto	varchar(100),
@@ -91,15 +91,15 @@ go
 
 create table Reservas
 (
-	numero			int not null,/*TO DO autogenerado por sistema*/
-	estado			varchar(100),/*TO DO restriccion estado (activa, cancelada, finalizada)*/
+	numero			bigint identity not null,
+	estado			varchar(100) constraint CHK_estado check (estado ='ACTIVA' OR estado='CANCELADA' or estado='FINALIZADA'),
 	fecha_inicio	date,
 	fecha_final		date,
-	nombre			varchar(100),
+	nombre_cli		varchar(100),
 	numero_hab		int,
 	nombre_hotel	varchar(100),
 	primary key (numero),
-	foreign key (nombre) references Usuarios(nombre),
+	foreign key (nombre_cli) references Clientes(nombre),
 	foreign key (numero_hab, nombre_hotel) references Habitaciones(numero, nombre_hotel)
 )
 go
@@ -107,7 +107,9 @@ go
 /*			Insersiones de prueba		  */
 /******************************************/
 insert into Usuarios values('adm','adm','adm_uno')
+insert into Usuarios values('cli','cli','adm_uno')
 insert into Administradores values('adm','super_adm')
+insert into Clientes values('cli','jujuy',1234567891011123)
 insert into Hoteles values('hotel','calleH',123,'ciudadH',3,'123456789','012345678','imagenes/uno.jpg',1,1)
 insert into Hoteles values('hotel2','calleH2',321,'ciudadH2',5,'987654321','123456789','imagenes/dos.jpg',0,1)
 insert into Habitaciones values(100,'hotel','descripcionH1',2,2000,1,'activa')
@@ -334,12 +336,93 @@ create proc eliminarHotel
 as
 begin
 	declare @respuesta int
-	delete from Hoteles where name = @name
+	delete from Hoteles where nombre = @nombre
 	set @respuesta = @@ERROR
 	if @respuesta <> 0
 		return -1 /*ERROR SQL*/
 end
 go
+
+
+--RESERVAS:
+
+
+CREATE PROCEDURE buscarFecha
+--ALTER PROCEDURE buscarFecha
+@Num_hab int,
+@Nomb_hotel varchar(100),
+@F_inicio date,
+@F_fin date
+as
+BEGIN
+	IF EXISTS (SELECT fecha_inicio,fecha_final,nombre_hotel,numero_hab FROM Reservas WHERE nombre_hotel=@Nomb_hotel  AND numero_hab=@Num_hab AND @F_inicio>=fecha_inicio AND @F_inicio<=fecha_final)
+	OR EXISTS (SELECT fecha_inicio,fecha_final,nombre_hotel,numero_hab FROM Reservas WHERE nombre_hotel=@Nomb_hotel  AND numero_hab=@Num_hab AND @F_fin>=fecha_inicio AND @F_fin<=fecha_final)
+	OR EXISTS (SELECT fecha_inicio,fecha_final,nombre_hotel,numero_hab FROM Reservas WHERE nombre_hotel=@Nomb_hotel  AND numero_hab=@Num_hab AND @F_inicio<=fecha_inicio AND @F_fin>=fecha_final)
+	RETURN -3
+END
+GO
+
+CREATE PROCEDURE RealizarReserva
+--ALTER PROCEDURE RealizarReserva
+
+@F_inicio date,
+@F_fin date,
+@Nombre_Cli varchar(100),
+@Numero_Hab int,
+@Nombre_Hotel varchar(100)
+
+as
+BEGIN
+	DECLARE @aux int
+	declare @dias int
+	declare @total int
+	declare @costo int
+	--Controlo que el usuario ingresado se encuentre registrado.
+	IF NOT EXISTS(SELECT nombre FROM Clientes WHERE nombre=@Nombre_Cli)
+	RETURN -1
+	
+	--Controlo que el período de reserva ingresado sea positivo.
+	IF (SELECT DATEDIFF(DAY,@F_inicio,@F_fin))<0
+	RETURN -2
+	
+	--Controlo que el vehículo se encuentre disponible en la fecha ingresada.
+	EXEC @aux=BuscarFecha @Numero_Hab, @Nombre_Hotel, @F_inicio, @F_fin
+	IF @aux=-3
+	RETURN @aux
+	
+	--Calculo el costo total de la reserva	
+	SELECT @costo = costo FROM Habitaciones WHERE numero=@Numero_Hab AND nombre_hotel=@Nombre_Hotel
+	SELECT @dias = DATEDIFF(dd,@F_inicio,@F_fin)
+	SELECT @total = @costo * @dias
+	
+	--Inserto la reserva, devuelvo el costo de la reserva en caso de que no hayan errores.
+	insert Reservas (estado, fecha_inicio, fecha_final, nombre_cli, numero_hab, nombre_hotel) values
+	('ACTIVA',@F_inicio,@F_fin,@Nombre_Cli,@Numero_Hab, @Nombre_Hotel)
+	SET @aux=@@ERROR
+	IF @aux=0 
+	RETURN @total;
+	ELSE RETURN @aux
+	
+END
+
+--select * from Reservas
+DECLARE @resp int
+EXEC @resp = RealizarReserva  '20171002', '20171011', 'cli', 100, 'hotel'
+IF @resp=-1
+     PRINT 'El usuario no se encuentra registrado. No se pudo realizar la reserva.'
+     
+ELSE IF @resp=-2
+     PRINT 'El período de reserva no puede ser negativo. No se pudo realizar la reserva.'          
+     
+ELSE IF @resp=-3
+     PRINT 'Esta habitacion ya se encuentra reservada en la fecha solicitada, no es posible realizar la reserva.'
+
+ELSE IF @resp<0 AND @resp<>-1 AND @resp<>-2 AND @resp<>-3
+	PRINT 'Ocurrió un error. No se pudo insertar la reserva.'
+
+ELSE IF @resp>0
+	PRINT '¡Habitacion reservada correctamente!' 
+GO
 /******************************************/
 /*			Consultas de prueba			  */
 /******************************************/

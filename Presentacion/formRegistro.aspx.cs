@@ -74,4 +74,8 @@ public partial class formRegistro : System.Web.UI.Page
 
         return requeridos;
     }
+    protected void txtTarj_TextChanged(object sender, EventArgs e)
+    {
+
+    }
 }
