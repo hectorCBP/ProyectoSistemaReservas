@@ -171,6 +171,47 @@ begin
 			return 1
 		end
 end
+
+go
+create proc modificarAdmin
+@nombre			varchar (100), 
+@clave			varchar (100),
+@nombreCompleto	varchar (100),
+@cargo			varchar	(100)
+as
+begin
+	
+	declare @usuario int
+	declare @resultado int
+	
+	exec @usuario = buscarUsuario @nombre,@clave
+	
+	if not exists (select * from Usuarios where nombre=@nombre)
+	return -1
+	else
+		
+	begin tran
+		update Usuarios set nombre_completo=@nombreCompleto, clave = @clave where nombre = @nombre
+		set @resultado = @@ERROR
+		if @resultado <> 0
+		begin
+			rollback
+			return -2 /*error al modificar usuario*/
+		end
+		update Administradores set cargo=@cargo where nombre = @nombre
+		set @resultado = @@ERROR
+		if @resultado <> 0
+		begin
+			rollback
+			return -3 /*error al modificar administrador*/
+		end
+		else
+		begin
+			commit tran
+			return 1 --todo ok
+		end
+end
+
 go
 create proc agregarTelefonosCliente
 @nombre varchar(100),
@@ -375,18 +416,18 @@ create proc agregarHabitacion
 @numero int,
 @nombreHotel varchar(100),
 @descripcion varchar(100),
-@cantHespesd int,
+@cantHuesped int,
 @costo decimal,
 @piso int
 as 
 begin
 	declare @resultado int
 	 
-	if exists (select nombre_hotel from Habitaciones where nomber_hotel = @nombreHotel and numero = @numero)
+	if exists (select nombre_hotel from Habitaciones where nombre_hotel = @nombreHotel and numero = @numero)
 		return -1 /*ERROR habitacion ya existe*/
 
 	insert into Habitaciones
-	values(@numero, @nombreHotel, @descriptcion, @cantHuesped, @costo, @piso)
+	values(@numero, @nombreHotel, @descripcion, @cantHuesped, @costo, @piso)
 	set @resultado = @@ERROR
 	if @resultado <> 0
 		return -2 /*ERROR SQL*/
@@ -396,13 +437,13 @@ create proc modificarHabitacion
 @numero int,
 @nombreHotel varchar(100),
 @descripcion varchar(100),
-@cantHespesd int,
+@cantHuesped int,
 @costo decimal,
 @piso int
 as 
 begin
 	declare @resultado int
-	if not exists (select nombre_hotel from Habitaciones where nomber_hotel = @nombreHotel and numero = @numero)
+	if not exists (select nombre_hotel from Habitaciones where nombre_hotel = @nombreHotel and numero = @numero)
 		return -1 /*ERROR habitacion no existe*/
 
 	update Habitaciones 

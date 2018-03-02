@@ -12,6 +12,7 @@ public partial class formCli : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        lblMsj.Text = "";
         try
         {
             gvUsers.DataSource = LogicaAdministrador.ListarAdmins();
