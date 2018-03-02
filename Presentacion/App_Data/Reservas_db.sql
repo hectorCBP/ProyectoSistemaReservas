@@ -390,7 +390,6 @@ begin
 		return -1 /*ERROR SQL*/
 end
 go
-
 --Listar hoteles segun categoria
 create proc ListarCategoria
 @cat int
@@ -400,91 +399,6 @@ begin
 	where categoria = @cat
 end
 go
-
-
-
-
-
---RESERVAS:
-
-
-CREATE PROCEDURE buscarFecha
---ALTER PROCEDURE buscarFecha
-@Num_hab int,
-@Nomb_hotel varchar(100),
-@F_inicio date,
-@F_fin date
-as
-BEGIN
-	IF EXISTS (SELECT fecha_inicio,fecha_final,nombre_hotel,numero_hab FROM Reservas WHERE nombre_hotel=@Nomb_hotel  AND numero_hab=@Num_hab AND @F_inicio>=fecha_inicio AND @F_inicio<=fecha_final)
-	OR EXISTS (SELECT fecha_inicio,fecha_final,nombre_hotel,numero_hab FROM Reservas WHERE nombre_hotel=@Nomb_hotel  AND numero_hab=@Num_hab AND @F_fin>=fecha_inicio AND @F_fin<=fecha_final)
-	OR EXISTS (SELECT fecha_inicio,fecha_final,nombre_hotel,numero_hab FROM Reservas WHERE nombre_hotel=@Nomb_hotel  AND numero_hab=@Num_hab AND @F_inicio<=fecha_inicio AND @F_fin>=fecha_final)
-	RETURN -3
-END
-GO
-
-CREATE PROCEDURE RealizarReserva
---ALTER PROCEDURE RealizarReserva
-
-@F_inicio date,
-@F_fin date,
-@Nombre_Cli varchar(100),
-@Numero_Hab int,
-@Nombre_Hotel varchar(100)
-
-as
-BEGIN
-	DECLARE @aux int
-	declare @dias int
-	declare @total int
-	declare @costo int
-	--Controlo que el usuario ingresado se encuentre registrado.
-	IF NOT EXISTS(SELECT nombre FROM Clientes WHERE nombre=@Nombre_Cli)
-	RETURN -1
-	
-	--Controlo que el período de reserva ingresado sea positivo.
-	IF (SELECT DATEDIFF(DAY,@F_inicio,@F_fin))<0
-	RETURN -2
-	
-	--Controlo que el vehículo se encuentre disponible en la fecha ingresada.
-	EXEC @aux=BuscarFecha @Numero_Hab, @Nombre_Hotel, @F_inicio, @F_fin
-	IF @aux=-3
-	RETURN @aux
-	
-	--Calculo el costo total de la reserva	
-	SELECT @costo = costo FROM Habitaciones WHERE numero=@Numero_Hab AND nombre_hotel=@Nombre_Hotel
-	SELECT @dias = DATEDIFF(dd,@F_inicio,@F_fin)
-	SELECT @total = @costo * @dias
-	
-	--Inserto la reserva, devuelvo el costo de la reserva en caso de que no hayan errores.
-	insert Reservas (estado_reserva, fecha_inicio, fecha_final, nombre_cli, numero_hab, nombre_hotel) values
-	('ACTIVA',@F_inicio,@F_fin,@Nombre_Cli,@Numero_Hab, @Nombre_Hotel)
-	SET @aux=@@ERROR
-	IF @aux=0 
-	RETURN @total;
-	ELSE RETURN @aux
-	
-END
-
---select * from Reservas
-DECLARE @resp int
-EXEC @resp = RealizarReserva  '20171002', '20171011', 'cli', 100, 'hotel'
-IF @resp=-1
-     PRINT 'El usuario no se encuentra registrado. No se pudo realizar la reserva.'
-     
-ELSE IF @resp=-2
-     PRINT 'El período de reserva no puede ser negativo. No se pudo realizar la reserva.'          
-     
-ELSE IF @resp=-3
-     PRINT 'Esta habitacion ya se encuentra reservada en la fecha solicitada, no es posible realizar la reserva.'
-
-ELSE IF @resp<0 AND @resp<>-1 AND @resp<>-2 AND @resp<>-3
-	PRINT 'Ocurrió un error. No se pudo insertar la reserva.'
-
-ELSE IF @resp>0
-	PRINT '¡Habitacion reservada correctamente!' 
-GO
-
 
 
 /**************************
@@ -569,6 +483,82 @@ begin
 	where estado_reserva = 'activa'
 end
 go
+CREATE PROCEDURE buscarFecha
+--ALTER PROCEDURE buscarFecha
+@Num_hab int,
+@Nomb_hotel varchar(100),
+@F_inicio date,
+@F_fin date
+as
+BEGIN
+	IF EXISTS (SELECT fecha_inicio,fecha_final,nombre_hotel,numero_hab FROM Reservas WHERE nombre_hotel=@Nomb_hotel  AND numero_hab=@Num_hab AND @F_inicio>=fecha_inicio AND @F_inicio<=fecha_final)
+	OR EXISTS (SELECT fecha_inicio,fecha_final,nombre_hotel,numero_hab FROM Reservas WHERE nombre_hotel=@Nomb_hotel  AND numero_hab=@Num_hab AND @F_fin>=fecha_inicio AND @F_fin<=fecha_final)
+	OR EXISTS (SELECT fecha_inicio,fecha_final,nombre_hotel,numero_hab FROM Reservas WHERE nombre_hotel=@Nomb_hotel  AND numero_hab=@Num_hab AND @F_inicio<=fecha_inicio AND @F_fin>=fecha_final)
+	RETURN -3
+END
+GO
+CREATE PROCEDURE RealizarReserva
+--ALTER PROCEDURE RealizarReserva
+
+@F_inicio date,
+@F_fin date,
+@Nombre_Cli varchar(100),
+@Numero_Hab int,
+@Nombre_Hotel varchar(100)
+
+as
+BEGIN
+	DECLARE @aux int
+	declare @dias int
+	declare @total int
+	declare @costo int
+	--Controlo que el usuario ingresado se encuentre registrado.
+	IF NOT EXISTS(SELECT nombre FROM Clientes WHERE nombre=@Nombre_Cli)
+	RETURN -1
+	
+	--Controlo que el período de reserva ingresado sea positivo.
+	IF (SELECT DATEDIFF(DAY,@F_inicio,@F_fin))<0
+	RETURN -2
+	
+	--Controlo que el vehículo se encuentre disponible en la fecha ingresada.
+	EXEC @aux=BuscarFecha @Numero_Hab, @Nombre_Hotel, @F_inicio, @F_fin
+	IF @aux=-3
+	RETURN @aux
+	
+	--Calculo el costo total de la reserva	
+	SELECT @costo = costo FROM Habitaciones WHERE numero=@Numero_Hab AND nombre_hotel=@Nombre_Hotel
+	SELECT @dias = DATEDIFF(dd,@F_inicio,@F_fin)
+	SELECT @total = @costo * @dias
+	
+	--Inserto la reserva, devuelvo el costo de la reserva en caso de que no hayan errores.
+	insert Reservas (estado_reserva, fecha_inicio, fecha_final, nombre_cli, numero_hab, nombre_hotel) values
+	('ACTIVA',@F_inicio,@F_fin,@Nombre_Cli,@Numero_Hab, @Nombre_Hotel)
+	SET @aux=@@ERROR
+	IF @aux=0 
+	RETURN @total;
+	ELSE RETURN @aux
+	
+END
+
+--select * from Reservas
+DECLARE @resp int
+EXEC @resp = RealizarReserva  '20171002', '20171011', 'cli', 100, 'hotel'
+IF @resp=-1
+     PRINT 'El usuario no se encuentra registrado. No se pudo realizar la reserva.'
+     
+ELSE IF @resp=-2
+     PRINT 'El período de reserva no puede ser negativo. No se pudo realizar la reserva.'          
+     
+ELSE IF @resp=-3
+     PRINT 'Esta habitacion ya se encuentra reservada en la fecha solicitada, no es posible realizar la reserva.'
+
+ELSE IF @resp<0 AND @resp<>-1 AND @resp<>-2 AND @resp<>-3
+	PRINT 'Ocurrió un error. No se pudo insertar la reserva.'
+
+ELSE IF @resp>0
+	PRINT '¡Habitacion reservada correctamente!' 
+GO
+
 
 
 /******************************************/
