@@ -20,6 +20,16 @@ namespace Logica
             return listaHotel;
         }
 
+        public static List<Hotel> ListaCat(int cat)
+        {
+            List<Hotel> listaCat1 = PersistenciaHotel.ListaHotelesCategoria(cat);
+
+            if (listaCat1.Count == 0)
+                throw new Exception("No exisiten hoteles con esta categoria");
+
+            return listaCat1;
+        }
+
         public static Hotel Buscar(string nombre)
         {
             Hotel hotel = PersistenciaHotel.Buscar(nombre);

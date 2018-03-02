@@ -59,7 +59,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
     }
     protected void btnCrearRes_Click(object sender, EventArgs e)
     {
-        Response.Redirect("formCliente.aspx");
+        Response.Redirect("formRes.aspx");
     }
     protected void btnLstRes_Click(object sender, EventArgs e)
     {

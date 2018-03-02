@@ -90,27 +90,16 @@ go
 
 create table Reservas
 (
-<<<<<<< HEAD
+
 	numero			bigint identity not null,
-	estado			varchar(100) constraint CHK_estado check (estado ='ACTIVA' OR estado='CANCELADA' or estado='FINALIZADA'),
+	estado_reserva	varchar(100) constraint CHK_estado_reserva check (estado_reserva ='ACTIVA' OR estado_reserva='CANCELADA' or estado_reserva='FINALIZADA'),
 	fecha_inicio	date,
 	fecha_final		date,
 	nombre_cli		varchar(100),
-=======
-	numero			int not null,/*TO DO autogenerado por sistema*/
-	fecha_inicio	date,
-	fecha_final		date,
-	nombre_cliente	varchar(100),
->>>>>>> 2c11da65585d17e43e106af338fa85f4028d97ab
 	numero_hab		int,
 	nombre_hotel	varchar(100),
-	estado_reserva	varchar(100),/*TO DO restriccion estado (activa, cancelada, finalizada)*/
 	primary key (numero),
-<<<<<<< HEAD
 	foreign key (nombre_cli) references Clientes(nombre),
-=======
-	foreign key (nombre_cliente) references Usuarios(nombre),
->>>>>>> 2c11da65585d17e43e106af338fa85f4028d97ab
 	foreign key (numero_hab, nombre_hotel) references Habitaciones(numero, nombre_hotel)
 )
 go
@@ -120,13 +109,10 @@ go
 insert into Usuarios values('adm','adm','adm_uno')
 insert into Usuarios values('cli','cli','adm_uno')
 insert into Administradores values('adm','super_adm')
-<<<<<<< HEAD
 insert into Clientes values('cli','jujuy',1234567891011123)
-=======
 insert into Usuarios values('usr','usr','usr_hard')
 insert into Clientes values('usr','direccion','0123456789012345')
 insert into Telefono_Clientes values('usr','1122334455')
->>>>>>> 2c11da65585d17e43e106af338fa85f4028d97ab
 insert into Hoteles values('hotel','calleH',123,'ciudadH',3,'123456789','012345678','imagenes/uno.jpg',1,1)
 insert into Hoteles values('hotel2','calleH2',321,'ciudadH2',5,'987654321','123456789','imagenes/dos.jpg',0,1)
 insert into Habitaciones values(100,'hotel','descripcionH1',2,2000,1)
@@ -364,8 +350,20 @@ begin
 end
 go
 
+--Listar hoteles segun categoria
+create proc ListarCategoria
+@cat int
+as
+begin 
+	select * from Hoteles
+	where categoria = @cat
+end
+go
 
-<<<<<<< HEAD
+
+
+
+
 --RESERVAS:
 
 
@@ -418,7 +416,7 @@ BEGIN
 	SELECT @total = @costo * @dias
 	
 	--Inserto la reserva, devuelvo el costo de la reserva en caso de que no hayan errores.
-	insert Reservas (estado, fecha_inicio, fecha_final, nombre_cli, numero_hab, nombre_hotel) values
+	insert Reservas (estado_reserva, fecha_inicio, fecha_final, nombre_cli, numero_hab, nombre_hotel) values
 	('ACTIVA',@F_inicio,@F_fin,@Nombre_Cli,@Numero_Hab, @Nombre_Hotel)
 	SET @aux=@@ERROR
 	IF @aux=0 
@@ -445,7 +443,9 @@ ELSE IF @resp<0 AND @resp<>-1 AND @resp<>-2 AND @resp<>-3
 ELSE IF @resp>0
 	PRINT '¡Habitacion reservada correctamente!' 
 GO
-=======
+
+
+
 /**************************
 	SP DE HABITACIONES
 ***************************/
@@ -458,6 +458,7 @@ begin
 	and ha.nombre_hotel = @nombre
 end
 go
+--EXEC listarHabitacionesDeHotel 'hotel'
 create proc obtenerHabitacionDeHotel
 @nombreHotel varchar(100),
 @numeroHabitacion varchar(100)
@@ -473,18 +474,18 @@ create proc agregarHabitacion
 @numero int,
 @nombreHotel varchar(100),
 @descripcion varchar(100),
-@cantHespesd int,
+@cantHuesped int,
 @costo decimal,
 @piso int
 as 
 begin
 	declare @resultado int
 	 
-	if exists (select nombre_hotel from Habitaciones where nomber_hotel = @nombreHotel and numero = @numero)
+	if exists (select nombre_hotel from Habitaciones where nombre_hotel = @nombreHotel and numero = @numero)
 		return -1 /*ERROR habitacion ya existe*/
 
 	insert into Habitaciones
-	values(@numero, @nombreHotel, @descriptcion, @cantHuesped, @costo, @piso)
+	values(@numero, @nombreHotel, @descripcion, @cantHuesped, @costo, @piso)
 	set @resultado = @@ERROR
 	if @resultado <> 0
 		return -2 /*ERROR SQL*/
@@ -494,13 +495,13 @@ create proc modificarHabitacion
 @numero int,
 @nombreHotel varchar(100),
 @descripcion varchar(100),
-@cantHespesd int,
+@cantHuesped int,
 @costo decimal,
 @piso int
 as 
 begin
 	declare @resultado int
-	if not exists (select nombre_hotel from Habitaciones where nomber_hotel = @nombreHotel and numero = @numero)
+	if not exists (select nombre_hotel from Habitaciones where nombre_hotel = @nombreHotel and numero = @numero)
 		return -1 /*ERROR habitacion no existe*/
 
 	update Habitaciones 
@@ -529,7 +530,6 @@ end
 go
 
 
->>>>>>> 2c11da65585d17e43e106af338fa85f4028d97ab
 /******************************************/
 /*			Consultas de prueba			  */
 /******************************************/

@@ -48,6 +48,43 @@ namespace Persistencia
             return listaHoteles;
         }
 
+        public static List<Hotel> ListaHotelesCategoria(int cat)
+        {
+            List<Hotel> listaCat1 = new List<Hotel>();
+
+            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlCommand cmd = new SqlCommand("ListarCategoria", cnn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@cat", cat);
+
+            Hotel hotel = null;
+            try
+            {
+                cnn.Open();
+                SqlDataReader lector = cmd.ExecuteReader();
+
+                while (lector.Read())
+                {
+
+                    hotel = new Hotel((string)lector["nombre"],
+                                        (string)lector["calle"],
+                                        (int)lector["numero"],
+                                        (string)lector["ciudad"],
+                                        (int)lector["categoria"],
+                                        (string)lector["telefono"],
+                                        (string)lector["fax"],
+                                        (string)lector["url_foto"],
+                                        (bool)lector["playa"],
+                                        (bool)lector["piscina"]);
+                    listaCat1.Add(hotel);
+                }
+            }
+            catch (Exception ex)
+            { throw ex; }
+            finally { cnn.Close(); }
+            return listaCat1;
+        }
+
         public static Hotel Buscar(string nombre)
         {
             Hotel hotel = null;

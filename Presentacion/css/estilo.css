@@ -177,6 +177,7 @@ table{
   width:25%;
 }
 
+
 @keyframes slider {
   20%{left: 0%;}
   25%,45%{left:-100%;}

@@ -1,6 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="formEstadoHab.aspx.cs" Inherits="formEstadoHab" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    <style type="text/css">
+        .style1
+        {
+            height: 44px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="contenedor" Runat="Server">
     <table style="width:100%;">
@@ -13,7 +19,7 @@
             <td>
                             <table class="formulario" style="width:100%;">
                                 <tr>
-                                    <td colspan="3">
+                                    <td colspan="3" class="style1">
                 <asp:Label ID="lblSubTitulo" runat="server" 
                 Text="Estado de habitaciones" CssClass="subtitulo" ForeColor="#47D363"></asp:Label>
                                     </td>
