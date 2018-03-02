@@ -174,6 +174,47 @@ begin
 			return 1
 		end
 end
+
+go
+create proc modificarAdmin
+@nombre			varchar (100), 
+@clave			varchar (100),
+@nombreCompleto	varchar (100),
+@cargo			varchar	(100)
+as
+begin
+	
+	declare @usuario int
+	declare @resultado int
+	
+	exec @usuario = buscarUsuario @nombre,@clave
+	
+	if not exists (select * from Usuarios where nombre=@nombre)
+	return -1
+	else
+		
+	begin tran
+		update Usuarios set nombre_completo=@nombreCompleto, clave = @clave where nombre = @nombre
+		set @resultado = @@ERROR
+		if @resultado <> 0
+		begin
+			rollback
+			return -2 /*error al modificar usuario*/
+		end
+		update Administradores set cargo=@cargo where nombre = @nombre
+		set @resultado = @@ERROR
+		if @resultado <> 0
+		begin
+			rollback
+			return -3 /*error al modificar administrador*/
+		end
+		else
+		begin
+			commit tran
+			return 1 --todo ok
+		end
+end
+
 go
 create proc agregarTelefonosCliente
 @nombre varchar(100),

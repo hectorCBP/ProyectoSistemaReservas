@@ -25,5 +25,6 @@ namespace Logica
         {
             return PersistenciaAdministrador.ModificarAdmin(a);
         }
+
     }
 }
