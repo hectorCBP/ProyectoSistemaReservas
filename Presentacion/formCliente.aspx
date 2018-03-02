@@ -12,7 +12,7 @@
     <table style="width:100%;" class="userForm">
         <tr>
             <td align="center" class="style1">
-                <asp:Label ID="lblMsj" runat="server" Text="[lblMsj]"></asp:Label>
+                <asp:Label ID="lblMsj" runat="server"></asp:Label>
             </td>
         </tr>
         </table>
