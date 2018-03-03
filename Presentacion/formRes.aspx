@@ -1,50 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="formRes.aspx.cs" Inherits="formRes" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <style type="text/css">
-        .style11
-        {
-            height: 57px;
-            width: 30%;
-        }
-        .style9
-        {
-            height: 57px;
-        }
-        .style13
-        {
-            height: 241px;
-            margin-left: 80px;
-        }
-        .style14
-        {
-            width: 66%;
-            height: 241px;
-        }
-        .style12
-        {
-            height: 6px;
-            width: 30%;
-        }
-        .style10
-        {
-            height: 6px;
-            width: 66%;
-        }
-        .style7
-        {
-            height: 295px;
-        }
-        .style15
-        {
-            height: 12px;
-        }
-        .style16
-        {
-            height: 44px;
-        }
-    </style>
-</asp:Content>
+    </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="contenedor" Runat="Server">
     <table style="width:100%;" class="userForm">
         <tr>
@@ -66,7 +23,7 @@
 &nbsp;&nbsp;
                 <asp:Label ID="lblCat" runat="server" Text="Categoria de hotel"></asp:Label>
             </td>
-            <td align="center" width="33%">
+            <td align="center" width="33%" colspan="2">
                 <asp:DropDownList ID="lstCategoria" runat="server" Width="90%">
                     <asp:ListItem Selected="True" Value="-1">Seleccionar</asp:ListItem>
                 </asp:DropDownList>
@@ -77,18 +34,48 @@
             </td>
                                 </tr>
                                 <tr>
-            <td align="left" colspan="3">
+            <td align="left" colspan="4">
                 <hr />
             </td>
                                 </tr>
                                 <tr>
-            <td align="center" colspan="3">
-                <asp:Label ID="lblFechaIn" runat="server" style="text-align: left" 
-                    Text="Fecha de check-in"></asp:Label>
+            <td align="center" colspan="4">
+                <asp:Label ID="lblHotHab" runat="server" Visible="False"></asp:Label>
             </td>
                                 </tr>
                                 <tr>
-            <td align="center" colspan="3">
+            <td align="center" colspan="4">
+                <asp:GridView ID="gvReserva" runat="server" Width="100%" BackColor="White" 
+                    BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" 
+                    ForeColor="Black" GridLines="Horizontal" AutoGenerateSelectButton="True" 
+                                            onselectedindexchanged="gvReserva_SelectedIndexChanged">
+                    <Columns>
+                        <asp:ImageField>
+                        </asp:ImageField>
+                    </Columns>
+                    <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
+                    <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
+                    <PagerStyle BackColor="White" ForeColor="Black" HorizontalAlign="Right" />
+                    <RowStyle HorizontalAlign="Center" />
+                    <SelectedRowStyle BackColor="#CC3333" Font-Bold="True" ForeColor="White" />
+                    <SortedAscendingCellStyle BackColor="#F7F7F7" />
+                    <SortedAscendingHeaderStyle BackColor="#4B4B4B" />
+                    <SortedDescendingCellStyle BackColor="#E5E5E5" />
+                    <SortedDescendingHeaderStyle BackColor="#242121" />
+                </asp:GridView>
+            </td>
+                                </tr>
+                                <tr>
+            <td align="center" colspan="2">
+                <asp:Label ID="lblFechaIn" runat="server" style="text-align: left" 
+                    Text="Fecha de check-in"></asp:Label>
+            </td>
+            <td align="center" colspan="2">
+                <asp:Label ID="lblFechaFin0" runat="server" Text="Fecha de check-out"></asp:Label>
+            </td>
+                                </tr>
+                                <tr>
+            <td align="center" colspan="2" valign="top">
                 <asp:Calendar ID="clnFechaIn" runat="server" Height="220px" Width="400px" 
                     BackColor="White" BorderColor="Black" DayNameFormat="Shortest" 
                     Font-Names="Times New Roman" Font-Size="10pt" ForeColor="Black" 
@@ -106,19 +93,7 @@
                     <TodayDayStyle BackColor="#CCCC99" />
                 </asp:Calendar>
             </td>
-                                </tr>
-                                <tr>
-            <td align="left" colspan="3">
-                <hr />
-            </td>
-                                </tr>
-                                <tr>
-            <td align="center" colspan="3">
-                <asp:Label ID="lblFechaFin" runat="server" Text="Fecha de check-out"></asp:Label>
-            </td>
-                                </tr>
-                                <tr>
-            <td align="center" colspan="3">
+            <td align="center" colspan="2">
                 <asp:Calendar ID="clnFechaFin" runat="server" Width="400px" BackColor="White" 
                     BorderColor="Black" DayNameFormat="Shortest" Font-Names="Times New Roman" 
                     Font-Size="10pt" ForeColor="Black" Height="220px" NextPrevFormat="FullMonth" 
@@ -138,7 +113,7 @@
             </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="3">
+                                    <td colspan="4">
                                         <hr />
                                     </td>
                                 </tr>
@@ -147,20 +122,13 @@
                     </tr>
                     <tr>
                         <td>
-                <asp:GridView ID="gvReserva" runat="server" Width="100%" BackColor="White" 
-                    BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" 
-                    ForeColor="Black" GridLines="Horizontal" AutoGenerateSelectButton="True" 
-                                            onselectedindexchanged="gvReserva_SelectedIndexChanged">
-                    <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
-                    <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
-                    <PagerStyle BackColor="White" ForeColor="Black" HorizontalAlign="Right" />
-                    <RowStyle HorizontalAlign="Center" />
-                    <SelectedRowStyle BackColor="#CC3333" Font-Bold="True" ForeColor="White" />
-                    <SortedAscendingCellStyle BackColor="#F7F7F7" />
-                    <SortedAscendingHeaderStyle BackColor="#4B4B4B" />
-                    <SortedDescendingCellStyle BackColor="#E5E5E5" />
-                    <SortedDescendingHeaderStyle BackColor="#242121" />
-                </asp:GridView>
+                            <asp:Button ID="btnCalcular" runat="server" CssClass="btnForm" 
+                                onclick="btnCalcular_Click" Text="Calcular Costo" />
+                                    </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <asp:Label ID="lblCosto" runat="server" Visible="False"></asp:Label>
                                     </td>
                     </tr>
                     </table>

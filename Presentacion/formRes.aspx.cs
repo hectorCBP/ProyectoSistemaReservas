@@ -37,6 +37,8 @@ public partial class formRes : System.Web.UI.Page
         {
             gvReserva.DataSource = LogicaHotel.ListaCat(Convert.ToInt32(lstCategoria.Text));
             gvReserva.DataBind();
+            lblHotHab.Visible = true;
+            lblHotHab.Text = "Hoteles:";
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
@@ -48,16 +50,22 @@ public partial class formRes : System.Web.UI.Page
             string nombre_hotel = gvReserva.SelectedRow.Cells[1].Text;
             gvReserva.DataSource = LogicaHabitacion.ListadoHabitaciones(nombre_hotel);
             gvReserva.DataBind();
+            lblHotHab.Text = "Habitaciones:";
             //gvReserva.SelectedIndex = -1;
 
-            if (gvReserva.SelectedIndex > 0)
-            {
-                Response.Write("<script>alert('El costo total de la reserva es de: ');</script>");
+            //if (gvReserva.SelectedIndex > 0)
+            //{
+            //    Response.Write("<script>alert('El costo total de la reserva es de: ');</script>");
 
                 
-            }
+            //}
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
+    }
+    protected void btnCalcular_Click(object sender, EventArgs e)
+    {
+        lblCosto.Visible = true;
+        lblCosto.Text = "x pesos";
     }
 }

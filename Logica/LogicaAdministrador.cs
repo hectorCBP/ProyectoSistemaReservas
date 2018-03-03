@@ -15,7 +15,6 @@ namespace Logica
             return lista;
         }
 
-
         public static bool AgregarAdmin(Administrador a)
         {
             return PersistenciaAdministrador.AgregarAdmin(a);
