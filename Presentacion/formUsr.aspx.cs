@@ -60,7 +60,21 @@ public partial class formCli : System.Web.UI.Page
     {
         try
         {
+            Administrador a = new Administrador(txtNombre.Text, txtNomCompleto.Text, txtClave.Text, txtCargo.Text);
 
+            if (a.Nombre != (string)Session["usuario"])
+            {
+                if (LogicaAdministrador.EliminarAdmin(a))
+                {
+                    lblMsj.Text = "Usuario eliminado correctamente";
+                    vaciarCampos();
+                    gvUsers.DataSource = LogicaAdministrador.ListarAdmins();
+                    gvUsers.DataBind();
+                }
+                
+            }
+            else
+                throw new Exception("No puedes borrar el Usuario logueado actualmente");
         }
         catch (Exception ex) { lblMsj.Text = ex.Message; }
     }

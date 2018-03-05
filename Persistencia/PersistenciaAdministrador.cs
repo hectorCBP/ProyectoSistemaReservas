@@ -114,7 +114,7 @@ namespace Persistencia
             SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
             SqlCommand cmd = new SqlCommand("modificarAdmin", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
-            //le paso como parametros la devolucion de las propiedades del cliente que recibe
+            //le paso como parametros la devolucion de las propiedades del administrador que recibe
             cmd.Parameters.AddWithValue("nombre", a.Nombre);
             cmd.Parameters.AddWithValue("nombreCompleto", a.NombreCompleto);
             cmd.Parameters.AddWithValue("clave", a.Clave);
@@ -128,7 +128,7 @@ namespace Persistencia
                 cnn.Open();
                 cmd.ExecuteNonQuery();
                 int ret = (int)pReturn.Value; //paso el retorno a un int para tenerlo mas facil
-                if (ret == 1) //si es 1 se agrego correctamente
+                if (ret == 1) //si es 1 se modifico correctamente
                     resp = true; //cambio el bool de respuesta a true
                 else if (ret == -1)
                     throw new Exception("No existe un Administrador con ese nombre.");
@@ -139,6 +139,35 @@ namespace Persistencia
             catch (Exception ex) { throw ex; }
             finally { cnn.Close(); }
 
+            return resp;
+        }
+
+        public static bool EliminarAdmin(Administrador a) {
+            bool resp = false;
+            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlCommand cmd = new SqlCommand("eliminarAdmin", cnn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            //le paso como parametros la devolucion de las propiedades del administrador que recibe
+            cmd.Parameters.AddWithValue("nombre", a.Nombre);
+
+            SqlParameter pReturn = new SqlParameter(); //para capturar el retorno
+            pReturn.Direction = ParameterDirection.ReturnValue;
+            cmd.Parameters.Add(pReturn);
+            try
+            {
+                cnn.Open();
+                cmd.ExecuteNonQuery();
+                int ret = (int)pReturn.Value; //paso el retorno a un int para tenerlo mas facil
+                if (ret == 1) //si es 1 se elimino correctamente
+                    resp = true; //cambio el bool de respuesta a true
+                else if (ret == -1)
+                    throw new Exception("No existe un Administrador con ese nombre.");
+                else
+                    throw new Exception("Error con la base de datos");
+
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cnn.Close(); }
             return resp;
         }
     }

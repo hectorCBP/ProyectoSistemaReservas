@@ -214,6 +214,42 @@ begin
 			return 1 --todo ok
 		end
 end
+go
+
+create proc eliminarAdmin
+--alter proc eliminarAdmin
+@nombre varchar(100)
+as
+begin
+	
+	declare @resultado int
+	
+	if not exists (select * from Usuarios where nombre=@nombre)
+	return -1 --no existe usuario
+	else
+		
+	begin tran
+		delete from Administradores where nombre = @nombre
+		set @resultado = @@ERROR
+		if @resultado <> 0
+		begin
+			rollback
+			return -2 /*error al eliminar usuario*/
+		end
+		delete from Usuarios where nombre = @nombre
+		set @resultado = @@ERROR
+		if @resultado <> 0
+		begin
+			rollback
+			return -3 /*error al eliminar administrador*/
+		end
+		else
+		begin
+			commit tran
+			return 1 --todo ok
+		end
+end
+
 
 go
 create proc agregarTelefonosCliente
