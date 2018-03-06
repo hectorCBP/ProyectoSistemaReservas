@@ -9,7 +9,9 @@ namespace EntidadesCompartidas
     {
         // atributos
         private int numero, numero_hab;
-        private string estado_reserva, nombre_cliente, nombre_hotel;
+        private string estado_reserva;
+        private Cliente cli;
+        private Habitacion hab;
         private DateTime fechaIni, fechaFin;
 
         // propiedades
@@ -18,26 +20,18 @@ namespace EntidadesCompartidas
             get { return numero; }
             set { numero = value; }
         }
-        public int NumeroHab 
-        {
-            get { return numero_hab; }
-            set { numero_hab = value; }
-        }
+        
         public string EstadoRes
         {
             get { return estado_reserva; }
             set { estado_reserva = value; }
         }
-        public string NombreCli
-        {
-            get { return nombre_cliente; }
-            set { nombre_cliente = value; }
-        }
-        public string NombreHotel
-        {
-            get { return nombre_hotel; }
-            set { nombre_hotel = value; }
-        }
+        public Cliente Cli
+        { get { return cli; } }
+
+        public Habitacion Hab
+        { get { return hab; } }
+
         public DateTime FechaIni
         {
             get { return fechaIni; }
@@ -50,15 +44,13 @@ namespace EntidadesCompartidas
         }
 
         // constructor
-        public Reserva(int pNumero, DateTime pFechaIni, DateTime pFechaFin,
-                       string pNomCli, int pNumHab, string pNomHotel, string pEstadoRes)
+        public Reserva(int pNumero, DateTime pFechaIni, DateTime pFechaFin, string pEstadoRes, Cliente pCli, Habitacion pHab)
         {
             Numero = pNumero;
             FechaIni = pFechaIni;
             FechaFin = pFechaFin;
-            NombreCli = pNomCli;
-            NumeroHab = pNumHab;
-            NombreHotel = pNomHotel;
+            cli = pCli;
+            hab = pHab;           
             EstadoRes = pEstadoRes;
         }
     }

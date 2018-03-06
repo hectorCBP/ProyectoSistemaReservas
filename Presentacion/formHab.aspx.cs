@@ -115,7 +115,7 @@ public partial class formHab : System.Web.UI.Page
                 Convert.ToInt32(txtPisoHab.Text));
 
             LogicaHabitacion.Modificar(habitacion);
-            lblMsj.Text = "Se mopdificó correctamente";
+            lblMsj.Text = "Se modificó correctamente";
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }

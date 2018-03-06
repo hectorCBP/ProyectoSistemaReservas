@@ -44,7 +44,7 @@ create table Clientes
 (
 	nombre					varchar (100) not null,
 	direccion				varchar (100),
-	numero_tarjeta_credito	varchar (100),/*TO DO debe ser unico y de 16 caracteres*/ 
+	numero_tarjeta_credito	varchar (100) unique,/*TO DO debe ser unico y de 16 caracteres*/ 
 	primary key (nombre),
 	foreign key (nombre) references Usuarios(nombre)
 )

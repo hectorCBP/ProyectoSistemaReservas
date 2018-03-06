@@ -40,7 +40,7 @@
                                 </tr>
                                 <tr>
             <td align="center" colspan="4">
-                <asp:Label ID="lblHotHab" runat="server" Visible="False"></asp:Label>
+                <asp:Label ID="lblHot" runat="server" Visible="False"></asp:Label>
             </td>
                                 </tr>
                                 <tr>
@@ -49,10 +49,6 @@
                     BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" 
                     ForeColor="Black" GridLines="Horizontal" AutoGenerateSelectButton="True" 
                                             onselectedindexchanged="gvReserva_SelectedIndexChanged">
-                    <Columns>
-                        <asp:ImageField>
-                        </asp:ImageField>
-                    </Columns>
                     <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
                     <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
                     <PagerStyle BackColor="White" ForeColor="Black" HorizontalAlign="Right" />
@@ -63,6 +59,80 @@
                     <SortedDescendingCellStyle BackColor="#E5E5E5" />
                     <SortedDescendingHeaderStyle BackColor="#242121" />
                 </asp:GridView>
+            </td>
+                                </tr>
+                                <tr>
+            <td align="center" colspan="2">
+                <asp:Label ID="lblHabitaciones" runat="server" 
+                    Text="Habitaciones de hotel seleccionado:" Visible="False"></asp:Label>
+                <asp:DropDownList ID="ddlHabitaciones" runat="server" 
+                    onselectedindexchanged="ddlHabitaciones_SelectedIndexChanged" 
+                    Visible="False" AutoPostBack="True">
+                    <asp:ListItem Selected="True" Value="-1">Seleccione una habitación</asp:ListItem>
+                </asp:DropDownList>
+            </td>
+            <td align="center" colspan="2">
+                <asp:Panel ID="pnlHabitacion" runat="server" Visible="False">
+                    <table style="width:100%;">
+                        <tr>
+                            <td>
+                                <asp:Label ID="lblNumero" runat="server" Text="Número"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="tbNumero" runat="server"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="lclNombre" runat="server" style="text-align: left" 
+                                    Text="Nombre de Hotel"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="tbNombre" runat="server"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="lblDesc" runat="server" Text="Descripción"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="tbDesc" runat="server"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="lblHuespedes" runat="server" Text="Cantidad de huespedes"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="tbHues" runat="server"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="lblCostoDiario" runat="server" Text="Costo por día"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="tbCosto" runat="server"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="lblPiso" runat="server" Text="Piso"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="tbPiso" runat="server"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Button ID="btnReservar" runat="server" CssClass="btnForm" 
+                                    onclick="btnReservar_Click" Text="Reservar" />
+                            </td>
+                            <td>
+                                &nbsp;</td>
+                        </tr>
+                    </table>
+                </asp:Panel>
             </td>
                                 </tr>
                                 <tr>
