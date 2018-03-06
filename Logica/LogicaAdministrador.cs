@@ -25,5 +25,9 @@ namespace Logica
             return PersistenciaAdministrador.ModificarAdmin(a);
         }
 
+        public static bool EliminarAdmin(Administrador a)
+        {
+            return PersistenciaAdministrador.EliminarAdmin(a);
+        }
     }
 }
