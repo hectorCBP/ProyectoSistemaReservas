@@ -24,15 +24,15 @@ namespace Persistencia
                 SqlDataReader lector = cmd.ExecuteReader();
                 while (lector.Read())
                 {
-                    Reserva reserva = new Reserva(
-                        (int)lector["numero"],
-                        (DateTime)lector["fecha_inicio"],
-                        (DateTime)lector["fecha_final"],
-                        (string)lector["nombre_cliente"],
-                        (int)lector["numero_hab"],
-                        (string)lector["nombre_hotel"],
-                        (string)lector["estado_reserva"]);
-                    lstRes.Add(reserva);
+                    //Reserva reserva = new Reserva(
+                  //      (int)lector["numero"],
+                 //       (DateTime)lector["fecha_inicio"],
+                 //       (DateTime)lector["fecha_final"],
+                  //      (string)lector["nombre_cliente"],          ESTA MAL USADO ESTE CONSTRUCTOR, hay que usar el buscar usuario para pasarle usuarios como parametro
+                  //      (int)lector["numero_hab"],
+                  //      (string)lector["nombre_hotel"],
+                  //      (string)lector["estado_reserva"]);
+                  //  lstRes.Add(reserva);
                 }
             }
             catch (Exception ex)
