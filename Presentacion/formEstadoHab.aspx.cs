@@ -17,9 +17,7 @@ public partial class formEstadoHab : System.Web.UI.Page
             if (!IsPostBack)
             {
                 foreach (Hotel h in LogicaHotel.ListaHoteles())
-                {
                     lstHoteles.Items.Add(h.Nombre);
-                }
             }
         }
         catch (Exception ex)
@@ -29,8 +27,38 @@ public partial class formEstadoHab : System.Web.UI.Page
     {
         try
         {
+            lblMsj.Text = String.Empty;
+
+            if (lstHoteles.SelectedValue == "-1")
+                throw new Exception("Debe seleccionar un Hotel");
+            gvEstadoHab.Visible = true;
             gvEstadoHab.DataSource = LogicaHabitacion.ListadoHabitaciones(lstHoteles.Text);
             gvEstadoHab.DataBind();
+        }
+        catch (Exception ex)
+        { lblMsj.Text = ex.Message; }
+    }
+    protected void gvEstadoHab_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            lblMsj.Text = String.Empty;
+
+            if (lstHoteles.SelectedValue == "-1")
+                throw new Exception("Debe seleccionar un Hotel");
+
+            string numeroHab = gvEstadoHab.SelectedRow.Cells[3].Text;
+            //List<Reserva> lstRes = LogicaReserva.ListarPorHabitacion();
+        }
+        catch (Exception ex)
+        { lblMsj.Text = ex.Message; }
+    }
+
+    protected void lstHoteles_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            gvEstadoHab.Visible = false;
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }

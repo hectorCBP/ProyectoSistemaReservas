@@ -56,17 +56,18 @@
                                     <asp:BoundField DataField="Cargo" HeaderText="Cargo" />
                                     <asp:CommandField ShowSelectButton="True" SelectText="Selec." />
                                 </Columns>
-                                <FooterStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
-                                <HeaderStyle BackColor="#DDDDDD" Font-Bold="True" Font-Size="Medium" 
-                                    ForeColor="Black" Height="0px" />
-                                <PagerStyle BackColor="#FFCC66" ForeColor="#333333" HorizontalAlign="Center" />
-                                <RowStyle HorizontalAlign="Center" BackColor="#FAFAFA" ForeColor="#333333" 
+                                <EditRowStyle BackColor="#7C6F57" />
+                                <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+                                <HeaderStyle BackColor="#1C5E55" Font-Bold="True" Font-Size="Medium" 
+                                    ForeColor="White" Height="0px" />
+                                <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
+                                <RowStyle HorizontalAlign="Center" BackColor="#E3EAEB" 
                                     Height="0px" />
-                                <SelectedRowStyle BackColor="#47D363" Font-Bold="True" ForeColor="White" />
-                                <SortedAscendingCellStyle BackColor="#FDF5AC" />
-                                <SortedAscendingHeaderStyle BackColor="#4D0000" />
-                                <SortedDescendingCellStyle BackColor="#FCF6C0" />
-                                <SortedDescendingHeaderStyle BackColor="#820000" />
+                                <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
+                                <SortedAscendingCellStyle BackColor="#F8FAFA" />
+                                <SortedAscendingHeaderStyle BackColor="#246B61" />
+                                <SortedDescendingCellStyle BackColor="#D4DFE1" />
+                                <SortedDescendingHeaderStyle BackColor="#15524A" />
                             </asp:GridView>
                         </td>
                         <td valign="top" width="50%" class="style6">
