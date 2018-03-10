@@ -20,5 +20,16 @@ namespace Logica
 
             return lstRes;
         }
+
+        public static List<Reserva> ListarPorHabitacion(string numeroHab, string nombHotel)
+        {
+            List<Reserva> lstRes = new List<Reserva>();
+            lstRes = PersistenciaReserva.ListarPorHabitacion(numeroHab, nombHotel);
+
+            if (lstRes.Count == 0)
+                throw new Exception("No existen reservas en está habitación");
+
+            return lstRes;
+        }
     }
 }

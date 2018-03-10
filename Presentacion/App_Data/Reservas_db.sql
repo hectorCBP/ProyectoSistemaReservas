@@ -137,6 +137,7 @@ begin
 	and	clave = @clave		
 end
 go
+
 create proc agregarAdministrador
 @nombre			varchar (100), 
 @clave			varchar (100),
@@ -176,6 +177,7 @@ begin
 end
 
 go
+
 create proc modificarAdmin
 @nombre			varchar (100), 
 @clave			varchar (100),
@@ -249,9 +251,8 @@ begin
 			return 1 --todo ok
 		end
 end
-
-
 go
+
 create proc agregarTelefonosCliente
 @nombre varchar(100),
 @telefono varchar(100)
@@ -263,6 +264,7 @@ begin
 	insert into Telefono_Clientes values (@nombre,@telefono)
 end
 go
+
 create proc agregarCliente
 @nombre varchar(100),
 @clave	varchar(100),
@@ -305,6 +307,7 @@ begin
 		end
 end
 go
+
 create proc buscarAdministrador
 @nombre varchar(100),
 @clave	varchar(100)
@@ -316,6 +319,7 @@ begin
 	and u.nombre = a.nombre
 end
 go
+
 create proc buscarCliente
 --alter proc buscarCliente
 @nombre varchar(100),
@@ -332,6 +336,7 @@ begin
 	*/
 end
 go
+
 create proc ListarAdmins
 --alter proc ListarAdmins
 as
@@ -339,6 +344,7 @@ begin
 	select u.nombre as 'nombre',u.clave as 'clave',u.nombre_completo as 'nombre_completo',a.cargo as 'cargo' from usuarios u join administradores a on (u.nombre = a.nombre)
 end
 go
+
 create proc ListarClientes
 --alter proc ListarClientes
 as
@@ -357,6 +363,7 @@ begin
 	where estado_reserva = 'activa'
 end
 go
+
 CREATE PROCEDURE buscarFecha
 --ALTER PROCEDURE buscarFecha
 @Num_hab int,
@@ -371,6 +378,7 @@ BEGIN
 	RETURN -3
 END
 GO
+
 CREATE PROCEDURE RealizarReserva
 --ALTER PROCEDURE RealizarReserva
 
@@ -413,25 +421,8 @@ BEGIN
 	ELSE RETURN @aux
 	
 END
-
---select * from Reservas
-DECLARE @resp int
-EXEC @resp = RealizarReserva  '20171002', '20171011', 'cli', 100, 'hotel'
-IF @resp=-1
-     PRINT 'El usuario no se encuentra registrado. No se pudo realizar la reserva.'
-     
-ELSE IF @resp=-2
-     PRINT 'El período de reserva no puede ser negativo. No se pudo realizar la reserva.'          
-     
-ELSE IF @resp=-3
-     PRINT 'Esta habitacion ya se encuentra reservada en la fecha solicitada, no es posible realizar la reserva.'
-
-ELSE IF @resp<0 AND @resp<>-1 AND @resp<>-2 AND @resp<>-3
-	PRINT 'Ocurrió un error. No se pudo insertar la reserva.'
-
-ELSE IF @resp>0
-	PRINT '¡Habitacion reservada correctamente!' 
 GO
+
 create proc eliminarReserva
 @nomHotel varchar(100)
 as 
@@ -446,6 +437,16 @@ begin
 end
 go
 
+create proc listadoReservasCronologica
+@nombreHotel varchar(100),
+@numeroHab int
+as
+begin
+	select * from Reservas 
+	where nombre_hotel = @nombreHotel and numero_hab = @numeroHab
+	order by fecha_inicio DESC
+end
+go
 
 /**************************
 	SP DE HABITACIONES
@@ -459,7 +460,7 @@ begin
 	and ha.nombre_hotel = @nombre
 end
 go
---EXEC listarHabitacionesDeHotel 'hotel'
+
 create proc obtenerHabitacionDeHotel
 @nombreHotel varchar(100),
 @numeroHabitacion varchar(100)
@@ -471,6 +472,7 @@ begin
 	and ha.numero = @numeroHabitacion
 end
 go
+
 create proc agregarHabitacion
 @numero int,
 @nombreHotel varchar(100),
@@ -492,6 +494,7 @@ begin
 		return -2 /*ERROR SQL*/
 end 
 go
+
 create proc modificarHabitacion
 @numero int,
 @nombreHotel varchar(100),
@@ -517,6 +520,7 @@ begin
 		return -2 /*ERROR SQL*/
 end
 go
+
 create proc eliminarHabitacion
 @nomHotel varchar(100)
 as
@@ -557,6 +561,7 @@ begin
 	select * from Hoteles
 end 
 go
+
 create proc buscarHotel
 @nombre varchar(100)
 as
@@ -564,6 +569,7 @@ begin
 	select * from Hoteles where nombre = @nombre;
 end
 go
+
 create proc agregarHotel
 @nombre varchar(100),
 @calle varchar(100),
@@ -585,6 +591,7 @@ begin
 	values(@nombre, @calle, @numero, @ciudad, @categoria, @telefono, @fax, @url_foto, @playa, @piscina)
 end
 go
+
 create proc modificarHotel
 @nombre varchar(100),
 @calle varchar(100),
@@ -615,6 +622,7 @@ begin
 		return -1 /*ERROR SQL*/
 end 
 go
+
 create proc eliminarHotel
 @nomHotel varchar(100)
 as
@@ -644,7 +652,7 @@ begin
 		end
 end
 go
---Listar hoteles segun categoria
+
 create proc ListarCategoria
 @cat int
 as
@@ -669,4 +677,23 @@ go
 -- select * from Hoteles
 -- select * from Habitaciones
 -- exec ListarAdmins
+--EXEC listarHabitacionesDeHotel 'hotel'
+--select * from Reservas
+DECLARE @resp int
+EXEC @resp = RealizarReserva  '20171002', '20171011', 'cli', 100, 'hotel'
+IF @resp=-1
+     PRINT 'El usuario no se encuentra registrado. No se pudo realizar la reserva.'
+     
+ELSE IF @resp=-2
+     PRINT 'El período de reserva no puede ser negativo. No se pudo realizar la reserva.'          
+     
+ELSE IF @resp=-3
+     PRINT 'Esta habitacion ya se encuentra reservada en la fecha solicitada, no es posible realizar la reserva.'
+
+ELSE IF @resp<0 AND @resp<>-1 AND @resp<>-2 AND @resp<>-3
+	PRINT 'Ocurrió un error. No se pudo insertar la reserva.'
+
+ELSE IF @resp>0
+	PRINT '¡Habitacion reservada correctamente!' 
+GO
 
