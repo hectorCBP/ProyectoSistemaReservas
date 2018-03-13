@@ -150,7 +150,7 @@ namespace Persistencia
             cmd.Parameters.AddWithValue("@nomHotel", nomHotel);
             cmd.Parameters.AddWithValue("@numeroHab", Convert.ToUInt32(numeroHab));
 
-            SqlParameter resSQL = new SqlParameter;
+            SqlParameter resSQL = new SqlParameter();
             resSQL.Direction = ParameterDirection.ReturnValue;
             cmd.Parameters.Add(resSQL);
 
