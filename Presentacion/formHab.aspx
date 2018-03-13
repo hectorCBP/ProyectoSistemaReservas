@@ -100,7 +100,7 @@
                     <tr>
                         <td align="center">
                             <asp:Button ID="btnEliminarHab" runat="server" CssClass="btnForm" 
-                                Text="Eliminar" />
+                                Text="Eliminar" onclick="btnEliminarHab_Click" />
                         </td>
                         <td align="center" colspan="2">
                             <asp:Button ID="btnModificarHab" runat="server" CssClass="btnForm" 

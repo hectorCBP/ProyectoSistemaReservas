@@ -42,7 +42,7 @@ namespace Persistencia
 
             return lstHab;
         }
-
+        /*BUSCAR*/
         public static Habitacion ObtenerHabitacion(string nomHotel, string numeroHab)
         {
             Habitacion habitacion = null;
@@ -72,7 +72,7 @@ namespace Persistencia
             { cnn.Close(); }
             return habitacion;
         }
-
+        /*AGREGAR*/
         public static void Agregar(Habitacion habitacion)
         {
             SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
@@ -107,7 +107,7 @@ namespace Persistencia
             finally
             { cnn.Close(); }
         }
-
+        /*MODIFICAR*/
         public static void Modificar(Habitacion habitacion)
         {
             SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
@@ -135,6 +135,37 @@ namespace Persistencia
                     throw new Exception("Este número de habitación no existe");
                 if (respuesta == -2)
                     throw new Exception("ERROR SQL");
+            }
+            catch (Exception ex)
+            { throw ex; }
+            finally
+            { cnn.Close(); }
+        }
+        /*ELIMINAR*/
+        public static void Eliminar(string nomHotel, string numeroHab)
+        {
+            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlCommand cmd = new SqlCommand("eliminarHabitacion", cnn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@nomHotel", nomHotel);
+            cmd.Parameters.AddWithValue("@numeroHab", Convert.ToUInt32(numeroHab));
+
+            SqlParameter resSQL = new SqlParameter;
+            resSQL.Direction = ParameterDirection.ReturnValue;
+            cmd.Parameters.Add(resSQL);
+
+            try
+            {
+                cnn.Open();
+                cmd.ExecuteNonQuery();
+
+                int res = (int)resSQL.Value;
+                if(res == -1)
+                    throw new Exception ("ERROR - Numero de habitación no registrado");
+                if(res == -2)
+                    throw new Exception ("ERROR al eliminar reservas asociadas");
+                if(res == -3)
+                    throw new Exception ("ERROR SQL al eliminar habitación");
             }
             catch (Exception ex)
             { throw ex; }

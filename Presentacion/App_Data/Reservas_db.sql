@@ -423,7 +423,7 @@ BEGIN
 END
 GO
 
-create proc eliminarReserva
+create proc eliminarReservaCascada
 @nomHotel varchar(100)
 as 
 begin
@@ -431,7 +431,7 @@ begin
 	delete from Reservas where nombre_hotel = @nomHotel
 	set @respuesta = @@ERROR
 	if @respuesta <> 0
-		return -1 /*ERROR Eliminar reserva*/
+		return -1 /*ERROR Eliminar reserva cascada*/
 	else
 		return 0 
 end
@@ -445,6 +445,23 @@ begin
 	select * from Reservas 
 	where nombre_hotel = @nombreHotel and numero_hab = @numeroHab
 	order by fecha_inicio DESC
+end
+go
+
+create proc eliminarReserva
+@nomHotel varchar(100),
+@numeroHab int
+as 
+begin
+	declare @respuesta int
+	delete from Reservas 
+	where nombre_hotel = @nomHotel 
+	and numero_hab = @numeroHab
+	set @respuesta = @@ERROR
+	if @respuesta <> 0
+		return -1 /*ERROR eliminar reserva*/
+	else
+		return 0
 end
 go
 
@@ -521,18 +538,18 @@ begin
 end
 go
 
-create proc eliminarHabitacion
+create proc eliminarHabitacionCascada
 @nomHotel varchar(100)
 as
 begin
 	begin tran
 		declare @reserva int 
-		exec @reserva = eliminarReserva @nomHotel
+		exec @reserva = eliminarReservaCascada @nomHotel
 
 		if @reserva <> 0
 		begin
 			rollback
-			return -1 /* ERROR Eliminar reserva*/
+			return -1 /* ERROR Eliminar reserva cascada*/
 		end
 	
 		declare @respuesta int
@@ -542,7 +559,7 @@ begin
 		if @respuesta <> 0
 		begin
 			rollback
-			return -2 /*ERROR Eliminar habitacion*/
+			return -2 /*ERROR Eliminar habitacion cascada*/
 		end
 		else 
 		begin
@@ -550,6 +567,41 @@ begin
 			return 0
 		end
 end
+go
+
+create proc eliminarHabitacion
+@nomHotel varchar(100),
+@numeroHab int
+as
+begin 
+	begin tran
+		if not exists (select nombre_hotel from Habitaciones where nombre_hotel = @nombreHotel and numero = @numero)
+			return -1 /*ERROR habitacion no existe*/
+
+		declare @resultado int
+		exec @resultado = eliminarReserva @nomHotel, @numeroHab
+		if @resultado <> 0
+		begin
+			rollback
+			return -2 /*ERROR Eliminar reserva*/
+		end
+		
+		declare @respuesta int
+		delete from Habitaciones 
+		where nombre_hotel = @nomHotel and numero = @numeroHab
+		set @respuesta = @@ERROR
+		if @respuesta <> 0
+		begin
+			rollback
+			return -3 /*ERROR Eliminar habitacion*/
+		end
+		else 
+		begin
+			commit tran
+			return 0
+		end
+
+end 
 go
 
 /***********************
@@ -631,7 +683,7 @@ begin
 	begin tran
 		declare @respuesta int, @habitacion int
 
-		exec @habitacion = eliminarHabitacion @nomHotel
+		exec @habitacion = eliminarHabitacionCascada @nomHotel
 		if @habitacion <> 0
 		begin
 			rollback
