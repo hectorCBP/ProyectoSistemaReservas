@@ -47,6 +47,41 @@ namespace Persistencia
             return cliente;
         }
 
+        public static Cliente BuscarCliente(string pNombre)
+        {
+            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlCommand cmd = new SqlCommand("buscarClienteNombre", cnn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@nombre", pNombre);
+
+            Cliente cliente = null;
+
+            try
+            {
+                cnn.Open();
+                SqlDataReader lector = cmd.ExecuteReader();
+
+                if (lector.HasRows)
+                {
+                    lector.Read();
+
+                    string nombre = (string)lector["nombre"];
+                    string direccion = (string)lector["direccion"];
+                    string tarjeta = (string)lector["numero_tarjeta_credito"];
+                    string nombreCompleto = (string)lector["nombre_completo"];
+                    string clave = (string)lector["clave"];
+
+                    cliente = new Cliente(nombre, nombreCompleto, clave, direccion, tarjeta);
+                }
+                lector.Close();
+            }
+            catch (Exception e)
+            { throw e; }
+            finally
+            { cnn.Close(); }
+            return cliente;
+        }
+
         public static void nuevo( Cliente cliente )
         {
             SqlConnection cnn = new SqlConnection(Constantes.CONEXION);

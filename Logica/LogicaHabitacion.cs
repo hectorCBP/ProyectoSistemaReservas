@@ -20,7 +20,7 @@ namespace Logica
             return lstHab;
         }
 
-        public static Habitacion ObtenerHabitacion(string nomHotel, string numeroHab) 
+        public static Habitacion ObtenerHabitacion(string nomHotel, int numeroHab) 
         {
             Habitacion habitacion = PersistenciaHabitacion.ObtenerHabitacion(nomHotel, numeroHab);
 

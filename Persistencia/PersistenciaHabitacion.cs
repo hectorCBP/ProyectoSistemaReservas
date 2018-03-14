@@ -43,7 +43,7 @@ namespace Persistencia
             return lstHab;
         }
 
-        public static Habitacion ObtenerHabitacion(string nomHotel, string numeroHab)
+        public static Habitacion ObtenerHabitacion(string nomHotel, int numeroHab)
         {
             Habitacion habitacion = null;
             SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
@@ -66,8 +66,8 @@ namespace Persistencia
                         (int)lector["piso"]);
                 }
             }
-            catch (Exception)
-            { }
+             catch (Exception e)
+            { throw e; }
             finally
             { cnn.Close(); }
             return habitacion;

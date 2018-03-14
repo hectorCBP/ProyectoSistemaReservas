@@ -91,7 +91,7 @@ go
 create table Reservas
 (
 
-	numero			bigint identity not null,
+	numero			int identity not null,
 	estado_reserva	varchar(100) constraint CHK_estado_reserva check (estado_reserva ='ACTIVA' OR estado_reserva='CANCELADA' or estado_reserva='FINALIZADA'),
 	fecha_inicio	date,
 	fecha_final		date,
@@ -331,6 +331,17 @@ begin
 	on c.nombre = t.nombre
 	*/
 end
+--EXEC buscarClienteNombre 'cli'
+go
+create proc buscarClienteNombre
+--alter proc buscarCliente
+@nombre varchar(100)
+as
+begin
+	select*from Clientes c join Usuarios u
+	on u.nombre = @nombre
+	and u.nombre = c.nombre
+end
 go
 create proc ListarAdmins
 --alter proc ListarAdmins
@@ -452,7 +463,7 @@ go
 --EXEC listarHabitacionesDeHotel 'hotel'
 create proc obtenerHabitacionDeHotel
 @nombreHotel varchar(100),
-@numeroHabitacion varchar(100)
+@numeroHabitacion int
 as
 begin
 	select ha.* from Habitaciones ha join Hoteles ho
@@ -519,6 +530,16 @@ begin
 	where estado_reserva = 'activa'
 end
 go
+--exec reservasActivasCliente 'cli'
+create procedure reservasActivasCliente
+@nombre varchar(100)
+as
+begin 
+	select * from Reservas
+	where estado_reserva = 'activa' and nombre_cli=@nombre
+end
+go
+
 CREATE PROCEDURE buscarFecha
 --ALTER PROCEDURE buscarFecha
 @Num_hab int,
@@ -595,6 +616,31 @@ ELSE IF @resp>0
 	PRINT '¡Habitacion reservada correctamente!' 
 GO
 
+--exec BuscarReserva 1
+create proc BuscarReserva
+--alter proc BuscarReserva
+@numero int
+as
+begin
+	select*from Reservas where @numero=numero
+	
+end
+go
+
+create proc CancelarReserva
+--alter proc BuscarReserva
+@numero int
+as
+begin
+	declare @aux int
+	UPDATE Reservas SET estado_reserva='CANCELADA' WHERE numero=@numero
+	SET @aux=@@ERROR
+	IF @aux=0 
+	RETURN 1;
+	ELSE RETURN @aux
+end
+go
+
 
 
 /******************************************/
@@ -609,6 +655,7 @@ GO
 -- select * from Clientes
 -- select * from Telefono_Clientes
 -- select * from Hoteles
+--select*from Reservas
 -- select * from Habitaciones
 -- exec ListarAdmins
 

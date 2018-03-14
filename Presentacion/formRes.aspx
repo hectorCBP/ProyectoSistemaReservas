@@ -16,7 +16,7 @@
                 <hr />
                 <table style="width: 100%;">
                     <tr>
-                        <td>
+                        <td colspan="2">
                             <table class="style3" width="100%">
                                 <tr>
             <td align="left">
@@ -24,13 +24,14 @@
                 <asp:Label ID="lblCat" runat="server" Text="Categoria de hotel"></asp:Label>
             </td>
             <td align="center" width="33%" colspan="2">
-                <asp:DropDownList ID="lstCategoria" runat="server" Width="90%">
-                    <asp:ListItem Selected="True" Value="-1">Seleccionar</asp:ListItem>
+                <asp:DropDownList ID="lstCategoria" runat="server" Width="100%" 
+                    AutoPostBack="True" onselectedindexchanged="lstCategoria_SelectedIndexChanged">
+                    <asp:ListItem Selected="True" Value="-1">Seleccionar Categoria</asp:ListItem>
                 </asp:DropDownList>
             </td>
             <td align="left" width="33%">
                 <asp:Button ID="btnCargarCat" runat="server" CssClass="btnForm" 
-                    Text="Mostrar Hoteles" onclick="btnCargarHab_Click" />
+                    EnableViewState="False" onclick="btnCargarCat_Click" Text="Mostrar Hoteles" />
             </td>
                                 </tr>
                                 <tr>
@@ -62,7 +63,8 @@
             </td>
                                 </tr>
                                 <tr>
-            <td align="center" colspan="2">
+                                
+            <td align="center" colspan="2" style="padding-top: 30px; padding-bottom: 30px;">
                 <asp:Label ID="lblHabitaciones" runat="server" 
                     Text="Habitaciones de hotel seleccionado:" Visible="False"></asp:Label>
                 <asp:DropDownList ID="ddlHabitaciones" runat="server" 
@@ -125,9 +127,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <asp:Button ID="btnReservar" runat="server" CssClass="btnForm" 
-                                    onclick="btnReservar_Click" Text="Reservar" />
-                            </td>
+                                &nbsp;</td>
                             <td>
                                 &nbsp;</td>
                         </tr>
@@ -193,12 +193,21 @@
                     <tr>
                         <td>
                             <asp:Button ID="btnCalcular" runat="server" CssClass="btnForm" 
-                                onclick="btnCalcular_Click" Text="Calcular Costo" />
+                                onclick="btnCalcular_Click" Text="Calcular Costo" Enabled="False" />
+                                    </td>
+                        <td>
+                                <asp:Button ID="btnReservar" runat="server" CssClass="btnForm" 
+                                    onclick="btnReservar_Click" Text="Reservar" Enabled="False" />
                                     </td>
                     </tr>
                     <tr>
-                        <td align="right">
-                            <asp:Label ID="lblCosto" runat="server" Visible="False"></asp:Label>
+                        <td align="right" style="text-align: center">
+                            <asp:Label ID="lblCosto2" runat="server" Text="Costo TOTAL de la reserva:" 
+                                Visible="False"></asp:Label>
+                                    </td>
+                        <td align="right" style="text-align: center">
+                            <asp:Label ID="lblCosto" runat="server" Visible="False" 
+                                style="text-align: center"></asp:Label>
                                     </td>
                     </tr>
                     </table>

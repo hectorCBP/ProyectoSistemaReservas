@@ -8,7 +8,7 @@ namespace EntidadesCompartidas
     public class Reserva
     {
         // atributos
-        private int numero, numero_hab;
+        private int numero;
         private string estado_reserva;
         private Cliente cli;
         private Habitacion hab;

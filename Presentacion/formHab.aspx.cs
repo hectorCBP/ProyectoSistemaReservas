@@ -50,7 +50,7 @@ public partial class formHab : System.Web.UI.Page
             if(String.IsNullOrEmpty(txtNumeroHab.Text))
                 throw new Exception("Número de habitación no puede ser vacío");
 
-            Habitacion habitacion = LogicaHabitacion.ObtenerHabitacion(lstHoteles.Text, txtNumeroHab.Text);
+            Habitacion habitacion = LogicaHabitacion.ObtenerHabitacion(lstHoteles.Text, Convert.ToInt32(txtNumeroHab.Text));
 
             txtHuespedHab.Text = habitacion.CantHuesped.ToString();
             txtPisoHab.Text = habitacion.Piso.ToString();
