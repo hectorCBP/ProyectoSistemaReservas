@@ -12,48 +12,59 @@ public partial class formHot : System.Web.UI.Page
 {
 
     /** HERRAMIENTAS PARA CONTROLES */
-    List<Control> listOfTxtBox()
+    List<Control> listOfCtrls()
     {
-        List<Control> lstTB = new List<Control>();
+        List<Control> lstCrtl = new List<Control>();
 
-        lstTB.Add(txtHotel);
-        lstTB.Add(txtCategoriaH);
-        lstTB.Add(txtCalleH);
-        lstTB.Add(txtNumeroH);
-        lstTB.Add(txtCuidadH);
-        lstTB.Add(txtTelH);
-        lstTB.Add(txtFaxH);
+        lstCrtl.Add(txtHotel);
+        lstCrtl.Add(txtCategoriaH);
+        lstCrtl.Add(txtCalleH);
+        lstCrtl.Add(txtNumeroH);
+        lstCrtl.Add(txtCuidadH);
+        lstCrtl.Add(txtTelH);
+        lstCrtl.Add(txtFaxH);
 
-        return lstTB;
+        lstCrtl.Add(btnAgregarH);
+        lstCrtl.Add(btnModificarH);
+        lstCrtl.Add(btnEliminarH);
+
+        return lstCrtl;
     }
-    List<Control> listOfBtn()
+    private void limpiarFomulario() 
     {
-        List<Control> lstBtn = new List<Control>();
-
-        return lstBtn;
+        foreach (Control item in listOfCtrls())
+        {
+            if (item is TextBox && item.ID != "txtBuscarH")
+            {
+                ((TextBox)item).Text = String.Empty;
+                ((TextBox)item).Enabled = false;
+            }
+            if (item is Button)
+                ((Button)item).Enabled = false;
+        }
+        imgFotoH.Visible = false;
+        imgFotoH.ImageUrl = String.Empty;
+        txtFotoH.Enabled = true;
+        chkPiscinaH.Checked = false;
+        chkPlayaH.Checked = false;
+        txtBuscarH.Text = String.Empty;
     }
-
     protected void Page_Load(object sender, EventArgs e)
     {
         try
         {
-            txtBuscarH.Attributes.Add("placeholder", "Ingrese el nombre de un Hotel");
+            if (!IsPostBack)
+            {
+                txtBuscarH.Attributes.Add("placeholder", "Ingrese el nombre de un Hotel");
+                foreach (Control item in listOfCtrls())
+                {
+                    if (item is TextBox && item.ID != "txtBuscarH")
+                        ((TextBox)item).Enabled = false;
+                }
+            }
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
-    }
-    
-    protected void btnHab_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("formHab.aspx");
-    }
-    protected void btnUsr_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("formUsr.aspx");
-    }
-    protected void btnReserva_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("formResAdmin.aspx");
     }
 
     /** BUSCAR HOTEL */
@@ -66,6 +77,18 @@ public partial class formHot : System.Web.UI.Page
 
             Hotel hotel = LogicaHotel.Buscar(txtBuscarH.Text);
 
+            foreach (Control item in listOfCtrls())
+            {
+                if (item is TextBox && item.ID != "txtHotel")
+                    ((TextBox)item).Enabled = true;
+            }
+            btnModificarH.Enabled = true;
+            btnEliminarH.Enabled = true;
+            imgFotoH.Visible = true;
+            txtFotoH.Enabled = true;
+            chkPiscinaH.Enabled = true;
+            chkPlayaH.Enabled = true;
+
             txtHotel.Text = hotel.Nombre;
             txtCategoriaH.Text = hotel.Categoria.ToString();
             txtCalleH.Text = hotel.Calle;
@@ -75,13 +98,32 @@ public partial class formHot : System.Web.UI.Page
             txtFaxH.Text = hotel.Fax;
             chkPlayaH.Checked = hotel.Playa;
             chkPiscinaH.Checked = hotel.Piscina;
-
             imgFotoH.ImageUrl = hotel.UrlFoto;
 
-            lblMsj.Text = String.Empty;
+            lblMsj.Text = hotel.UrlFoto;//String.Empty;
         }
         catch (Exception ex)
-        { lblMsj.Text = ex.Message; }
+        {
+            foreach (Control item in listOfCtrls())
+            {
+                if (item is TextBox)
+                {
+                    ((TextBox)item).Text = String.Empty;
+                    ((TextBox)item).Enabled = true;
+                }
+                if (item is Button && item.ID != "btnAgregarH")
+                    ((Button)item).Enabled = false;
+            }
+
+            imgFotoH.Visible = false;
+            imgFotoH.ImageUrl = String.Empty;
+            txtFotoH.Enabled = true;
+            chkPiscinaH.Checked = false;
+            chkPlayaH.Checked = false;
+            btnAgregarH.Enabled = true;
+
+            lblMsj.Text = ex.Message; 
+        }
     }
     /** BOTONES ABM HOTEL */
     /** AGREGAR */
@@ -89,13 +131,13 @@ public partial class formHot : System.Web.UI.Page
     {
         try
         {
-            foreach (Control txtBox in listOfTxtBox())
+            foreach (Control txtBox in listOfCtrls())
             {
-                if (String.IsNullOrEmpty(((TextBox)txtBox).Text))
+                if (txtBox is TextBox && String.IsNullOrEmpty(((TextBox)txtBox).Text))
                     throw new Exception("Existen campos vacíos");
             }
 
-            string rutaImg = "~/imagenes/hoteles/" + txtFotoH.FileName;
+            string rutaImg = "imagenes/hoteles/" + txtFotoH.FileName;
 
             Hotel hotel = new Hotel(txtHotel.Text, txtCalleH.Text, Convert.ToInt32(txtNumeroH.Text), txtCuidadH.Text,
                                     Convert.ToInt32(txtCategoriaH.Text), txtTelH.Text, txtFaxH.Text, rutaImg,
@@ -104,7 +146,8 @@ public partial class formHot : System.Web.UI.Page
             LogicaHotel.Agregar(hotel);
             txtFotoH.SaveAs(Server.MapPath(rutaImg));
             lblMsj.Text = "Hotel agregado correctamente";
-            // TO DO limpiar campos
+            
+            limpiarFomulario();
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
@@ -115,21 +158,25 @@ public partial class formHot : System.Web.UI.Page
     {
         try
         {
-            foreach (Control txtBox in listOfTxtBox())
+            foreach (Control txtBox in listOfCtrls())
             {
-                if (String.IsNullOrEmpty(((TextBox)txtBox).Text))
+                if (txtBox is TextBox && String.IsNullOrEmpty(((TextBox)txtBox).Text))
                     throw new Exception("Existen campos vacíos");
             }
-            string rutaImg = "~/imagenes/hoteles/" + txtFotoH.FileName;
+            string rutaImg = txtFotoH.FileName !=  "" ? "imagenes/hoteles/" + txtFotoH.FileName : imgFotoH.ImageUrl;
 
             Hotel hotel = new Hotel(txtHotel.Text, txtCalleH.Text, Convert.ToInt32(txtNumeroH.Text), txtCuidadH.Text,
                                     Convert.ToInt32(txtCategoriaH.Text), txtTelH.Text, txtFaxH.Text, rutaImg,
                                     chkPlayaH.Checked, chkPiscinaH.Checked);
 
             LogicaHotel.Modificar(hotel);
-            txtFotoH.SaveAs(Server.MapPath(rutaImg));
-            lblMsj.Text = "Hotel modificado correctamente";
-            // TO DO limpiar campos
+            
+            if(txtFotoH.FileName != "")
+                txtFotoH.SaveAs(Server.MapPath(rutaImg));
+
+            //lblMsj.Text = "Hotel modificado correctamente";
+            lblMsj.Text = rutaImg;
+            limpiarFomulario();
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
@@ -140,6 +187,10 @@ public partial class formHot : System.Web.UI.Page
         try
         {
             LogicaHotel.Eliminar(txtHotel.Text);
+
+            lblMsj.Text = "Hotel eliminado correctamente con sus dependecias";
+
+            limpiarFomulario();
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }

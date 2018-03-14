@@ -23,6 +23,8 @@ public partial class formHab : System.Web.UI.Page
 
         return lstCampos;
     }
+
+    //TO DO METODO LIMPIAR FORMULARIO
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -30,8 +32,12 @@ public partial class formHab : System.Web.UI.Page
             if (!IsPostBack)
             {
                 foreach (Hotel h in LogicaHotel.ListaHoteles())
-                {
                     lstHoteles.Items.Add(h.Nombre);
+
+                foreach (Control item in listaRequeridos())
+                {
+                    if (item is TextBox && item.ID != "txtNumeroHab")
+                        ((TextBox)item).Enabled = false;
                 }
             }
         }
@@ -53,13 +59,31 @@ public partial class formHab : System.Web.UI.Page
 
             Habitacion habitacion = LogicaHabitacion.ObtenerHabitacion(lstHoteles.Text, Convert.ToInt32(txtNumeroHab.Text));
 
+            foreach (Control item in listaRequeridos())
+            {
+                if (item is TextBox)
+                    ((TextBox)item).Enabled = true;
+            }
+            btnModificarHab.Enabled = true;
+            btnEliminarHab.Enabled = true;
+
             txtHuespedHab.Text = habitacion.CantHuesped.ToString();
             txtPisoHab.Text = habitacion.Piso.ToString();
             txtDescripcionHab.Text = habitacion.Descripcion;
             txtCosto.Text = habitacion.Costo.ToString();
         }
         catch (Exception ex)
-        { lblMsj.Text = ex.Message; }
+        {
+            foreach (Control item in listaRequeridos())
+            {
+                if (item is TextBox && item.ID != "txtNumeroHab")
+                    ((TextBox)item).Text = String.Empty;
+            }
+            btnAgregarHab.Enabled = true;
+            btnModificarHab.Enabled = false;
+            btnEliminarHab.Enabled = false;
+            lblMsj.Text = ex.Message; 
+        }
     }
     protected void btnAgregarHab_Click(object sender, EventArgs e)
     {
@@ -104,9 +128,12 @@ public partial class formHab : System.Web.UI.Page
                     if (((DropDownList)campo).SelectedIndex == -1)
                         throw new Exception("Existen campos sin completar");
                 }
-                string box = ((TextBox)campo).Text;
-                if (String.IsNullOrEmpty(box))
-                    throw new Exception("Existen campos sin completar");
+                if (campo is TextBox)
+                {
+                    string box = ((TextBox)campo).Text;
+                    if (String.IsNullOrEmpty(box))
+                        throw new Exception("Existen campos sin completar");
+                }
             }
 
             Habitacion habitacion = new Habitacion(
