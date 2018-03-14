@@ -337,6 +337,7 @@ begin
 end
 --EXEC buscarClienteNombre 'cli'
 go
+
 create proc buscarClienteNombre
 --alter proc buscarCliente
 @nombre varchar(100)
@@ -586,7 +587,7 @@ create proc eliminarHabitacion
 as
 begin 
 	begin tran
-		if not exists (select nombre_hotel from Habitaciones where nombre_hotel = @nombreHotel and numero = @numero)
+		if not exists (select nombre_hotel from Habitaciones where nombre_hotel = @nomHotel and numero = @numeroHab)
 			return -1 /*ERROR habitacion no existe*/
 
 		declare @resultado int
@@ -785,6 +786,8 @@ go
 --select * from Reservas
 DECLARE @resp int
 EXEC @resp = RealizarReserva  '20171002', '20171011', 'cli', 100, 'hotel'
+EXEC @resp = RealizarReserva  '20171102', '20171211', 'cli', 100, 'hotel'
+EXEC @resp = RealizarReserva  '20181002', '20181011', 'cli', 100, 'hotel'
 IF @resp=-1
      PRINT 'El usuario no se encuentra registrado. No se pudo realizar la reserva.'
      

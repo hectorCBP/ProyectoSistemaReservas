@@ -192,10 +192,17 @@ namespace Persistencia
                 cnn.Open();
                 SqlDataReader lector = cmd.ExecuteReader();
                 while (lector.Read())
-                { 
-                    // instanciar reserva
-                    // agregar a la lista
-
+                {
+                    Cliente cliente = PersistenciaCliente.BuscarCliente((string)lector["nombre_cli"]);
+                    Habitacion habitacion = PersistenciaHabitacion.ObtenerHabitacion((string)lector["nombre_hotel"], (int)lector["numero_hab"]);
+                    Reserva reserva = new Reserva(
+                        (int)lector["numero"], 
+                        (DateTime)lector["fecha_inicio"], 
+                        (DateTime)lector["fecha_final"], 
+                        (string)lector["estado_reserva"],
+                         cliente,
+                         habitacion);
+                    lstRes.Add(reserva);
                 }
             }
             catch (Exception ex)

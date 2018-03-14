@@ -6,8 +6,12 @@
     <table style="width: 100%; margin-left: 0px;" id="formMaster" class="userForm">
         <tr>
             <td id="formHot" class="formulario" align="center">
-                <asp:Label ID="lblMsj" runat="server"></asp:Label>
                 <table style="width: 100%;">
+                    <tr>
+                        <td align="center" colspan="3">
+                <asp:Label ID="lblMsj" runat="server"></asp:Label>
+                        </td>
+                    </tr>
                     <tr>
                         <td align="left" colspan="3">
                 <asp:Label ID="lblHoteles" runat="server" Text="Mantenimiento de Hoteles" 
@@ -36,7 +40,7 @@
                         <td align="center">
                             &nbsp;</td>
                         <td align="center">
-                            <asp:Image ID="imgFotoH" runat="server" CssClass="foto" />
+                            <asp:Image ID="imgFotoH" runat="server" CssClass="foto" Visible="False" />
                         </td>
                         <td align="center">
                             &nbsp;</td>
@@ -46,7 +50,7 @@
                             <asp:Label ID="lblFoto" runat="server" Text="Imágen de hotel"></asp:Label>
                         </td>
                         <td align="center">
-                            <asp:FileUpload ID="txtFotoH" runat="server" />
+                            <asp:FileUpload ID="txtFotoH" runat="server" Enabled="False" />
                         </td>
                         <td align="center">
                             &nbsp;</td>
@@ -147,7 +151,7 @@
                             <asp:Label ID="lblPiscinaH" runat="server" Text="piscina"></asp:Label>
                         </td>
                         <td align="center" width="33%">
-                            <asp:CheckBox ID="chkPiscinaH" runat="server" />
+                            <asp:CheckBox ID="chkPiscinaH" runat="server" Enabled="False" />
                         </td>
                         <td align="center" width="33%">
                             &nbsp;</td>
@@ -157,7 +161,7 @@
                             <asp:Label ID="lblPlayaH" runat="server" Text="playa"></asp:Label>
                         </td>
                         <td align="center" width="33%">
-                            <asp:CheckBox ID="chkPlayaH" runat="server" />
+                            <asp:CheckBox ID="chkPlayaH" runat="server" Enabled="False" />
                         </td>
                         <td align="center" width="33%">
                             &nbsp;</td>
@@ -170,15 +174,15 @@
                     <tr>
                         <td align="center" height="30px" width="33%">
                             <asp:Button ID="btnEliminarH" runat="server" CssClass="btnForm" 
-                                Text="Eliminar" onclick="btnEliminarH_Click" />
+                                Text="Eliminar" onclick="btnEliminarH_Click" Enabled="False" />
                         </td>
                         <td align="center" height="30px" width="33%">
                             <asp:Button ID="btnModificarH" runat="server" CssClass="btnForm" 
-                                Text="Modificar" onclick="btnModificarH_Click" />
+                                Text="Modificar" onclick="btnModificarH_Click" Enabled="False" />
                         </td>
                         <td align="center" width="33%">
                             <asp:Button ID="btnAgregarH" runat="server" CssClass="btnForm" Text="Agregar" 
-                                onclick="btnAgregarH_Click" />
+                                onclick="btnAgregarH_Click" Enabled="False" />
                         </td>
                     </tr>
                     </table>
