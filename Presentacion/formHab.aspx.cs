@@ -47,6 +47,7 @@ public partial class formHab : System.Web.UI.Page
     {
         try
         {
+            lblMsj.Text = String.Empty;
             if(String.IsNullOrEmpty(txtNumeroHab.Text))
                 throw new Exception("Número de habitación no puede ser vacío");
 
@@ -64,6 +65,7 @@ public partial class formHab : System.Web.UI.Page
     {
         try
         {
+            lblMsj.Text = String.Empty;
             foreach (Control campo in listaRequeridos())
             {
                 if (campo is DropDownList)
@@ -94,6 +96,7 @@ public partial class formHab : System.Web.UI.Page
     {
         try
         {
+            lblMsj.Text = String.Empty;
             foreach (Control campo in listaRequeridos())
             {
                 if (campo is DropDownList)
@@ -116,6 +119,20 @@ public partial class formHab : System.Web.UI.Page
 
             LogicaHabitacion.Modificar(habitacion);
             lblMsj.Text = "Se modificó correctamente";
+        }
+        catch (Exception ex)
+        { lblMsj.Text = ex.Message; }
+    }
+    protected void btnEliminarHab_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            lblMsj.Text = String.Empty;
+            if (String.IsNullOrEmpty(txtNumeroHab.Text) || lstHoteles.SelectedValue == "-1")
+                throw new Exception("ERROR - Sin completar número de Habitación o nombre de Hotel");
+
+            LogicaHabitacion.Eliminar(lstHoteles.Text, txtNumeroHab.Text);
+            lblMsj.Text = "Se eliminó correctamente";
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }

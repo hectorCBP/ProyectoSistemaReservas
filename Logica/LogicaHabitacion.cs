@@ -40,5 +40,10 @@ namespace Logica
             PersistenciaHabitacion.Modificar(habitacion);
         }
 
+        public static void Eliminar(string nomHotel, string numeroHab)
+        {
+            PersistenciaHabitacion.Eliminar(nomHotel, numeroHab);
+        }
+
     }
 }

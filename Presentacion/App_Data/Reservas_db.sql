@@ -137,6 +137,7 @@ begin
 	and	clave = @clave		
 end
 go
+
 create proc agregarAdministrador
 @nombre			varchar (100), 
 @clave			varchar (100),
@@ -176,6 +177,7 @@ begin
 end
 
 go
+
 create proc modificarAdmin
 @nombre			varchar (100), 
 @clave			varchar (100),
@@ -249,9 +251,8 @@ begin
 			return 1 --todo ok
 		end
 end
-
-
 go
+
 create proc agregarTelefonosCliente
 @nombre varchar(100),
 @telefono varchar(100)
@@ -263,6 +264,7 @@ begin
 	insert into Telefono_Clientes values (@nombre,@telefono)
 end
 go
+
 create proc agregarCliente
 @nombre varchar(100),
 @clave	varchar(100),
@@ -305,6 +307,7 @@ begin
 		end
 end
 go
+
 create proc buscarAdministrador
 @nombre varchar(100),
 @clave	varchar(100)
@@ -316,6 +319,7 @@ begin
 	and u.nombre = a.nombre
 end
 go
+
 create proc buscarCliente
 --alter proc buscarCliente
 @nombre varchar(100),
@@ -343,6 +347,7 @@ begin
 	and u.nombre = c.nombre
 end
 go
+
 create proc ListarAdmins
 --alter proc ListarAdmins
 as
@@ -350,6 +355,7 @@ begin
 	select u.nombre as 'nombre',u.clave as 'clave',u.nombre_completo as 'nombre_completo',a.cargo as 'cargo' from usuarios u join administradores a on (u.nombre = a.nombre)
 end
 go
+
 create proc ListarClientes
 --alter proc ListarClientes
 as
@@ -357,168 +363,6 @@ begin
 	select u.nombre as 'nombre',u.clave as 'clave',u.nombre_completo as 'nombre_completo', c.direccion as 'direccion', c.numero_tarjeta_credito as 'tarjeta de credito' from usuarios u join Clientes c on (u.nombre = c.nombre)
 end
 go
-
-
-/***********************
-	SP DE HOTELES
-***********************/
-create proc obtenerHoteles
-as
-begin
-	select * from Hoteles
-end 
-go
-create proc buscarHotel
-@nombre varchar(100)
-as
-begin
-	select * from Hoteles where nombre = @nombre;
-end
-go
-create proc agregarHotel
-@nombre varchar(100),
-@calle varchar(100),
-@numero int,
-@ciudad varchar(100),
-@categoria int,
-@telefono varchar(100),
-@fax varchar(100),
-@url_foto varchar(100),
-@playa bit,
-@piscina bit
-as
-begin
-
-	if exists(select nombre from Hoteles where nombre = @nombre)
-		return -1 /* sale cuando ya existe el hotel */
-
-	insert into Hoteles
-	values(@nombre, @calle, @numero, @ciudad, @categoria, @telefono, @fax, @url_foto, @playa, @piscina)
-end
-go
-create proc modificarHotel
-@nombre varchar(100),
-@calle varchar(100),
-@numero int,
-@ciudad varchar(100),
-@categoria int,
-@telefono varchar(100),
-@fax varchar(100),
-@url_foto varchar(100),
-@playa bit,
-@piscina bit
-as
-begin 
-	declare @respuesta int
-	update Hoteles 
-	set calle = @calle,
-		numero = @numero,
-		ciudad = @ciudad,
-		categoria = @categoria,
-		telefono = @telefono,
-		fax = @fax,
-		url_foto = @url_foto,
-		playa = @playa,
-		piscina = @piscina
-	where nombre = @nombre
-	set @respuesta = @@ERROR
-	if @respuesta <> 0
-		return -1 /*ERROR SQL*/
-end 
-go
-create proc eliminarHotel
-@nombre varchar(100)
-as
-begin
-	declare @respuesta int
-	delete from Hoteles where nombre = @nombre
-	set @respuesta = @@ERROR
-	if @respuesta <> 0
-		return -1 /*ERROR SQL*/
-end
-go
---Listar hoteles segun categoria
-create proc ListarCategoria
-@cat int
-as
-begin 
-	select * from Hoteles
-	where categoria = @cat
-end
-go
-
-
-/**************************
-	SP DE HABITACIONES
-***************************/
-create proc listarHabitacionesDeHotel
-@nombre varchar(100)
-as
-begin 
-	select ha.* from Habitaciones ha join Hoteles ho
-	on ho.nombre = @nombre
-	and ha.nombre_hotel = @nombre
-end
-go
---EXEC listarHabitacionesDeHotel 'hotel'
-create proc obtenerHabitacionDeHotel
-@nombreHotel varchar(100),
-@numeroHabitacion int
-as
-begin
-	select ha.* from Habitaciones ha join Hoteles ho
-	on ho.nombre = @nombreHotel
-	and ha.nombre_hotel = nombre_hotel
-	and ha.numero = @numeroHabitacion
-end
-go
-create proc agregarHabitacion
-@numero int,
-@nombreHotel varchar(100),
-@descripcion varchar(100),
-@cantHuesped int,
-@costo decimal,
-@piso int
-as 
-begin
-	declare @resultado int
-	 
-	if exists (select nombre_hotel from Habitaciones where nombre_hotel = @nombreHotel and numero = @numero)
-		return -1 /*ERROR habitacion ya existe*/
-
-	insert into Habitaciones
-	values(@numero, @nombreHotel, @descripcion, @cantHuesped, @costo, @piso)
-	set @resultado = @@ERROR
-	if @resultado <> 0
-		return -2 /*ERROR SQL*/
-end 
-go
-create proc modificarHabitacion
-@numero int,
-@nombreHotel varchar(100),
-@descripcion varchar(100),
-@cantHuesped int,
-@costo decimal,
-@piso int
-as 
-begin
-	declare @resultado int
-	if not exists (select nombre_hotel from Habitaciones where nombre_hotel = @nombreHotel and numero = @numero)
-		return -1 /*ERROR habitacion no existe*/
-
-	update Habitaciones 
-	set descripcion = @descripcion, 
-		cant_huesped = @cantHuesped,
-		costo = @costo,
-		piso = @piso
-	where numero = @numero
-	and nombre_hotel = @nombreHotel
-	set @resultado = @@ERROR
-	if @resultado <> 0
-		return -2 /*ERROR SQL*/
-end
-go
-
 
 /************************
 	SP DE RESERVAS
@@ -528,15 +372,6 @@ as
 begin 
 	select * from Reservas
 	where estado_reserva = 'activa'
-end
-go
---exec reservasActivasCliente 'cli'
-create procedure reservasActivasCliente
-@nombre varchar(100)
-as
-begin 
-	select * from Reservas
-	where estado_reserva = 'activa' and nombre_cli=@nombre
 end
 go
 
@@ -554,6 +389,7 @@ BEGIN
 	RETURN -3
 END
 GO
+
 CREATE PROCEDURE RealizarReserva
 --ALTER PROCEDURE RealizarReserva
 
@@ -596,25 +432,303 @@ BEGIN
 	ELSE RETURN @aux
 	
 END
-
---select * from Reservas
-DECLARE @resp int
-EXEC @resp = RealizarReserva  '20171002', '20171011', 'cli', 100, 'hotel'
-IF @resp=-1
-     PRINT 'El usuario no se encuentra registrado. No se pudo realizar la reserva.'
-     
-ELSE IF @resp=-2
-     PRINT 'El período de reserva no puede ser negativo. No se pudo realizar la reserva.'          
-     
-ELSE IF @resp=-3
-     PRINT 'Esta habitacion ya se encuentra reservada en la fecha solicitada, no es posible realizar la reserva.'
-
-ELSE IF @resp<0 AND @resp<>-1 AND @resp<>-2 AND @resp<>-3
-	PRINT 'Ocurrió un error. No se pudo insertar la reserva.'
-
-ELSE IF @resp>0
-	PRINT '¡Habitacion reservada correctamente!' 
 GO
+
+create proc eliminarReservaCascada
+@nomHotel varchar(100)
+as 
+begin
+	declare @respuesta int
+	delete from Reservas where nombre_hotel = @nomHotel
+	set @respuesta = @@ERROR
+	if @respuesta <> 0
+		return -1 /*ERROR Eliminar reserva cascada*/
+	else
+		return 0 
+end
+go
+
+create proc listadoReservasCronologica
+@nombreHotel varchar(100),
+@numeroHab int
+as
+begin
+	select * from Reservas 
+	where nombre_hotel = @nombreHotel and numero_hab = @numeroHab
+	order by fecha_inicio DESC
+end
+go
+
+create proc eliminarReserva
+@nomHotel varchar(100),
+@numeroHab int
+as 
+begin
+	declare @respuesta int
+	delete from Reservas 
+	where nombre_hotel = @nomHotel 
+	and numero_hab = @numeroHab
+	set @respuesta = @@ERROR
+	if @respuesta <> 0
+		return -1 /*ERROR eliminar reserva*/
+	else
+		return 0
+end
+go
+
+/**************************
+	SP DE HABITACIONES
+***************************/
+create proc listarHabitacionesDeHotel
+@nombre varchar(100)
+as
+begin 
+	select ha.* from Habitaciones ha join Hoteles ho
+	on ho.nombre = @nombre
+	and ha.nombre_hotel = @nombre
+end
+go
+
+create proc obtenerHabitacionDeHotel
+@nombreHotel varchar(100),
+@numeroHabitacion int
+as
+begin
+	select ha.* from Habitaciones ha join Hoteles ho
+	on ho.nombre = @nombreHotel
+	and ha.nombre_hotel = nombre_hotel
+	and ha.numero = @numeroHabitacion
+end
+go
+
+create proc agregarHabitacion
+@numero int,
+@nombreHotel varchar(100),
+@descripcion varchar(100),
+@cantHuesped int,
+@costo decimal,
+@piso int
+as 
+begin
+	declare @resultado int
+	 
+	if exists (select nombre_hotel from Habitaciones where nombre_hotel = @nombreHotel and numero = @numero)
+		return -1 /*ERROR habitacion ya existe*/
+
+	insert into Habitaciones
+	values(@numero, @nombreHotel, @descripcion, @cantHuesped, @costo, @piso)
+	set @resultado = @@ERROR
+	if @resultado <> 0
+		return -2 /*ERROR SQL*/
+end 
+go
+
+create proc modificarHabitacion
+@numero int,
+@nombreHotel varchar(100),
+@descripcion varchar(100),
+@cantHuesped int,
+@costo decimal,
+@piso int
+as 
+begin
+	declare @resultado int
+	if not exists (select nombre_hotel from Habitaciones where nombre_hotel = @nombreHotel and numero = @numero)
+		return -1 /*ERROR habitacion no existe*/
+
+	update Habitaciones 
+	set descripcion = @descripcion, 
+		cant_huesped = @cantHuesped,
+		costo = @costo,
+		piso = @piso
+	where numero = @numero
+	and nombre_hotel = @nombreHotel
+	set @resultado = @@ERROR
+	if @resultado <> 0
+		return -2 /*ERROR SQL*/
+end
+go
+
+create proc eliminarHabitacionCascada
+@nomHotel varchar(100)
+as
+begin
+	begin tran
+		declare @reserva int 
+		exec @reserva = eliminarReservaCascada @nomHotel
+
+		if @reserva <> 0
+		begin
+			rollback
+			return -1 /* ERROR Eliminar reserva cascada*/
+		end
+	
+		declare @respuesta int
+		delete from Habitaciones 
+		where nombre_hotel = @nomHotel
+		set @respuesta = @@ERROR
+		if @respuesta <> 0
+		begin
+			rollback
+			return -2 /*ERROR Eliminar habitacion cascada*/
+		end
+		else 
+		begin
+			commit tran
+			return 0
+		end
+end
+go
+
+create proc eliminarHabitacion
+@nomHotel varchar(100),
+@numeroHab int
+as
+begin 
+	begin tran
+		if not exists (select nombre_hotel from Habitaciones where nombre_hotel = @nombreHotel and numero = @numero)
+			return -1 /*ERROR habitacion no existe*/
+
+		declare @resultado int
+		exec @resultado = eliminarReserva @nomHotel, @numeroHab
+		if @resultado <> 0
+		begin
+			rollback
+			return -2 /*ERROR Eliminar reserva*/
+		end
+		
+		declare @respuesta int
+		delete from Habitaciones 
+		where nombre_hotel = @nomHotel and numero = @numeroHab
+		set @respuesta = @@ERROR
+		if @respuesta <> 0
+		begin
+			rollback
+			return -3 /*ERROR Eliminar habitacion*/
+		end
+		else 
+		begin
+			commit tran
+			return 0
+		end
+
+end 
+go
+
+/***********************
+	SP DE HOTELES
+***********************/
+create proc obtenerHoteles
+as
+begin
+	select * from Hoteles
+end 
+go
+
+create proc buscarHotel
+@nombre varchar(100)
+as
+begin
+	select * from Hoteles where nombre = @nombre;
+end
+go
+
+--exec reservasActivasCliente 'cli'
+create procedure reservasActivasCliente
+@nombre varchar(100)
+as
+begin 
+	select * from Reservas
+	where estado_reserva = 'activa' and nombre_cli=@nombre
+end
+go
+
+
+
+create proc agregarHotel
+@nombre varchar(100),
+@calle varchar(100),
+@numero int,
+@ciudad varchar(100),
+@categoria int,
+@telefono varchar(100),
+@fax varchar(100),
+@url_foto varchar(100),
+@playa bit,
+@piscina bit
+
+as
+begin
+
+	if exists(select nombre from Hoteles where nombre = @nombre)
+		return -1 /* sale cuando ya existe el hotel */
+
+	insert into Hoteles
+	values(@nombre, @calle, @numero, @ciudad, @categoria, @telefono, @fax, @url_foto, @playa, @piscina)
+end
+go
+
+create proc modificarHotel
+@nombre varchar(100),
+@calle varchar(100),
+@numero int,
+@ciudad varchar(100),
+@categoria int,
+@telefono varchar(100),
+@fax varchar(100),
+@url_foto varchar(100),
+@playa bit,
+@piscina bit
+as
+begin 
+	declare @respuesta int
+	update Hoteles 
+	set calle = @calle,
+		numero = @numero,
+		ciudad = @ciudad,
+		categoria = @categoria,
+		telefono = @telefono,
+		fax = @fax,
+		url_foto = @url_foto,
+		playa = @playa,
+		piscina = @piscina
+	where nombre = @nombre
+	set @respuesta = @@ERROR
+	if @respuesta <> 0
+		return -1 /*ERROR SQL*/
+end 
+go
+
+create proc eliminarHotel
+@nomHotel varchar(100)
+as
+begin
+	
+	begin tran
+		declare @respuesta int, @habitacion int
+
+		exec @habitacion = eliminarHabitacionCascada @nomHotel
+		if @habitacion <> 0
+		begin
+			rollback
+			return -1 /*ERROR Eliminar habitacion*/
+		end
+
+		delete from Hoteles where nombre = @nomHotel
+		set @respuesta = @@ERROR
+		if @respuesta <> 0
+		begin
+			rollback
+			return -2 /*ERROR Eliminar hotel*/
+		end
+		else
+		begin
+			commit tran
+			return 0
+		end
+end
+go
+
 
 --exec BuscarReserva 1
 create proc BuscarReserva
@@ -641,6 +755,15 @@ begin
 end
 go
 
+create proc ListarCategoria
+@cat int
+as
+begin 
+	select * from Hoteles
+	where categoria = @cat
+end
+go
+
 
 
 /******************************************/
@@ -658,4 +781,23 @@ go
 --select*from Reservas
 -- select * from Habitaciones
 -- exec ListarAdmins
+--EXEC listarHabitacionesDeHotel 'hotel'
+--select * from Reservas
+DECLARE @resp int
+EXEC @resp = RealizarReserva  '20171002', '20171011', 'cli', 100, 'hotel'
+IF @resp=-1
+     PRINT 'El usuario no se encuentra registrado. No se pudo realizar la reserva.'
+     
+ELSE IF @resp=-2
+     PRINT 'El período de reserva no puede ser negativo. No se pudo realizar la reserva.'          
+     
+ELSE IF @resp=-3
+     PRINT 'Esta habitacion ya se encuentra reservada en la fecha solicitada, no es posible realizar la reserva.'
+
+ELSE IF @resp<0 AND @resp<>-1 AND @resp<>-2 AND @resp<>-3
+	PRINT 'Ocurrió un error. No se pudo insertar la reserva.'
+
+ELSE IF @resp>0
+	PRINT '¡Habitacion reservada correctamente!' 
+GO
 

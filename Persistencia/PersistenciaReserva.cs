@@ -26,9 +26,10 @@ namespace Persistencia
                 SqlDataReader lector = cmd.ExecuteReader();
                 while (lector.Read())
                 {
+
                     Cliente cli = PersistenciaCliente.BuscarCliente((string)lector["nombre_cli"]);
 
-                    Habitacion hab = PersistenciaHabitacion.ObtenerHabitacion((string)lector["nombre_hotel"], (int)lector["numero"]);
+                    Habitacion hab = PersistenciaHabitacion.ObtenerHabitacion((string)lector["nombre_hotel"], (int)lector["numero_hab"]);
                     r = new Reserva((int)lector[0], (DateTime)lector[1], (DateTime)lector[2], (string)lector[3],
                          cli, hab);
 
@@ -155,8 +156,8 @@ namespace Persistencia
                 SqlDataReader lector = cmd.ExecuteReader();
                 while (lector.Read())
                 {
-                    
-                    
+
+
                     Cliente cli = PersistenciaCliente.BuscarCliente((string)lector["nombre_cli"]);
 
                     Habitacion hab = PersistenciaHabitacion.ObtenerHabitacion((string)lector["nombre_hotel"], (int)lector["numero_hab"]);
@@ -174,6 +175,34 @@ namespace Persistencia
             finally
             { cnn.Close(); }
             return resp;
+        }
+
+        public static List<Reserva> ListarPorHabitacion(string numeroHab, string nomHotel)
+        {
+            List<Reserva> lstRes = new List<Reserva>();
+            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+
+            SqlCommand cmd = new SqlCommand("listadoReservasCronologica", cnn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@numeroHab", Convert.ToInt32(numeroHab));
+            cmd.Parameters.AddWithValue("@nombreHotel", nomHotel);
+
+            try
+            {
+                cnn.Open();
+                SqlDataReader lector = cmd.ExecuteReader();
+                while (lector.Read())
+                { 
+                    // instanciar reserva
+                    // agregar a la lista
+
+                }
+            }
+            catch (Exception ex)
+            { throw ex; }
+            finally
+            { cnn.Close(); }
+            return lstRes;
         }
     }
 }

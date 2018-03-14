@@ -23,7 +23,6 @@ public partial class formRes : System.Web.UI.Page
             { btnCargarCat.Enabled = false; }
             else { btnCargarCat.Enabled = true;}
             
-
             int[] categorias = { 1, 2, 3, 4, 5 };
             if (!IsPostBack)
             {
@@ -31,18 +30,25 @@ public partial class formRes : System.Web.UI.Page
                 foreach (int cat in categorias)
                 {
                     lstCategoria.Items.Add(cat.ToString());
-
                 }
             }
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
     }
+
     protected void btnLstRes_Click(object sender, EventArgs e)
     {
-        Response.Redirect("formLstRes.aspx");
+        try
+        {
+            Response.Redirect("formLstRes.aspx");
+        }
+        catch (Exception ex)
+        { lblMsj.Text = ex.Message; }
     }
+
     protected void btnCargarCat_Click(object sender, EventArgs e)
+
     {
         try
         {
@@ -69,6 +75,7 @@ public partial class formRes : System.Web.UI.Page
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
     }
+
     protected void gvReserva_SelectedIndexChanged(object sender, EventArgs e)
     {
         try{
@@ -79,26 +86,37 @@ public partial class formRes : System.Web.UI.Page
             lblHabitaciones.Visible = true;
             ddlHabitaciones.Visible = true;
             ddlHabitaciones.SelectedIndex = -1;
-            foreach (Habitacion hab in listHabitaciones) {
+
+            foreach (Habitacion hab in listHabitaciones) 
                 ddlHabitaciones.Items.Add(hab.Numero.ToString());
-            }
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
     }
+
     protected void btnCalcular_Click(object sender, EventArgs e)
     {
-        DateTime fechaIn = clnFechaIn.SelectedDate;
-        DateTime fechaFin = clnFechaFin.SelectedDate;
-        int dias = (int)(fechaFin - fechaIn).TotalDays+1;
-        string nombre_hotel = gvReserva.SelectedRow.Cells[1].Text;
 
-        Habitacion hab = LogicaHabitacion.ObtenerHabitacion(nombre_hotel, Convert.ToInt32(ddlHabitaciones.Text));
-        decimal costo = dias * hab.Costo;
-        lblCosto2.Visible = true;
-        lblCosto.Visible = true;
-        lblCosto.Text = costo.ToString()+"$";
+        try
+        {
+
+            DateTime fechaIn = clnFechaIn.SelectedDate;
+            DateTime fechaFin = clnFechaFin.SelectedDate;
+            int dias = (int)(fechaFin - fechaIn).TotalDays+1;
+            string nombre_hotel = gvReserva.SelectedRow.Cells[1].Text;
+
+            Habitacion hab = LogicaHabitacion.ObtenerHabitacion(nombre_hotel, Convert.ToInt32(ddlHabitaciones.Text));
+            decimal costo = dias * hab.Costo;
+            lblCosto2.Visible = true;
+            lblCosto.Visible = true;
+            lblCosto.Text = costo.ToString()+"$";
+        }
+
+        catch (Exception ex)
+        { lblMsj.Text = ex.Message; }
+
     }
+
     protected void ddlHabitaciones_SelectedIndexChanged(object sender, EventArgs e)
     {
         try
@@ -126,13 +144,11 @@ public partial class formRes : System.Web.UI.Page
                 pnlHabitacion.Visible = false;
             }
             
-            
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
-        
-
     }
+
     protected void btnReservar_Click(object sender, EventArgs e)
     {
         try
