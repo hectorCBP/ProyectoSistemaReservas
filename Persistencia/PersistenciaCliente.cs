@@ -48,6 +48,7 @@ namespace Persistencia
             return cliente;
         }
 
+<<<<<<< HEAD
         public static bool nuevo( Cliente cliente )
 =======
         public static Cliente BuscarCliente(string pNombre)
