@@ -24,7 +24,23 @@ public partial class formHab : System.Web.UI.Page
         return lstCampos;
     }
 
-    //TO DO METODO LIMPIAR FORMULARIO
+    void LimpiarFormulario() 
+    {
+        foreach (Control item in listaRequeridos())
+        {
+            if (item is TextBox && item.ID != "txtNumeroHab")
+            {
+                ((TextBox)item).Text = String.Empty;
+                ((TextBox)item).Enabled = false;
+            }
+        }
+
+        txtNumeroHab.Text = String.Empty;
+        lstHoteles.SelectedIndex = -1;
+        btnAgregarHab.Enabled = false;
+        btnModificarHab.Enabled = false;
+        btnEliminarHab.Enabled = false;
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -64,6 +80,7 @@ public partial class formHab : System.Web.UI.Page
                 if (item is TextBox)
                     ((TextBox)item).Enabled = true;
             }
+            btnAgregarHab.Enabled = false;
             btnModificarHab.Enabled = true;
             btnEliminarHab.Enabled = true;
 
@@ -112,6 +129,7 @@ public partial class formHab : System.Web.UI.Page
 
             LogicaHabitacion.Agregar(habitacion);
             lblMsj.Text = "Se agrego correctamente";
+            LimpiarFormulario();
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
@@ -146,6 +164,7 @@ public partial class formHab : System.Web.UI.Page
 
             LogicaHabitacion.Modificar(habitacion);
             lblMsj.Text = "Se modificó correctamente";
+            LimpiarFormulario();
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
@@ -160,6 +179,7 @@ public partial class formHab : System.Web.UI.Page
 
             LogicaHabitacion.Eliminar(lstHoteles.Text, txtNumeroHab.Text);
             lblMsj.Text = "Se eliminó correctamente";
+            LimpiarFormulario();
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
