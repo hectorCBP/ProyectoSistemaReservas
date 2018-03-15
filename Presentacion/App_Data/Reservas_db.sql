@@ -367,6 +367,7 @@ go
 /************************
 	SP DE RESERVAS
 *************************/
+--exec reservasActivas
 create proc reservasActivas
 as
 begin 
@@ -586,7 +587,7 @@ create proc eliminarHabitacion
 as
 begin 
 	begin tran
-		if not exists (select nombre_hotel from Habitaciones where nombre_hotel = @nombreHotel and numero = @numero)
+		if not exists (select nombre_hotel from Habitaciones where nombre_hotel = @nomHotel and numero = @numeroHab)
 			return -1 /*ERROR habitacion no existe*/
 
 		declare @resultado int
@@ -754,7 +755,7 @@ begin
 	ELSE RETURN @aux
 end
 go
-
+--exec ListarCategoria 3
 create proc ListarCategoria
 @cat int
 as

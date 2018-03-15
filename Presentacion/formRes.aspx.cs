@@ -17,8 +17,7 @@ public partial class formRes : System.Web.UI.Page
             lblMsj.Text = "";
             lblCosto.Visible = false;
             lblCosto2.Visible = false;
-            clnFechaIn.SelectedDate = DateTime.Today;
-            clnFechaFin.SelectedDate = DateTime.Today;
+            
             if (lstCategoria.SelectedIndex == 0)
             { btnCargarCat.Enabled = false; }
             else { btnCargarCat.Enabled = true;}
@@ -26,7 +25,8 @@ public partial class formRes : System.Web.UI.Page
             int[] categorias = { 1, 2, 3, 4, 5 };
             if (!IsPostBack)
             {
-                
+                clnFechaIn.SelectedDate = DateTime.Today;
+                clnFechaFin.SelectedDate = DateTime.Today;
                 foreach (int cat in categorias)
                 {
                     lstCategoria.Items.Add(cat.ToString());
@@ -52,6 +52,7 @@ public partial class formRes : System.Web.UI.Page
     {
         try
         {
+            
             btnReservar.Enabled = false;
             btnCalcular.Enabled = false;
             if (lstCategoria.SelectedIndex != 0)
@@ -71,6 +72,8 @@ public partial class formRes : System.Web.UI.Page
                 pnlHabitacion.Visible = false;
                 ddlHabitaciones.Visible = false;
             }
+
+
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
@@ -155,6 +158,7 @@ public partial class formRes : System.Web.UI.Page
         {
             DateTime fechaIn = clnFechaIn.SelectedDate;
             DateTime fechaFin = clnFechaFin.SelectedDate;
+
 
             int dias = (int)(fechaFin - fechaIn).TotalDays+1;
 

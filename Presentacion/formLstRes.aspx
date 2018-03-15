@@ -9,10 +9,6 @@
         .style10
         {
         }
-        .style11
-        {
-            width: 241px;
-        }
         .style12
         {
             width: 272px;
@@ -44,7 +40,7 @@
         .style19
         {
             height: 44px;
-            text-align: left;
+            text-align: center;
         }
         .style20
         {
@@ -85,15 +81,16 @@
                             <table style="width:100%;">
                                 <tr>
                                     <td>
-                            <asp:GridView ID="gvResActivas" runat="server" 
-                                BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" 
+                            <asp:GridView ID="gvResActivas" runat="server" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" 
                                 CellPadding="4" ForeColor="Black" GridLines="Horizontal" Width="100%" 
                                             onselectedindexchanged="gvResActivas_SelectedIndexChanged1">
                                 <Columns>
                                     <asp:CommandField ShowSelectButton="True" />
                                 </Columns>
-                                <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
-                                <SelectedRowStyle BackColor="#CC3333" ForeColor="White" />
+                                <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+                                <PagerStyle BackColor="#666666" />
+                                <RowStyle BackColor="#E3EAEB" />
+                                <SelectedRowStyle BackColor="#C5BBAF" ForeColor="#333333" />
                             </asp:GridView>
                                     </td>
                                 </tr>
@@ -301,7 +298,8 @@
                                             <asp:Label ID="lblFoto" runat="server" Text="Foto"></asp:Label>
                                         </td>
                                         <td>
-                                            <img alt="" src="" />
+                                            &nbsp;<asp:Image ID="imgFtoHotel" runat="server" Width="170px" 
+                                                CssClass="foto2"/>
                                         </td>
                                     </tr>
                                     <tr>

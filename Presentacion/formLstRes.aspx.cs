@@ -65,6 +65,7 @@ public partial class formLstRes : System.Web.UI.Page
             txtCiudad.Text = hot.Ciudad;
             txtCat.Text = hot.Categoria.ToString();
             txtTel.Text = hot.Telefono;
+            txtFax.Text = hot.Fax;
 
             if (hot.Piscina == true)
             {
@@ -77,6 +78,8 @@ public partial class formLstRes : System.Web.UI.Page
                 chkPlaya.Checked = true;
             }
             else { chkPlaya.Checked = false; }
+
+            imgFtoHotel.ImageUrl = hot.UrlFoto;
             
             
             

@@ -27,12 +27,19 @@
             <td>
                 <asp:GridView ID="gvResActivas" runat="server" Width="100%" BackColor="White" 
                     BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" 
-                    ForeColor="Black" GridLines="Horizontal" Visible="False">
+                    ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False">
                     <Columns>
-                        <asp:ButtonField HeaderText="Estado de reserva" ShowHeader="True" 
+                        <asp:ButtonField ShowHeader="True" 
                             Text="Finalizar">
                         <ItemStyle HorizontalAlign="Center" />
                         </asp:ButtonField>
+                        <asp:BoundField DataField="numero" HeaderText="Número" />
+                        <asp:BoundField DataField="EstadoRes" HeaderText="Estado" />
+                        <asp:BoundField DataField="FechaIni" HeaderText="Check In" />
+                        <asp:BoundField DataField="FechaFin" HeaderText="Check Out" />
+                        <asp:BoundField DataField="Cli.Nombre" HeaderText="Cliente" />
+                        <asp:BoundField DataField="Hab.Numero" HeaderText="Nro Habitación" />
+                        <asp:BoundField DataField="Hab.NombreHotel" HeaderText="Nombre Hotel" />
                     </Columns>
                     <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
                     <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />

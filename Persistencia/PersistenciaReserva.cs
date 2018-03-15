@@ -30,8 +30,8 @@ namespace Persistencia
                     Cliente cli = PersistenciaCliente.BuscarCliente((string)lector["nombre_cli"]);
 
                     Habitacion hab = PersistenciaHabitacion.ObtenerHabitacion((string)lector["nombre_hotel"], (int)lector["numero_hab"]);
-                    r = new Reserva((int)lector[0], (DateTime)lector[1], (DateTime)lector[2], (string)lector[3],
-                         cli, hab);
+                    r = new Reserva((int)lector["numero"], (DateTime)lector["fecha_inicio"], (DateTime)lector["fecha_final"], (string)lector["estado_reserva"],
+                          cli, hab);
 
                     resp.Add(r);
                 }

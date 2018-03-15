@@ -49,8 +49,23 @@
                 <asp:GridView ID="gvReserva" runat="server" Width="100%" CellPadding="4" 
                     ForeColor="#333333" GridLines="None" AutoGenerateSelectButton="True" 
                                             
-                    onselectedindexchanged="gvReserva_SelectedIndexChanged">
+                    onselectedindexchanged="gvReserva_SelectedIndexChanged" 
+                    AutoGenerateColumns="False">
                     <AlternatingRowStyle BackColor="White" />
+                    <Columns>
+                        <asp:BoundField DataField="nombre" HeaderText="Nombre" />
+                        <asp:BoundField DataField="calle" HeaderText="Calle" />
+                        <asp:BoundField DataField="numero" HeaderText="Número" />
+                        <asp:BoundField DataField="ciudad" HeaderText="Ciudad" />
+                        <asp:BoundField DataField="categoria" HeaderText="Categoria" />
+                        <asp:BoundField DataField="telefono" HeaderText="Teléfono" />
+                        <asp:BoundField DataField="fax" HeaderText="Fax" />
+                        <asp:ImageField DataImageUrlField="UrlFoto" HeaderText="Imagen">
+                            <ControlStyle Width="100px" />
+                        </asp:ImageField>
+                        <asp:CheckBoxField DataField="playa" HeaderText="Playa" />
+                        <asp:CheckBoxField DataField="piscina" HeaderText="Piscina" />
+                    </Columns>
                     <EditRowStyle BackColor="#7C6F57" />
                     <FooterStyle BackColor="#1C5E55" ForeColor="White" Font-Bold="True" />
                     <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
