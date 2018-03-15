@@ -70,12 +70,21 @@
                                     <td colspan="3">
                                         <asp:GridView ID="gvResHab" runat="server" CellPadding="4" ForeColor="#333333" 
                                             GridLines="None" Visible="False" Width="100%">
-                                            <AlternatingRowStyle BackColor="White" />
+                                           <AlternatingRowStyle BackColor="White" />
+                                            <Columns>
+                                                <asp:BoundField DataField="numero" HeaderText="Número" />
+                                                <asp:BoundField DataField="EstadoRes" HeaderText="Estado" />
+                                                <asp:BoundField DataField="FechaIni" HeaderText="Check In" />
+                                                <asp:BoundField DataField="FechaFin" HeaderText="Check Out" />
+                                                <asp:BoundField DataField="Cli.Nombre" HeaderText="Cliente" />
+                                                <asp:BoundField DataField="Hab.Numero" HeaderText="Nro Habitación" />
+                                                <asp:BoundField DataField="Hab.NombreHotel" HeaderText="Nombre Hotel" />
+                                            </Columns>
                                             <EditRowStyle BackColor="#7C6F57" />
-                                            <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+                                            <FooterStyle BackColor="#1C5E55" ForeColor="White" Font-Bold="True" />
                                             <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
                                             <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
-                                            <RowStyle BackColor="#E3EAEB" />
+                                            <RowStyle HorizontalAlign="Center" BackColor="#E3EAEB" />
                                             <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
                                             <SortedAscendingCellStyle BackColor="#F8FAFA" />
                                             <SortedAscendingHeaderStyle BackColor="#246B61" />
