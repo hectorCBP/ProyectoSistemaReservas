@@ -18,8 +18,8 @@ namespace EntidadesCompartidas
             get { return telefonos; }
             set
             {
-                if (value.Count > 0)
-                {
+                //if (value.Count > 0)
+                //{
                     long a;
                     bool esnumero = true;
                     foreach (string b in value)
@@ -31,9 +31,9 @@ namespace EntidadesCompartidas
                         telefonos = value;
                     else
                         throw new Exception("Los telefonos deben ser digitos");
-                }
-                else
-                    throw new Exception("Al menos debe haber un telefono de contacto.");
+                //}
+                //else
+                //    throw new Exception("Al menos debe haber un telefono de contacto.");
 
             }
         }

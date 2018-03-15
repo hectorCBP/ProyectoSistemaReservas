@@ -253,18 +253,6 @@ begin
 end
 go
 
-create proc agregarTelefonosCliente
-@nombre varchar(100),
-@telefono varchar(100)
-as 
-begin 
-	if exists (select @nombre from Telefono_Clientes where nombre = @nombre and telefono = @telefono)
-		return -1 /*error cliente-telefono ya existe*/
-	
-	insert into Telefono_Clientes values (@nombre,@telefono)
-end
-go
-
 create proc agregarCliente
 @nombre varchar(100),
 @clave	varchar(100),

@@ -48,9 +48,7 @@ namespace Persistencia
             return cliente;
         }
 
-<<<<<<< HEAD
-        public static bool nuevo( Cliente cliente )
-=======
+
         public static Cliente BuscarCliente(string pNombre)
         {
             SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
@@ -74,8 +72,8 @@ namespace Persistencia
                     string tarjeta = (string)lector["numero_tarjeta_credito"];
                     string nombreCompleto = (string)lector["nombre_completo"];
                     string clave = (string)lector["clave"];
-
-                    cliente = new Cliente(nombre, nombreCompleto, clave, direccion, tarjeta);
+                    List<string> tels = new List<string>();
+                    cliente = new Cliente(nombre, nombreCompleto, clave, direccion, tarjeta,tels);
                 }
                 lector.Close();
             }
@@ -86,8 +84,7 @@ namespace Persistencia
             return cliente;
         }
 
-        public static void nuevo( Cliente cliente )
->>>>>>> 4748619df0f7ef8038f14388792b7b11d4d7f42a
+        public static bool nuevo( Cliente cliente )
         {
             bool devuelvo = false;   
             SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
