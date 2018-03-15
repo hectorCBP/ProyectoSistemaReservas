@@ -14,8 +14,21 @@ public partial class formResAdmin : System.Web.UI.Page
     {
         try
         {
+            gvResActivas.Visible = true;
+            gvResActivas.AutoGenerateColumns = false;
             gvResActivas.DataSource = LogicaReserva.Listado();
             gvResActivas.DataBind();
+        }
+        catch (Exception ex)
+        { lblMsj.Text = ex.Message; }
+    }
+    protected void gvResActivas_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            int numero = Convert.ToInt32(gvResActivas.SelectedRow.Cells[1].Text);
+            LogicaReserva.FinalizarReszerva(numero);
+            Response.Redirect("formResAdmin.aspx");
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }

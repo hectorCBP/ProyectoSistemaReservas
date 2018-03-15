@@ -39,6 +39,10 @@
     margin: 5px;
     width: 300px; 
 }
+.foto2 
+{
+    margin-top:-38px;
+}
 /************************************/
 /*     Formulario de Registro       */
 /************************************/
@@ -80,7 +84,8 @@ table{
 .formulario
 { 
     border: 1px solid #1a1a1a;
-    width: 100%; 
+    width: 100%;
+    text-align: left;
 }
 .boton
 {
@@ -100,7 +105,9 @@ table{
 .boton:hover
 {background-color:#47d363}
 .subtitulo
-{ margin-left: 2%; }
+{ margin-left: 2%;
+    text-align: left;
+}
 .btnForm
 {
     border-style: none;
@@ -110,7 +117,7 @@ table{
     letter-spacing: 1px;
     margin: 0;
     height: 40px;
-    width: 100%;    
+    width: 100%;
 }
 .btnForm:hover
 {

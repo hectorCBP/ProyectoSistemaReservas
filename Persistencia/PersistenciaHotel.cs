@@ -84,7 +84,7 @@ namespace Persistencia
             finally { cnn.Close(); }
             return listaCat1;
         }
-
+        /*BUSCAR*/
         public static Hotel Buscar(string nombre)
         {
             Hotel hotel = null;
@@ -118,7 +118,7 @@ namespace Persistencia
             finally { cnn.Close(); }
             return hotel;
         }
-
+        /*AGREGAR*/
         public static void Agregar(Hotel hotel)
         {
             SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
@@ -156,7 +156,7 @@ namespace Persistencia
             finally
             { cnn.Close();}
         }
-
+        /*MODIFICAR*/
         public static void Modificar(Hotel hotel)
         {
             SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
@@ -190,12 +190,12 @@ namespace Persistencia
             finally
             { cnn.Close(); }       
         }
-
+        /*ELIMINAR*/
         public static void Eliminar(string nombre)
         {
             SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
 
-            SqlCommand cmd = new SqlCommand("", cnn);
+            SqlCommand cmd = new SqlCommand("eliminarHotel", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@nombre", nombre);
 

@@ -6,8 +6,12 @@
     <table style="width: 100%; margin-left: 0px;" id="formMaster" class="userForm">
     <tr>
         <td id="formHab"  class="formulario" align="center">
-                <asp:Label ID="lblMsj" runat="server"></asp:Label>
                 <table style="width: 100%;">
+                    <tr>
+                        <td align="center" colspan="4" width="50%" style="width: 100%">
+                <asp:Label ID="lblMsj" runat="server"></asp:Label>
+                        </td>
+                    </tr>
                     <tr>
                         <td align="left" colspan="2" width="50%">
                 <asp:Label ID="lblHab" runat="server" Text="Mantenimiento de Habitaciones" 
@@ -100,15 +104,15 @@
                     <tr>
                         <td align="center">
                             <asp:Button ID="btnEliminarHab" runat="server" CssClass="btnForm" 
-                                Text="Eliminar" />
+                                Text="Eliminar" onclick="btnEliminarHab_Click" Enabled="False" />
                         </td>
                         <td align="center" colspan="2">
                             <asp:Button ID="btnModificarHab" runat="server" CssClass="btnForm" 
-                                Text="Modificar" onclick="btnModificarHab_Click" />
+                                Text="Modificar" onclick="btnModificarHab_Click" Enabled="False" />
                         </td>
                         <td>
                             <asp:Button ID="btnAgregarHab" runat="server" CssClass="btnForm" 
-                                Text="Agregar" onclick="btnAgregarHab_Click" />
+                                Text="Agregar" onclick="btnAgregarHab_Click" Enabled="False" />
                         </td>
                     </tr>
                     </table>

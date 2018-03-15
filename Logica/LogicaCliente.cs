@@ -16,6 +16,14 @@ namespace Logica
 
         }
 
+        public static Cliente Buscar(string pNombre)
+        {
+            Cliente cli = null;
+            cli = PersistenciaCliente.BuscarCliente(pNombre);
+
+            return cli;
+        }
+
         public static object ListarClientes()
         {
             List<Cliente> lista = PersistenciaCliente.ListarClientes();

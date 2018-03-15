@@ -43,22 +43,34 @@ public partial class formEstadoHab : System.Web.UI.Page
         try
         {
             lblMsj.Text = String.Empty;
+            gvResHab.Visible = false;
 
             if (lstHoteles.SelectedValue == "-1")
                 throw new Exception("Debe seleccionar un Hotel");
 
             string numeroHab = gvEstadoHab.SelectedRow.Cells[3].Text;
-            //List<Reserva> lstRes = LogicaReserva.ListarPorHabitacion();
+            List<Reserva> lstRes = LogicaReserva.ListarPorHabitacion(numeroHab, lstHoteles.Text);
+
+            if (lstRes.Count == 0)
+                throw new Exception("No existen reservas para esta habitación");
+            else
+            {
+                gvResHab.Visible = true;
+                gvResHab.AutoGenerateColumns = false;
+                gvResHab.DataSource = lstRes;
+                gvResHab.DataBind();
+            }
+
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
     }
-
     protected void lstHoteles_SelectedIndexChanged(object sender, EventArgs e)
     {
         try
         {
             gvEstadoHab.Visible = false;
+            gvResHab.Visible = false;
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }

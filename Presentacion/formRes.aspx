@@ -16,7 +16,7 @@
                 <hr />
                 <table style="width: 100%;">
                     <tr>
-                        <td>
+                        <td colspan="2">
                             <table class="style3" width="100%">
                                 <tr>
             <td align="left">
@@ -24,13 +24,14 @@
                 <asp:Label ID="lblCat" runat="server" Text="Categoria de hotel"></asp:Label>
             </td>
             <td align="center" width="33%" colspan="2">
-                <asp:DropDownList ID="lstCategoria" runat="server" Width="90%">
-                    <asp:ListItem Selected="True" Value="-1">Seleccionar</asp:ListItem>
+                <asp:DropDownList ID="lstCategoria" runat="server" Width="100%" 
+                    AutoPostBack="True" onselectedindexchanged="lstCategoria_SelectedIndexChanged">
+                    <asp:ListItem Selected="True" Value="-1">Seleccionar Categoria</asp:ListItem>
                 </asp:DropDownList>
             </td>
             <td align="left" width="33%">
                 <asp:Button ID="btnCargarCat" runat="server" CssClass="btnForm" 
-                    Text="Mostrar Hoteles" onclick="btnCargarHab_Click" />
+                    EnableViewState="False" onclick="btnCargarCat_Click" Text="Mostrar Hoteles" />
             </td>
                                 </tr>
                                 <tr>
@@ -48,8 +49,23 @@
                 <asp:GridView ID="gvReserva" runat="server" Width="100%" CellPadding="4" 
                     ForeColor="#333333" GridLines="None" AutoGenerateSelectButton="True" 
                                             
-                    onselectedindexchanged="gvReserva_SelectedIndexChanged">
+                    onselectedindexchanged="gvReserva_SelectedIndexChanged" 
+                    AutoGenerateColumns="False">
                     <AlternatingRowStyle BackColor="White" />
+                    <Columns>
+                        <asp:BoundField DataField="nombre" HeaderText="Nombre" />
+                        <asp:BoundField DataField="calle" HeaderText="Calle" />
+                        <asp:BoundField DataField="numero" HeaderText="Número" />
+                        <asp:BoundField DataField="ciudad" HeaderText="Ciudad" />
+                        <asp:BoundField DataField="categoria" HeaderText="Categoria" />
+                        <asp:BoundField DataField="telefono" HeaderText="Teléfono" />
+                        <asp:BoundField DataField="fax" HeaderText="Fax" />
+                        <asp:ImageField DataImageUrlField="UrlFoto" HeaderText="Imagen">
+                            <ControlStyle Width="100px" />
+                        </asp:ImageField>
+                        <asp:CheckBoxField DataField="playa" HeaderText="Playa" />
+                        <asp:CheckBoxField DataField="piscina" HeaderText="Piscina" />
+                    </Columns>
                     <EditRowStyle BackColor="#7C6F57" />
                     <FooterStyle BackColor="#1C5E55" ForeColor="White" Font-Bold="True" />
                     <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
@@ -64,7 +80,8 @@
             </td>
                                 </tr>
                                 <tr>
-            <td align="center" colspan="2">
+                                
+            <td align="center" colspan="2" style="padding-top: 30px; padding-bottom: 30px;">
                 <asp:Label ID="lblHabitaciones" runat="server" 
                     Text="Habitaciones de hotel seleccionado:" Visible="False"></asp:Label>
                 <asp:DropDownList ID="ddlHabitaciones" runat="server" 
@@ -127,9 +144,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <asp:Button ID="btnReservar" runat="server" CssClass="btnForm" 
-                                    onclick="btnReservar_Click" Text="Reservar" />
-                            </td>
+                                &nbsp;</td>
                             <td>
                                 &nbsp;</td>
                         </tr>
@@ -195,12 +210,21 @@
                     <tr>
                         <td>
                             <asp:Button ID="btnCalcular" runat="server" CssClass="btnForm" 
-                                onclick="btnCalcular_Click" Text="Calcular Costo" />
+                                onclick="btnCalcular_Click" Text="Calcular Costo" Enabled="False" />
+                                    </td>
+                        <td>
+                                <asp:Button ID="btnReservar" runat="server" CssClass="btnForm" 
+                                    onclick="btnReservar_Click" Text="Reservar" Enabled="False" />
                                     </td>
                     </tr>
                     <tr>
-                        <td align="right">
-                            <asp:Label ID="lblCosto" runat="server" Visible="False"></asp:Label>
+                        <td align="right" style="text-align: center">
+                            <asp:Label ID="lblCosto2" runat="server" Text="Costo TOTAL de la reserva:" 
+                                Visible="False"></asp:Label>
+                                    </td>
+                        <td align="right" style="text-align: center">
+                            <asp:Label ID="lblCosto" runat="server" Visible="False" 
+                                style="text-align: center"></asp:Label>
                                     </td>
                     </tr>
                     </table>

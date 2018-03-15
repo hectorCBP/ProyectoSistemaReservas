@@ -91,7 +91,7 @@ go
 create table Reservas
 (
 
-	numero			bigint identity not null,
+	numero			int identity not null,
 	estado_reserva	varchar(100) constraint CHK_estado_reserva check (estado_reserva ='ACTIVA' OR estado_reserva='CANCELADA' or estado_reserva='FINALIZADA'),
 	fecha_inicio	date,
 	fecha_final		date,
@@ -354,6 +354,18 @@ begin
 	on c.nombre = t.nombre
 	*/
 end
+--EXEC buscarClienteNombre 'cli'
+go
+
+create proc buscarClienteNombre
+--alter proc buscarCliente
+@nombre varchar(100)
+as
+begin
+	select*from Clientes c join Usuarios u
+	on u.nombre = @nombre
+	and u.nombre = c.nombre
+end
 go
 
 create proc ListarAdmins
@@ -384,11 +396,28 @@ go
 /************************
 	SP DE RESERVAS
 *************************/
+--exec reservasActivas
 create proc reservasActivas
 as
 begin 
 	select * from Reservas
-	where estado_reserva = 'activa'
+	where estado_reserva = 'ACTIVA'
+end
+go
+
+create proc finalizarReserva
+@id int
+as
+begin
+	declare @respuesta int
+	update Reservas 
+	set estado_reserva = 'FINALIZADA'
+	where numero = @id
+	set @respuesta = @@ERROR
+	if @respuesta <> 0
+		return -1 /*ERROR al actualizar*/
+	else 
+		return 0
 end
 go
 
@@ -451,7 +480,7 @@ BEGIN
 END
 GO
 
-create proc eliminarReserva
+create proc eliminarReservaCascada
 @nomHotel varchar(100)
 as 
 begin
@@ -459,7 +488,7 @@ begin
 	delete from Reservas where nombre_hotel = @nomHotel
 	set @respuesta = @@ERROR
 	if @respuesta <> 0
-		return -1 /*ERROR Eliminar reserva*/
+		return -1 /*ERROR Eliminar reserva cascada*/
 	else
 		return 0 
 end
@@ -473,6 +502,23 @@ begin
 	select * from Reservas 
 	where nombre_hotel = @nombreHotel and numero_hab = @numeroHab
 	order by fecha_inicio DESC
+end
+go
+
+create proc eliminarReserva
+@nomHotel varchar(100),
+@numeroHab int
+as 
+begin
+	declare @respuesta int
+	delete from Reservas 
+	where nombre_hotel = @nomHotel 
+	and numero_hab = @numeroHab
+	set @respuesta = @@ERROR
+	if @respuesta <> 0
+		return -1 /*ERROR eliminar reserva*/
+	else
+		return 0
 end
 go
 
@@ -491,7 +537,7 @@ go
 
 create proc obtenerHabitacionDeHotel
 @nombreHotel varchar(100),
-@numeroHabitacion varchar(100)
+@numeroHabitacion int
 as
 begin
 	select ha.* from Habitaciones ha join Hoteles ho
@@ -549,18 +595,18 @@ begin
 end
 go
 
-create proc eliminarHabitacion
+create proc eliminarHabitacionCascada
 @nomHotel varchar(100)
 as
 begin
 	begin tran
 		declare @reserva int 
-		exec @reserva = eliminarReserva @nomHotel
+		exec @reserva = eliminarReservaCascada @nomHotel
 
 		if @reserva <> 0
 		begin
 			rollback
-			return -1 /* ERROR Eliminar reserva*/
+			return -1 /* ERROR Eliminar reserva cascada*/
 		end
 	
 		declare @respuesta int
@@ -570,7 +616,7 @@ begin
 		if @respuesta <> 0
 		begin
 			rollback
-			return -2 /*ERROR Eliminar habitacion*/
+			return -2 /*ERROR Eliminar habitacion cascada*/
 		end
 		else 
 		begin
@@ -578,6 +624,41 @@ begin
 			return 0
 		end
 end
+go
+
+create proc eliminarHabitacion
+@nomHotel varchar(100),
+@numeroHab int
+as
+begin 
+	begin tran
+		if not exists (select nombre_hotel from Habitaciones where nombre_hotel = @nomHotel and numero = @numeroHab)
+			return -1 /*ERROR habitacion no existe*/
+
+		declare @resultado int
+		exec @resultado = eliminarReserva @nomHotel, @numeroHab
+		if @resultado <> 0
+		begin
+			rollback
+			return -2 /*ERROR Eliminar reserva*/
+		end
+		
+		declare @respuesta int
+		delete from Habitaciones 
+		where nombre_hotel = @nomHotel and numero = @numeroHab
+		set @respuesta = @@ERROR
+		if @respuesta <> 0
+		begin
+			rollback
+			return -3 /*ERROR Eliminar habitacion*/
+		end
+		else 
+		begin
+			commit tran
+			return 0
+		end
+
+end 
 go
 
 /***********************
@@ -598,6 +679,18 @@ begin
 end
 go
 
+--exec reservasActivasCliente 'cli'
+create procedure reservasActivasCliente
+@nombre varchar(100)
+as
+begin 
+	select * from Reservas
+	where estado_reserva = 'ACTIVA' and nombre_cli=@nombre
+end
+go
+
+
+
 create proc agregarHotel
 @nombre varchar(100),
 @calle varchar(100),
@@ -609,6 +702,7 @@ create proc agregarHotel
 @url_foto varchar(100),
 @playa bit,
 @piscina bit
+
 as
 begin
 
@@ -659,7 +753,7 @@ begin
 	begin tran
 		declare @respuesta int, @habitacion int
 
-		exec @habitacion = eliminarHabitacion @nomHotel
+		exec @habitacion = eliminarHabitacionCascada @nomHotel
 		if @habitacion <> 0
 		begin
 			rollback
@@ -681,6 +775,32 @@ begin
 end
 go
 
+
+--exec BuscarReserva 1
+create proc BuscarReserva
+--alter proc BuscarReserva
+@numero int
+as
+begin
+	select*from Reservas where @numero=numero
+	
+end
+go
+
+create proc CancelarReserva
+--alter proc BuscarReserva
+@numero int
+as
+begin
+	declare @aux int
+	UPDATE Reservas SET estado_reserva='CANCELADA' WHERE numero=@numero
+	SET @aux=@@ERROR
+	IF @aux=0 
+	RETURN 1;
+	ELSE RETURN @aux
+end
+go
+--exec ListarCategoria 3
 create proc ListarCategoria
 @cat int
 as
@@ -689,6 +809,7 @@ begin
 	where categoria = @cat
 end
 go
+
 
 
 /******************************************/
@@ -703,12 +824,15 @@ go
 -- select * from Clientes
 -- select * from Telefono_Clientes
 -- select * from Hoteles
+--select*from Reservas
 -- select * from Habitaciones
 -- exec ListarAdmins
 --EXEC listarHabitacionesDeHotel 'hotel'
 --select * from Reservas
 DECLARE @resp int
 EXEC @resp = RealizarReserva  '20171002', '20171011', 'cli', 100, 'hotel'
+EXEC @resp = RealizarReserva  '20171102', '20171211', 'cli', 100, 'hotel'
+EXEC @resp = RealizarReserva  '20181002', '20181011', 'cli', 100, 'hotel'
 IF @resp=-1
      PRINT 'El usuario no se encuentra registrado. No se pudo realizar la reserva.'
      
