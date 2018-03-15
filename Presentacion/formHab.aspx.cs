@@ -23,6 +23,24 @@ public partial class formHab : System.Web.UI.Page
 
         return lstCampos;
     }
+
+    void LimpiarFormulario() 
+    {
+        foreach (Control item in listaRequeridos())
+        {
+            if (item is TextBox && item.ID != "txtNumeroHab")
+            {
+                ((TextBox)item).Text = String.Empty;
+                ((TextBox)item).Enabled = false;
+            }
+        }
+
+        txtNumeroHab.Text = String.Empty;
+        lstHoteles.SelectedIndex = -1;
+        btnAgregarHab.Enabled = false;
+        btnModificarHab.Enabled = false;
+        btnEliminarHab.Enabled = false;
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -30,8 +48,12 @@ public partial class formHab : System.Web.UI.Page
             if (!IsPostBack)
             {
                 foreach (Hotel h in LogicaHotel.ListaHoteles())
-                {
                     lstHoteles.Items.Add(h.Nombre);
+
+                foreach (Control item in listaRequeridos())
+                {
+                    if (item is TextBox && item.ID != "txtNumeroHab")
+                        ((TextBox)item).Enabled = false;
                 }
             }
         }
@@ -53,13 +75,32 @@ public partial class formHab : System.Web.UI.Page
 
             Habitacion habitacion = LogicaHabitacion.ObtenerHabitacion(lstHoteles.Text, Convert.ToInt32(txtNumeroHab.Text));
 
+            foreach (Control item in listaRequeridos())
+            {
+                if (item is TextBox)
+                    ((TextBox)item).Enabled = true;
+            }
+            btnAgregarHab.Enabled = false;
+            btnModificarHab.Enabled = true;
+            btnEliminarHab.Enabled = true;
+
             txtHuespedHab.Text = habitacion.CantHuesped.ToString();
             txtPisoHab.Text = habitacion.Piso.ToString();
             txtDescripcionHab.Text = habitacion.Descripcion;
             txtCosto.Text = habitacion.Costo.ToString();
         }
         catch (Exception ex)
-        { lblMsj.Text = ex.Message; }
+        {
+            foreach (Control item in listaRequeridos())
+            {
+                if (item is TextBox && item.ID != "txtNumeroHab")
+                    ((TextBox)item).Text = String.Empty;
+            }
+            btnAgregarHab.Enabled = true;
+            btnModificarHab.Enabled = false;
+            btnEliminarHab.Enabled = false;
+            lblMsj.Text = ex.Message; 
+        }
     }
     protected void btnAgregarHab_Click(object sender, EventArgs e)
     {
@@ -88,6 +129,7 @@ public partial class formHab : System.Web.UI.Page
 
             LogicaHabitacion.Agregar(habitacion);
             lblMsj.Text = "Se agrego correctamente";
+            LimpiarFormulario();
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
@@ -104,9 +146,12 @@ public partial class formHab : System.Web.UI.Page
                     if (((DropDownList)campo).SelectedIndex == -1)
                         throw new Exception("Existen campos sin completar");
                 }
-                string box = ((TextBox)campo).Text;
-                if (String.IsNullOrEmpty(box))
-                    throw new Exception("Existen campos sin completar");
+                if (campo is TextBox)
+                {
+                    string box = ((TextBox)campo).Text;
+                    if (String.IsNullOrEmpty(box))
+                        throw new Exception("Existen campos sin completar");
+                }
             }
 
             Habitacion habitacion = new Habitacion(
@@ -119,6 +164,7 @@ public partial class formHab : System.Web.UI.Page
 
             LogicaHabitacion.Modificar(habitacion);
             lblMsj.Text = "Se modificó correctamente";
+            LimpiarFormulario();
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
@@ -133,6 +179,7 @@ public partial class formHab : System.Web.UI.Page
 
             LogicaHabitacion.Eliminar(lstHoteles.Text, txtNumeroHab.Text);
             lblMsj.Text = "Se eliminó correctamente";
+            LimpiarFormulario();
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }

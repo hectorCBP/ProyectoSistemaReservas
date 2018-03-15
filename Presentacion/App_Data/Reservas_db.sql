@@ -337,6 +337,7 @@ begin
 end
 --EXEC buscarClienteNombre 'cli'
 go
+
 create proc buscarClienteNombre
 --alter proc buscarCliente
 @nombre varchar(100)
@@ -372,7 +373,23 @@ create proc reservasActivas
 as
 begin 
 	select * from Reservas
-	where estado_reserva = 'activa'
+	where estado_reserva = 'ACTIVA'
+end
+go
+
+create proc finalizarReserva
+@id int
+as
+begin
+	declare @respuesta int
+	update Reservas 
+	set estado_reserva = 'FINALIZADA'
+	where numero = @id
+	set @respuesta = @@ERROR
+	if @respuesta <> 0
+		return -1 /*ERROR al actualizar*/
+	else 
+		return 0
 end
 go
 
@@ -640,7 +657,7 @@ create procedure reservasActivasCliente
 as
 begin 
 	select * from Reservas
-	where estado_reserva = 'activa' and nombre_cli=@nombre
+	where estado_reserva = 'ACTIVA' and nombre_cli=@nombre
 end
 go
 
@@ -786,6 +803,8 @@ go
 --select * from Reservas
 DECLARE @resp int
 EXEC @resp = RealizarReserva  '20171002', '20171011', 'cli', 100, 'hotel'
+EXEC @resp = RealizarReserva  '20171102', '20171211', 'cli', 100, 'hotel'
+EXEC @resp = RealizarReserva  '20181002', '20181011', 'cli', 100, 'hotel'
 IF @resp=-1
      PRINT 'El usuario no se encuentra registrado. No se pudo realizar la reserva.'
      

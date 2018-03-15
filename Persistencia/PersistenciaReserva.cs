@@ -19,21 +19,23 @@ namespace Persistencia
             SqlCommand cmd = new SqlCommand("reservasActivas", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             try
-            {
-                
-                Reserva r = null; 
+            {       
                 cnn.Open();
                 SqlDataReader lector = cmd.ExecuteReader();
                 while (lector.Read())
                 {
 
-                    Cliente cli = PersistenciaCliente.BuscarCliente((string)lector["nombre_cli"]);
+                    Cliente cliente = PersistenciaCliente.BuscarCliente((string)lector["nombre_cli"]);
+                    Habitacion habitacion = PersistenciaHabitacion.ObtenerHabitacion((string)lector["nombre_hotel"], (int)lector["numero_hab"]);
+                    Reserva reserva = new Reserva(
+                        (int)lector["numero"],
+                        (DateTime)lector["fecha_inicio"],
+                        (DateTime)lector["fecha_final"],
+                        (string)lector["estado_reserva"],
+                         cliente,
+                         habitacion);
+                    resp.Add(reserva);
 
-                    Habitacion hab = PersistenciaHabitacion.ObtenerHabitacion((string)lector["nombre_hotel"], (int)lector["numero_hab"]);
-                    r = new Reserva((int)lector["numero"], (DateTime)lector["fecha_inicio"], (DateTime)lector["fecha_final"], (string)lector["estado_reserva"],
-                          cli, hab);
-
-                    resp.Add(r);
                 }
             }
             catch (Exception ex)
@@ -192,10 +194,17 @@ namespace Persistencia
                 cnn.Open();
                 SqlDataReader lector = cmd.ExecuteReader();
                 while (lector.Read())
-                { 
-                    // instanciar reserva
-                    // agregar a la lista
-
+                {
+                    Cliente cliente = PersistenciaCliente.BuscarCliente((string)lector["nombre_cli"]);
+                    Habitacion habitacion = PersistenciaHabitacion.ObtenerHabitacion((string)lector["nombre_hotel"], (int)lector["numero_hab"]);
+                    Reserva reserva = new Reserva(
+                        (int)lector["numero"], 
+                        (DateTime)lector["fecha_inicio"], 
+                        (DateTime)lector["fecha_final"], 
+                        (string)lector["estado_reserva"],
+                         cliente,
+                         habitacion);
+                    lstRes.Add(reserva);
                 }
             }
             catch (Exception ex)
@@ -203,6 +212,31 @@ namespace Persistencia
             finally
             { cnn.Close(); }
             return lstRes;
+        }
+
+        public static void FinalizarReserva(int numero)
+        {
+            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlCommand cmd = new SqlCommand("finalizarReserva", cnn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@id", numero);
+
+            SqlParameter resSQL = new SqlParameter();
+            resSQL.Direction = ParameterDirection.ReturnValue;
+            cmd.Parameters.Add(resSQL);
+
+            try
+            {
+                cnn.Open();
+                cmd.ExecuteNonQuery();
+                int res = (int)resSQL.Value;
+                if (res == -1)
+                    throw new Exception("ERROR - No se completo la actualización");
+            }
+            catch (Exception ex)
+            { throw ex; }
+            finally
+            { cnn.Close(); }
         }
     }
 }

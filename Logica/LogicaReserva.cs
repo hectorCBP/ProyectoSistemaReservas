@@ -21,7 +21,6 @@ namespace Logica
             return lstRes;
         }
 
-
         public static List<Reserva> ListadoCliente(string nombre)
         {
             List<Reserva> lstRes = new List<Reserva>();
@@ -32,7 +31,6 @@ namespace Logica
 
             return lstRes;
         }
-
         public static int Agregar(Reserva pRes)
         {
             return PersistenciaReserva.Agregar(pRes);
@@ -41,12 +39,10 @@ namespace Logica
         {
             return PersistenciaReserva.Cancelar(num);
         }
-
         public static Reserva Buscar(int num)
         {
             return PersistenciaReserva.Buscar(num);
         }
-
         public static List<Reserva> ListarPorHabitacion(string numeroHab, string nombHotel)
         {
             List<Reserva> lstRes = new List<Reserva>();
@@ -56,6 +52,10 @@ namespace Logica
                 throw new Exception("No existen reservas en está habitación");
 
             return lstRes;
+        }
+        public static void FinalizarReszerva(int numero) 
+        {
+            PersistenciaReserva.FinalizarReserva(numero);
         }
 
     }

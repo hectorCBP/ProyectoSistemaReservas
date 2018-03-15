@@ -44,7 +44,7 @@
                                     <td colspan="3">
                 <asp:GridView ID="gvEstadoHab" runat="server" Width="100%" CellPadding="4" 
                     ForeColor="#333333" GridLines="None" onselectedindexchanged="gvEstadoHab_SelectedIndexChanged">
-                    <AlternatingRowStyle BackColor="White" />
+                    <AlternatingRowStyle BackColor="White" HorizontalAlign="Center" />
                     <Columns>
                         <asp:CommandField ShowSelectButton="True" />
                     </Columns>
