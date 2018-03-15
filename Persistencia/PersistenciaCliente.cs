@@ -35,8 +35,9 @@ namespace Persistencia
                     string tarjeta = (string)lector["numero_tarjeta_credito"];
                     string nombreCompleto = (string)lector["nombre_completo"];
                     string clave = (string)lector["clave"];
+                    List<string> tels = new List<string>(); 
 
-                    cliente = new Cliente(nombre, nombreCompleto, clave, direccion, tarjeta);
+                    cliente = new Cliente(nombre, nombreCompleto, clave, direccion, tarjeta,tels);
                 }
                 lector.Close();
             }
@@ -47,11 +48,11 @@ namespace Persistencia
             return cliente;
         }
 
-        public static void nuevo( Cliente cliente )
+        public static bool nuevo( Cliente cliente )
         {
+            bool devuelvo = false;   
             SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
 
-            // TO DO make a sp with phones insert!
             SqlCommand cmd = new SqlCommand("agregarCliente", cnn);
             cmd.CommandType = CommandType.StoredProcedure; 
             cmd.Parameters.AddWithValue("@nombre",cliente.Nombre);
@@ -70,43 +71,49 @@ namespace Persistencia
                 cmd.ExecuteNonQuery();
                 int resp = (int)resSQL.Value;
 
-                if (resp == -1)
+                if (resp == 1)
+                    devuelvo = true;
+                else if (resp == -1)
                     throw new Exception("Ya existe éste usuario");
             } 
             catch(Exception ex)
             { throw ex; }
             finally { cnn.Close(); }
+            return devuelvo;
         }
 
-        // THIS IS A BUG!!!!!!!
-        /*
-        public static void nuevo(TelefonoCliente telefono)
-        {
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
-
-            SqlCommand cmd = new SqlCommand("agregarTelefonosCliente", cnn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@nombre", telefono.NombreCliente);
-            cmd.Parameters.AddWithValue("@telefono", telefono.Telefono);
-            SqlParameter resSQL = new SqlParameter();
-            resSQL.Direction = ParameterDirection.ReturnValue;
-            cmd.Parameters.Add(resSQL);
-
-            try
+        public static bool TelefonosCliente(Cliente c) {
+            bool devuelvo = false;
+            List<string> tels = new List<string>();
+            tels = c.Telefonos;
+            for (int i = 0; i < tels.Count; i++ )
             {
-                cnn.Open();
-                cmd.ExecuteNonQuery();
-
-                int resp = (int)resSQL.Value;
-
-                if (resp == -1)
-                    throw new Exception("Ya existe éste teléfono");
+                SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+                SqlCommand cmd = new SqlCommand("agregarTelefono", cnn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@nombre", c.Nombre);
+                cmd.Parameters.AddWithValue("@telefono", tels[i]);
+                SqlParameter retorno = new SqlParameter();
+                retorno.Direction = ParameterDirection.ReturnValue;
+                cmd.Parameters.Add(retorno);
+                try {
+                    cnn.Open();
+                    cmd.ExecuteNonQuery();
+                    int ret = (int)retorno.Value;
+                    if (ret == 1)
+                        devuelvo = true;
+                    else if (ret == -1)
+                    {
+                        devuelvo = false;
+                        throw new Exception("No existe el cliente para asignar este telefono");
+                    }
+                }
+                catch (Exception ex) { throw ex; }
+                finally { cnn.Close(); }
+                
             }
-            catch (Exception ex)
-            { throw ex; }
-            finally { cnn.Close(); }         
+            return devuelvo;
         }
-        */
 
         public static List<Cliente> ListarClientes()
         {
@@ -121,8 +128,10 @@ namespace Persistencia
                 SqlDataReader dr = cmd.ExecuteReader(); //ejecuto 
                 while (dr.Read()) //leo
                 {
-                    a = new Cliente((string)dr[0], (string)dr[2], (string)dr[1], (string)dr[3], (string)dr[4]); // creo un admin con los datos del reader
+                    List<string> tels = new List<string>();
 
+                    a = new Cliente((string)dr[0], (string)dr[2], (string)dr[1], (string)dr[3], (string)dr[4],tels); // creo un admin con los datos del reader
+                    
                     resp.Add(a);
 
                 }

@@ -9,7 +9,34 @@ namespace EntidadesCompartidas
     {
         // atributos
         private string direccion,tarjeta;
+        List<string> telefonos;
         // propiedades
+
+
+        public List<string> Telefonos
+        {
+            get { return telefonos; }
+            set
+            {
+                if (value.Count > 0)
+                {
+                    long a;
+                    bool esnumero = true;
+                    foreach (string b in value)
+                    {
+                        if (!long.TryParse(b, out a))
+                            esnumero = false;
+                    }
+                    if (esnumero)
+                        telefonos = value;
+                    else
+                        throw new Exception("Los telefonos deben ser digitos");
+                }
+                else
+                    throw new Exception("Al menos debe haber un telefono de contacto.");
+
+            }
+        }
         public string Direccion
         { 
             get { return direccion; }
@@ -37,11 +64,12 @@ namespace EntidadesCompartidas
             } 
         }
         // constructor
-        public Cliente(string pNombre, string pNombreCompleto, string pClave, string pDireccion, string pTarjeta)
+        public Cliente(string pNombre, string pNombreCompleto, string pClave, string pDireccion, string pTarjeta, List<string> pTelefonos)
             : base(pNombre, pNombreCompleto, pClave)
         {
             Direccion = pDireccion;
             Tarjeta = pTarjeta;
+            Telefonos = pTelefonos;
         }
     }
 }

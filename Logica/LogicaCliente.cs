@@ -10,25 +10,21 @@ namespace Logica
 {
     public class LogicaCliente
     {
-        public static void Agregar( Cliente cliente, List<TelefonoCliente> listaTelefonos )
+        public static bool Agregar( Cliente cliente )
         {
-            PersistenciaCliente.nuevo(cliente);
+            return PersistenciaCliente.nuevo(cliente);
 
-            // TO DO FIX THIS
-            // ERROR NOT ROLLBACK NEW CLIENT IF PHONE
-            // IS ALREADY INSERT
-            /*
-            foreach(TelefonoCliente tel in listaTelefonos)
-            {
-                PersistenciaCliente.nuevo(tel);
-            }
-            */
         }
 
         public static object ListarClientes()
         {
             List<Cliente> lista = PersistenciaCliente.ListarClientes();
             return lista;
+        }
+
+        public static bool AgregarTelefono(Cliente cliente)
+        {
+            return PersistenciaCliente.TelefonosCliente(cliente);
         }
     }
 }
