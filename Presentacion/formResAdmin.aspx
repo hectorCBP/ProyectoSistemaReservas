@@ -31,11 +31,7 @@
                     onselectedindexchanged="gvResActivas_SelectedIndexChanged">
                     <AlternatingRowStyle BackColor="White" />
                     <Columns>
-                        <asp:CommandField HeaderText="Acción" SelectText="Finalizar" 
-                            ShowSelectButton="True" />
-
-                        <ItemStyle HorizontalAlign="Center" />
-                        </asp:ButtonField>
+                        <asp:CommandField HeaderText="Acción" SelectText="Finalizar" ShowSelectButton="True" />
                         <asp:BoundField DataField="numero" HeaderText="Número" />
                         <asp:BoundField DataField="EstadoRes" HeaderText="Estado" />
                         <asp:BoundField DataField="FechaIni" HeaderText="Check In" />
@@ -43,7 +39,6 @@
                         <asp:BoundField DataField="Cli.Nombre" HeaderText="Cliente" />
                         <asp:BoundField DataField="Hab.Numero" HeaderText="Nro Habitación" />
                         <asp:BoundField DataField="Hab.NombreHotel" HeaderText="Nombre Hotel" />
-
                     </Columns>
                     <EditRowStyle BackColor="#7C6F57" />
                     <FooterStyle BackColor="#1C5E55" ForeColor="White" Font-Bold="True" />
