@@ -21,7 +21,6 @@ namespace Logica
             return lstRes;
         }
 
-
         public static List<Reserva> ListadoCliente(string nombre)
         {
             List<Reserva> lstRes = new List<Reserva>();
@@ -53,6 +52,10 @@ namespace Logica
                 throw new Exception("No existen reservas en está habitación");
 
             return lstRes;
+        }
+        public static void FinalizarReszerva(int numero) 
+        {
+            PersistenciaReserva.FinalizarReserva(numero);
         }
 
     }

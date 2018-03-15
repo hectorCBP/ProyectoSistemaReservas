@@ -372,7 +372,23 @@ create proc reservasActivas
 as
 begin 
 	select * from Reservas
-	where estado_reserva = 'activa'
+	where estado_reserva = 'ACTIVA'
+end
+go
+
+create proc finalizarReserva
+@id int
+as
+begin
+	declare @respuesta int
+	update Reservas 
+	set estado_reserva = 'FINALIZADA'
+	where numero = @id
+	set @respuesta = @@ERROR
+	if @respuesta <> 0
+		return -1 /*ERROR al actualizar*/
+	else 
+		return 0
 end
 go
 
@@ -640,7 +656,7 @@ create procedure reservasActivasCliente
 as
 begin 
 	select * from Reservas
-	where estado_reserva = 'activa' and nombre_cli=@nombre
+	where estado_reserva = 'ACTIVA' and nombre_cli=@nombre
 end
 go
 
