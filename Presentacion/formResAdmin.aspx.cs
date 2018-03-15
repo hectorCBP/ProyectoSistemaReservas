@@ -15,6 +15,7 @@ public partial class formResAdmin : System.Web.UI.Page
         try
         {
             gvResActivas.Visible = true;
+            gvResActivas.AutoGenerateColumns = false;
             gvResActivas.DataSource = LogicaReserva.Listado();
             gvResActivas.DataBind();
         }

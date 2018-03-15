@@ -56,6 +56,7 @@ public partial class formEstadoHab : System.Web.UI.Page
             else
             {
                 gvResHab.Visible = true;
+                gvResHab.AutoGenerateColumns = false;
                 gvResHab.DataSource = lstRes;
                 gvResHab.DataBind();
             }
@@ -69,6 +70,7 @@ public partial class formEstadoHab : System.Web.UI.Page
         try
         {
             gvEstadoHab.Visible = false;
+            gvResHab.Visible = false;
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
