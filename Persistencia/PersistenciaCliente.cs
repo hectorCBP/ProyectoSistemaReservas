@@ -97,16 +97,11 @@ namespace Persistencia
             cmd.Parameters.AddWithValue("@direccion",cliente.Direccion);
             cmd.Parameters.AddWithValue("@numeroTarjeta",cliente.Tarjeta);
 
-            SqlParameter resSQL = new SqlParameter();
-            resSQL.Direction = ParameterDirection.ReturnValue;
-            cmd.Parameters.Add(resSQL);
-
-            try 
-            { 
+            try
+            {
                 cnn.Open();
                 cmd.ExecuteNonQuery();
                 int resp = (int)resSQL.Value;
-
                 if (resp == 1)
                     devuelvo = true;
                 else if (resp == -1)
