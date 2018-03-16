@@ -14,6 +14,7 @@ public partial class formEstadoHab : System.Web.UI.Page
     {
         try
         {
+            lblMsj.Text = "";
             if (!IsPostBack)
             {
                 foreach (Hotel h in LogicaHotel.ListaHoteles())
