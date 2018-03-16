@@ -92,10 +92,13 @@ public partial class formLstRes : System.Web.UI.Page
     {
         try
         {
-
+            pnlDatosRes.Visible = false;
             int num_res = Convert.ToInt32(gvResActivas.SelectedRow.Cells[1].Text);
 
             int resp = LogicaReserva.Cancelar(num_res);
+            
+            Response.Redirect("formLstRes.aspx");
+            
             
         }
         catch (Exception ex)

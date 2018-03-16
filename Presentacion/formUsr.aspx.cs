@@ -38,11 +38,12 @@ public partial class formCli : System.Web.UI.Page
             gvUsers.Enabled = false;
             btnEliminar.Visible = true;
             pnlModificar.Visible = true;
-            txtNombre.Text = gvUsers.SelectedRow.Cells[0].Text;
+            
+            txtNombre.Text =string.Format(gvUsers.SelectedRow.Cells[0].Text);
             txtNombre.Enabled = false;
-            txtNomCompleto.Text = gvUsers.SelectedRow.Cells[1].Text;
-            txtClave.Text = gvUsers.SelectedRow.Cells[2].Text;
-            txtCargo.Text = gvUsers.SelectedRow.Cells[3].Text;
+            txtNomCompleto.Text = string.Format(gvUsers.SelectedRow.Cells[1].Text);
+            txtClave.Text = string.Format(gvUsers.SelectedRow.Cells[2].Text);
+            txtCargo.Text = string.Format(gvUsers.SelectedRow.Cells[3].Text);
             
         }
         }

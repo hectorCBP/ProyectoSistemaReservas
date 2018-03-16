@@ -12,7 +12,7 @@ public partial class formRegistro : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        lblMsj.Text = "";
     }
 
     protected void btnReg_Click(object sender, EventArgs e)
@@ -33,33 +33,35 @@ public partial class formRegistro : System.Web.UI.Page
             string clave = txtPass.Text.Trim();
             string direccion = txtDir.Text.Trim();
             string tarjeta = txtTarj.Text.Trim();
-
-            Cliente cliente = new Cliente(usuario, nombreComleto, clave, direccion, tarjeta);
-
-            List<TelefonoCliente> lstObjTel = new List<TelefonoCliente>();
-            /*
-             * THIS NEED A FIX
-             * 
-            List<string> lstTel = new List<string>();            
-            TelefonoCliente telCli = null;
-
-            if (txtSegTel.Text != null)
-                lstTel.Add(txtSegTel.Text.Trim());
-            if (txtMovil.Text != null)
-                lstTel.Add(txtMovil.Text.Trim());
+            List<string> tels = new List<string>();
+            tels.Add(txtTel.Text);
+            if (txtSegTel.Text!="")
+                tels.Add(txtSegTel.Text);
+            if (txtMovil.Text!="")
+                tels.Add(txtMovil.Text);
             
-            foreach (string numTel in lstTel)
+
+            Cliente cliente = new Cliente(usuario, nombreComleto, clave, direccion, tarjeta,tels);
+            if (LogicaCliente.Agregar(cliente))
             {
-                telCli = new TelefonoCliente(txtNomUsr.Text, numTel);
-                lstObjTel.Add(telCli);
+                if (LogicaCliente.AgregarTelefono(cliente))
+                {
+                    lblMsj.Text = "Cliente Agregado correctamente.";
+                }
+                else
+                {
+                    lblMsj.Text = "Se creo el cliente pero hubo problemas al cargar su telefono/s";
+                }
+                txtNomUsr.Text = "";
+                txtNomCom.Text = "";
+                txtTarj.Text = "";
+                txtDir.Text = "";
+                txtTel.Text = "";
+                txtSegTel.Text = "";
+                txtMovil.Text = "";
             }
-            */            
-            LogicaCliente.Agregar(cliente, lstObjTel);           
-            lblMsj.Text = "Se ha registrado con éxito";
-
-            foreach (Control campo in listaRequeridos())
-                ((TextBox)campo).Text = String.Empty;
-
+            else
+                lblMsj.Text = "No se pudo agregar el cliente.";
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }

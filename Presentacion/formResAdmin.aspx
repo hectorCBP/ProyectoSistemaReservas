@@ -27,11 +27,15 @@
             <td>
 
                 <asp:GridView ID="gvResActivas" runat="server" Width="100%" CellPadding="4" 
-                    ForeColor="#333333" GridLines="None" Visible="False" 
-                    onselectedindexchanged="gvResActivas_SelectedIndexChanged">
+                    ForeColor="#333333" GridLines="None" 
+                    onselectedindexchanged="gvResActivas_SelectedIndexChanged" 
+                    AutoGenerateColumns="False">
                     <AlternatingRowStyle BackColor="White" />
                     <Columns>
-                        <asp:CommandField HeaderText="Acción" SelectText="Finalizar" ShowSelectButton="True" />
+
+                        <asp:CommandField HeaderText="Acción" SelectText="Finalizar" 
+                            ShowSelectButton="True" />
+
                         <asp:BoundField DataField="numero" HeaderText="Número" />
                         <asp:BoundField DataField="EstadoRes" HeaderText="Estado" />
                         <asp:BoundField DataField="FechaIni" HeaderText="Check In" />

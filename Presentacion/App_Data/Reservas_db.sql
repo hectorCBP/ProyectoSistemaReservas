@@ -253,18 +253,6 @@ begin
 end
 go
 
-create proc agregarTelefonosCliente
-@nombre varchar(100),
-@telefono varchar(100)
-as 
-begin 
-	if exists (select @nombre from Telefono_Clientes where nombre = @nombre and telefono = @telefono)
-		return -1 /*error cliente-telefono ya existe*/
-	
-	insert into Telefono_Clientes values (@nombre,@telefono)
-end
-go
-
 create proc agregarCliente
 @nombre varchar(100),
 @clave	varchar(100),
@@ -305,6 +293,25 @@ begin
 			commit tran
 			return 1
 		end
+end
+go
+
+create proc agregarTelefono
+--alter proc agregarTelefono
+@nombre varchar(100),
+@telefono varchar (100)
+as
+begin
+declare @errorAux int
+	if not exists (select * from Clientes where nombre=@nombre)
+		return -1
+	else
+	insert into Telefono_Clientes (nombre,telefono) values (@nombre,@telefono)
+	set @errorAux = @@ERROR
+	if @errorAux<>0
+		return -2;
+	else
+		return 1
 end
 go
 
@@ -364,6 +371,15 @@ begin
 	select u.nombre as 'nombre',u.clave as 'clave',u.nombre_completo as 'nombre_completo', c.direccion as 'direccion', c.numero_tarjeta_credito as 'tarjeta de credito' from usuarios u join Clientes c on (u.nombre = c.nombre)
 end
 go
+
+create proc TelefonosCliente --pasando el nombre de usuario devuelve los telefonos del mismo
+@nombre varchar(100)
+as
+begin
+	select t.telefono from Telefono_Clientes t where (t.nombre=@nombre)
+end
+go
+
 
 /************************
 	SP DE RESERVAS
