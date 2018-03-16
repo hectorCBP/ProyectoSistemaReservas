@@ -146,13 +146,13 @@ create proc agregarAdministrador
 as
 begin
 	
-	declare @usuario int
 	declare @resultado int
 	
-	exec @usuario = buscarUsuario @nombre,@clave
-	
-	if (@usuario > 0)
-		return -1 /*usuario ya existe*/
+
+	if exists (select * from Usuarios where nombre=@nombre)
+	return -1--existe
+	else
+
 		
 	begin tran
 		insert into Usuarios values (@nombre, @clave, @nombreCompleto)
@@ -186,11 +186,8 @@ create proc modificarAdmin
 as
 begin
 	
-	declare @usuario int
 	declare @resultado int
-	
-	exec @usuario = buscarUsuario @nombre,@clave
-	
+		
 	if not exists (select * from Usuarios where nombre=@nombre)
 	return -1
 	else
@@ -216,6 +213,7 @@ begin
 			return 1 --todo ok
 		end
 end
+
 go
 
 create proc eliminarAdmin
@@ -261,22 +259,20 @@ create proc agregarCliente
 @numeroTarjeta varchar(100)
 as 
 begin
-	declare @usuario int
+	
 	declare @resultado int
 	
-	exec @usuario = buscarUsuario @nombre,@clave
-	
-	if (@usuario > 0)
+	if exists (select nombre from Usuarios where nombre=@nombre)
+
 		return -1 /*usuario ya existe*/	
 		
 	begin tran
 
 		insert into Usuarios values (@nombre, @clave, @nombreCompleto)
 		set @resultado = @@ERROR
-
 		if @resultado <> 0
 		begin
-			rollback
+			
 			return -2 /*error al insertar usuario*/
 		end
 
@@ -361,6 +357,14 @@ create proc ListarAdmins
 as
 begin
 	select u.nombre as 'nombre',u.clave as 'clave',u.nombre_completo as 'nombre_completo',a.cargo as 'cargo' from usuarios u join administradores a on (u.nombre = a.nombre)
+end
+go
+
+create proc BuscarAdmin
+@nombre varchar(100)
+as
+begin
+	select u.nombre as 'nombre',u.clave as 'clave',u.nombre_completo as 'nombre_completo',a.cargo as 'cargo' from usuarios u join administradores a on (u.nombre = a.nombre) and a.nombre=@nombre
 end
 go
 

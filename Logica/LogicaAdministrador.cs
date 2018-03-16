@@ -29,5 +29,10 @@ namespace Logica
         {
             return PersistenciaAdministrador.EliminarAdmin(a);
         }
+
+        public static Administrador BuscarAdmin(string nombre)
+        {
+            return PersistenciaAdministrador.BuscarAdmin(nombre);
+        }
     }
 }
