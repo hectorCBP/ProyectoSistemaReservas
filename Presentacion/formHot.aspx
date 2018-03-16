@@ -25,7 +25,7 @@
                     </tr>
                     <tr>
                         <td align="center" colspan="2">
-                            <asp:TextBox ID="txtBuscarH" runat="server" CssClass="txtBoxReg"></asp:TextBox>
+                            <asp:TextBox ID="txtBuscarH" runat="server" CssClass="txtBoxReg" placeholder="nombre del hotel a buscar"></asp:TextBox>
                         </td>
                         <td>
                             <asp:Button ID="btnBuscarH" runat="server" CssClass="btnForm" Text="Buscar" 
@@ -62,7 +62,7 @@
                     </tr>
                     <tr>
                         <td align="center" width="33%">
-                            <asp:Label ID="lblHotel" runat="server" Text="Hotel"></asp:Label>
+                            <asp:Label ID="lblHotel" runat="server" Text="Nombre  De Hotel"></asp:Label>
                         </td>
                         <td align="center" width="33%">
                             <asp:TextBox ID="txtHotel" runat="server" Width="90%"></asp:TextBox>
@@ -87,7 +87,7 @@
                     </tr>
                     <tr>
                         <td align="center" width="33%">
-                            <asp:Label ID="lblCalle" runat="server" Text="calle"></asp:Label>
+                            <asp:Label ID="lblCalle" runat="server" Text="Dirección"></asp:Label>
                         </td>
                         <td align="center" width="33%">
                             <asp:TextBox ID="txtCalleH" runat="server" Width="90%"></asp:TextBox>
@@ -97,7 +97,7 @@
                     </tr>
                     <tr>
                         <td align="center" width="33%">
-                            <asp:Label ID="lblNumeroH" runat="server" Text="nº puerta"></asp:Label>
+                            <asp:Label ID="lblNumeroH" runat="server" Text="Nº De Puerta"></asp:Label>
                         </td>
                         <td align="center" width="33%">
                             <asp:TextBox ID="txtNumeroH" runat="server" Width="90%" MaxLength="10"></asp:TextBox>
@@ -107,7 +107,7 @@
                     </tr>
                     <tr>
                         <td align="center" width="33%">
-                            <asp:Label ID="lblCiudadH" runat="server" Text="ciudad"></asp:Label>
+                            <asp:Label ID="lblCiudadH" runat="server" Text="Ciudad"></asp:Label>
                         </td>
                         <td align="center" width="33%">
                             <asp:TextBox ID="txtCuidadH" runat="server" Width="90%"></asp:TextBox>
@@ -148,7 +148,7 @@
                     </tr>
                     <tr>
                         <td align="center" width="33%">
-                            <asp:Label ID="lblPiscinaH" runat="server" Text="piscina"></asp:Label>
+                            <asp:Label ID="lblPiscinaH" runat="server" Text="Tiene Piscina"></asp:Label>
                         </td>
                         <td align="center" width="33%">
                             <asp:CheckBox ID="chkPiscinaH" runat="server" Enabled="False" />
@@ -158,7 +158,7 @@
                     </tr>
                     <tr>
                         <td align="center" width="33%">
-                            <asp:Label ID="lblPlayaH" runat="server" Text="playa"></asp:Label>
+                            <asp:Label ID="lblPlayaH" runat="server" Text="Próximo a playa"></asp:Label>
                         </td>
                         <td align="center" width="33%">
                             <asp:CheckBox ID="chkPlayaH" runat="server" Enabled="False" />

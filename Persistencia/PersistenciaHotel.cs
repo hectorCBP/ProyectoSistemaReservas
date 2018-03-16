@@ -197,7 +197,7 @@ namespace Persistencia
 
             SqlCommand cmd = new SqlCommand("eliminarHotel", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@nombre", nombre);
+            cmd.Parameters.AddWithValue("@nomHotel", nombre);
 
             SqlParameter resSQL = new SqlParameter();
             resSQL.Direction = ParameterDirection.ReturnValue;
