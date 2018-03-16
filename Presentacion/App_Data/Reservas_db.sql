@@ -812,7 +812,7 @@ go
 -- select * from Clientes
 -- select * from Telefono_Clientes
 -- select * from Hoteles
---select*from Reservas
+-- select * from Reservas
 -- select * from Habitaciones
 -- exec ListarAdmins
 --EXEC listarHabitacionesDeHotel 'hotel'
