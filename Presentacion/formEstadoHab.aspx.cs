@@ -69,6 +69,9 @@ public partial class formEstadoHab : System.Web.UI.Page
     {
         try
         {
+            lblMsj.Text = String.Empty;
+            gvEstadoHab.DataSource = null;
+            gvEstadoHab.DataBind();
             gvEstadoHab.Visible = false;
             gvResHab.Visible = false;
         }
