@@ -70,7 +70,6 @@ namespace EntidadesCompartidas
             get { return url_foto; }
             set { url_foto = value; }
         }
-
         public int Numero
         {
             get { return numero;}
@@ -94,7 +93,6 @@ namespace EntidadesCompartidas
                     throw new Exception("El número de categoría debe debe ser 1, 2, 3, 4 o 5.");
             }
         }
-
         public bool Playa
         {
             get { return playa; }

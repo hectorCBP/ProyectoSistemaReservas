@@ -106,15 +106,16 @@ go
 /******************************************/
 /*			Insersiones de prueba		  */
 /******************************************/
-insert into Usuarios values('adm','adm','adm_uno')
-insert into Usuarios values('cli','cli','adm_uno')
-insert into Usuarios values('Juan','juan','Juan Perez')
-insert into Usuarios values('Carlos','carlos','Carlos Lopez')
-insert into Usuarios values('Lucas','lucas','Lucas Martinez')
-insert into Usuarios values('Laura','laura','Laura Sanchez')
-insert into Usuarios values('Carla','carla','Carla Suarez')
-insert into Usuarios values('Sofia','sofia','Sofia Suarez')
-insert into Usuarios values('usr','usr','usr_hard')
+
+insert into Usuarios values('adm','adm12345','adm_uno')
+insert into Usuarios values('cli','cli12345','adm_uno')
+insert into Usuarios values('Juan','juan1234','Juan Perez')
+insert into Usuarios values('Carlos','carlos12','Carlos Lopez')
+insert into Usuarios values('Lucas','lucas123','Lucas Martinez')
+insert into Usuarios values('Laura','laura123','Laura Sanchez')
+insert into Usuarios values('Carla','carla123','Carla Suarez')
+insert into Usuarios values('Sofia','sofia123','Sofia Suarez')
+insert into Usuarios values('usr','usr12345','usr_hard')
 
 insert into Administradores values('adm','super_adm')
 insert into Administradores values('Carlos','Gerente')
@@ -193,13 +194,13 @@ create proc agregarAdministrador
 as
 begin
 	
-	declare @usuario int
 	declare @resultado int
 	
-	exec @usuario = buscarUsuario @nombre,@clave
-	
-	if (@usuario = 1)
-		return -1 /*usuario ya existe*/
+
+	if exists (select * from Usuarios where nombre=@nombre)
+	return -1--existe
+	else
+
 		
 	begin tran
 		insert into Usuarios values (@nombre, @clave, @nombreCompleto)
@@ -233,11 +234,8 @@ create proc modificarAdmin
 as
 begin
 	
-	declare @usuario int
 	declare @resultado int
-	
-	exec @usuario = buscarUsuario @nombre,@clave
-	
+		
 	if not exists (select * from Usuarios where nombre=@nombre)
 	return -1
 	else
@@ -263,6 +261,7 @@ begin
 			return 1 --todo ok
 		end
 end
+
 go
 
 create proc eliminarAdmin
@@ -308,22 +307,20 @@ create proc agregarCliente
 @numeroTarjeta varchar(100)
 as 
 begin
-	declare @usuario int
+	
 	declare @resultado int
 	
-	exec @usuario = buscarUsuario @nombre,@clave
-	
-	if (@usuario = 1)
+	if exists (select nombre from Usuarios where nombre=@nombre)
+
 		return -1 /*usuario ya existe*/	
 		
 	begin tran
 
 		insert into Usuarios values (@nombre, @clave, @nombreCompleto)
 		set @resultado = @@ERROR
-
 		if @resultado <> 0
 		begin
-			rollback
+			
 			return -2 /*error al insertar usuario*/
 		end
 
@@ -408,6 +405,14 @@ create proc ListarAdmins
 as
 begin
 	select u.nombre as 'nombre',u.clave as 'clave',u.nombre_completo as 'nombre_completo',a.cargo as 'cargo' from usuarios u join administradores a on (u.nombre = a.nombre)
+end
+go
+
+create proc BuscarAdmin
+@nombre varchar(100)
+as
+begin
+	select u.nombre as 'nombre',u.clave as 'clave',u.nombre_completo as 'nombre_completo',a.cargo as 'cargo' from usuarios u join administradores a on (u.nombre = a.nombre) and a.nombre=@nombre
 end
 go
 
@@ -859,7 +864,7 @@ go
 -- select * from Clientes
 -- select * from Telefono_Clientes
 -- select * from Hoteles
---select*from Reservas
+-- select * from Reservas
 -- select * from Habitaciones
 -- exec ListarAdmins
 --EXEC listarHabitacionesDeHotel 'hotel'

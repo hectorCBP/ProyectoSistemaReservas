@@ -49,6 +49,7 @@ namespace EntidadesCompartidas
         public int Piso
         {
             get { return piso; }
+
             set
             {
                 if (value >= 0)
@@ -57,6 +58,7 @@ namespace EntidadesCompartidas
                     throw new Exception("El piso de la habitación debe ser positivo.");
             }
         }
+
 
         public decimal Costo
         {

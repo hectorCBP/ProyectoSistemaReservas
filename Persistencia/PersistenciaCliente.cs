@@ -97,23 +97,20 @@ namespace Persistencia
             cmd.Parameters.AddWithValue("@direccion",cliente.Direccion);
             cmd.Parameters.AddWithValue("@numeroTarjeta",cliente.Tarjeta);
 
-            SqlParameter resSQL = new SqlParameter();
-            resSQL.Direction = ParameterDirection.ReturnValue;
-            cmd.Parameters.Add(resSQL);
+            SqlParameter ret = new SqlParameter();
+            ret.Direction = ParameterDirection.ReturnValue;
+            cmd.Parameters.Add(ret);
 
-            try 
-            { 
+            try
+            {
                 cnn.Open();
                 cmd.ExecuteNonQuery();
-                int resp = (int)resSQL.Value;
-
+                int resp = (int)ret.Value;
                 if (resp == 1)
                     devuelvo = true;
-                else if (resp == -1)
-                    throw new Exception("Ya existe éste usuario");
             } 
-            catch(Exception ex)
-            { throw ex; }
+            catch(Exception)
+            { throw new Exception("Ya existe éste usuario"); }
             finally { cnn.Close(); }
             return devuelvo;
         }

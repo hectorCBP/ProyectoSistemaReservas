@@ -32,12 +32,7 @@ namespace Logica
 
         public static Hotel Buscar(string nombre)
         {
-            Hotel hotel = PersistenciaHotel.Buscar(nombre);
-
-            if (hotel == null)
-                throw new Exception("Nombre de hotel no registrado");
-
-            return hotel;
+            return PersistenciaHotel.Buscar(nombre);
         }
 
         public static void Agregar(Hotel hotel)

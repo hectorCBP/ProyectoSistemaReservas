@@ -39,12 +39,12 @@ public partial class formCli : System.Web.UI.Page
             btnEliminar.Visible = true;
             pnlModificar.Visible = true;
             
-            txtNombre.Text =string.Format(gvUsers.SelectedRow.Cells[0].Text);
+            Administrador a = LogicaAdministrador.BuscarAdmin( Server.HtmlDecode(gvUsers.SelectedRow.Cells[0].Text));
+            txtNombre.Text = a.Nombre.ToString();
             txtNombre.Enabled = false;
-            txtNomCompleto.Text = string.Format(gvUsers.SelectedRow.Cells[1].Text);
-            txtClave.Text = string.Format(gvUsers.SelectedRow.Cells[2].Text);
-            txtCargo.Text = string.Format(gvUsers.SelectedRow.Cells[3].Text);
-            
+            txtNomCompleto.Text = a.NombreCompleto.ToString();            
+            txtClave.Text = a.Clave.ToString();            
+            txtCargo.Text = a.Cargo.ToString();
         }
         }
         catch (Exception ex) { lblMsj.Text = ex.Message; }
@@ -108,6 +108,12 @@ public partial class formCli : System.Web.UI.Page
     {
         try{
 
+            foreach (Control campo in listaRequeridos())
+            {
+                if (String.IsNullOrEmpty(((TextBox)campo).Text))
+                    throw new Exception("Debe completar todos los campos!");
+            }
+
         Administrador a = new Administrador(txtNombre.Text,txtNomCompleto.Text,txtClave.Text,txtCargo.Text);
         if (gvUsers.SelectedIndex == -1)
         {
@@ -126,5 +132,17 @@ public partial class formCli : System.Web.UI.Page
         gvUsers.DataBind();
         }
         catch (Exception ex) { lblMsj.Text = ex.Message; }
+    }
+
+    List<Control> listaRequeridos()
+    {
+        List<Control> requeridos = new List<Control>();
+
+        requeridos.Add(txtNombre);
+        requeridos.Add(txtNomCompleto);
+        requeridos.Add(txtClave);
+        requeridos.Add(txtCargo);
+   
+        return requeridos;
     }
 }

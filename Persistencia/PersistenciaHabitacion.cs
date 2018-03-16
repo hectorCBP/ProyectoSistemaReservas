@@ -12,6 +12,8 @@ namespace Persistencia
 {
     public class PersistenciaHabitacion
     {
+        /*retorna una lista de todas las 
+         habitaciones de un hotel especifico*/
         public static List<Habitacion> ListadoHabitaciones(string nombreHotel)
         {
             List<Habitacion> lstHab = new List<Habitacion>();
@@ -44,8 +46,9 @@ namespace Persistencia
         }
 
 
+        /*retorna una habitacion especifica
+         de un hotel especifico*/
         public static Habitacion ObtenerHabitacion(string nomHotel, int numeroHab)
-
         {
             Habitacion habitacion = null;
             SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
@@ -74,7 +77,9 @@ namespace Persistencia
             { cnn.Close(); }
             return habitacion;
         }
-        /*AGREGAR*/
+
+        /*agrega una habitacion 
+         a un hotel especifico*/
         public static void Agregar(Habitacion habitacion)
         {
             SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
@@ -109,7 +114,9 @@ namespace Persistencia
             finally
             { cnn.Close(); }
         }
-        /*MODIFICAR*/
+
+        /*modifica los datos de una
+         habitacion especifica*/
         public static void Modificar(Habitacion habitacion)
         {
             SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
@@ -143,7 +150,9 @@ namespace Persistencia
             finally
             { cnn.Close(); }
         }
-        /*ELIMINAR*/
+
+        /*Elimina una habitacion de un hotel
+         especifico y todas sus reservas asociadas*/
         public static void Eliminar(string nomHotel, string numeroHab)
         {
             SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
