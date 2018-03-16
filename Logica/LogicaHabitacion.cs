@@ -10,6 +10,7 @@ namespace Logica
 {
     public class LogicaHabitacion
     {
+        /*listar habitacion de hotel*/
         public static List<Habitacion> ListadoHabitaciones(string nombreHotel)
         {
             List<Habitacion> lstHab = PersistenciaHabitacion.ListadoHabitaciones(nombreHotel);
@@ -20,6 +21,7 @@ namespace Logica
             return lstHab;
         }
 
+        /*obtener habitacion de un hotel*/
         public static Habitacion ObtenerHabitacion(string nomHotel, int numeroHab) 
         {
             Habitacion habitacion = PersistenciaHabitacion.ObtenerHabitacion(nomHotel, numeroHab);
@@ -30,16 +32,19 @@ namespace Logica
             return habitacion;
         }
 
+        /*agregar una habitacion*/
         public static void Agregar(Habitacion habitacion)
         {
             PersistenciaHabitacion.Agregar(habitacion);
         }
 
+        /*modificar una habitacion*/
         public static void Modificar(Habitacion habitacion)
         {
             PersistenciaHabitacion.Modificar(habitacion);
         }
 
+        /*eliminar una habitacion*/
         public static void Eliminar(string nomHotel, string numeroHab)
         {
             PersistenciaHabitacion.Eliminar(nomHotel, numeroHab);

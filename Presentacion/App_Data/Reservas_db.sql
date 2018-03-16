@@ -106,8 +106,8 @@ go
 /******************************************/
 /*			Insersiones de prueba		  */
 /******************************************/
-insert into Usuarios values('adm','adm','adm_uno')
-insert into Usuarios values('cli','cli','adm_uno')
+insert into Usuarios values('adm','adm123456','adm_uno')
+insert into Usuarios values('cli','cli123456','adm_uno')
 insert into Administradores values('adm','super_adm')
 insert into Clientes values('cli','jujuy',1234567891011123)
 insert into Usuarios values('usr','usr','usr_hard')
@@ -148,9 +148,16 @@ begin
 	
 	declare @resultado int
 	
+<<<<<<< HEAD
 	if exists (select * from Usuarios where nombre=@nombre)
 	return -1--existe
 	else
+=======
+	exec @usuario = buscarUsuario @nombre,@clave
+	
+	if (@usuario > 0)
+		return -1 /*usuario ya existe*/
+>>>>>>> 9ca29be19d8bf11570e272d1e9ecba5d4f77b711
 		
 	begin tran
 		insert into Usuarios values (@nombre, @clave, @nombreCompleto)
@@ -260,7 +267,11 @@ begin
 	
 	declare @resultado int
 	
+<<<<<<< HEAD
 	if exists (select nombre from Usuarios where nombre=@nombre)
+=======
+	if (@usuario > 0)
+>>>>>>> 9ca29be19d8bf11570e272d1e9ecba5d4f77b711
 		return -1 /*usuario ya existe*/	
 		
 	begin tran

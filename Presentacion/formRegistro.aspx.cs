@@ -14,6 +14,7 @@ public partial class formRegistro : System.Web.UI.Page
     {
         lblMsj.Text = "";
     }
+
     protected void btnReg_Click(object sender, EventArgs e)
     {
         try
@@ -26,7 +27,6 @@ public partial class formRegistro : System.Web.UI.Page
 
             if (txtPass.Text != txtRepPass.Text)
                 throw new Exception("Los campos de clave no coinciden");
-
 
             string usuario = txtNomUsr.Text.Trim();
             string nombreComleto = txtNomCom.Text.Trim();
@@ -62,8 +62,6 @@ public partial class formRegistro : System.Web.UI.Page
             }
             else
                 lblMsj.Text = "No se pudo agregar el cliente.";
-
-            
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
@@ -81,9 +79,5 @@ public partial class formRegistro : System.Web.UI.Page
         requeridos.Add(txtTel);
 
         return requeridos;
-    }
-    protected void txtTarj_TextChanged(object sender, EventArgs e)
-    {
-
     }
 }

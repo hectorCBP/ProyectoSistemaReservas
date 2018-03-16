@@ -23,7 +23,13 @@ namespace EntidadesCompartidas
          public string Clave
          {
              get { return clave; }
-             set { clave = value; }// TO DO restriccion minimo 8 caracteres
+             set
+             {
+                 if (value.Length < 7)
+                     throw new Exception("Su clave debe tener minimo 8 caracteres");
+                 else
+                     clave = value;
+             }
          }
          // contructor
          public Usuario(string pNombre, string pNombreCompleto, string pClave)
