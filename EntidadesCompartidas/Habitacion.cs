@@ -8,7 +8,7 @@ namespace EntidadesCompartidas
     public class Habitacion
     {
         // atributos
-        private string nombre_hotel, descripcion, estado;
+        private string nombre_hotel, descripcion;
         private int numero, cant_huesped, piso;
         private decimal costo;
 
@@ -23,27 +23,52 @@ namespace EntidadesCompartidas
             get { return descripcion; }
             set { descripcion = value; }
         }
+
         public int Numero
         {
             get { return numero; }
-            set { numero = value; }
-        }// TO DO control no negativo y mayor a cero
+            set
+            {
+                if (value >= 0)
+                    numero = value;
+                else
+                    throw new Exception("El número de la habitación debe ser positivo.");
+            }
+        }
         public int CantHuesped
         {
             get { return cant_huesped; }
-            set { cant_huesped = value; }
-        }// TO DO control no negativo
+            set
+            {
+                if (value >= 0)
+                    cant_huesped = value;
+                else
+                    throw new Exception("La cantidad de huespedes debe ser positiva.");
+            }
+        }
         public int Piso
         {
             get { return piso; }
-            set { piso = value; }
-        }// TO DO control no negativo
+            set
+            {
+                if (value >= 0)
+                    piso = value;
+                else
+                    throw new Exception("El piso de la habitación debe ser positivo.");
+            }
+        }
 
         public decimal Costo
         {
             get { return costo; }
-            set { costo = value; }
-        }// TO DO control no negativo y mayor a cero
+            set
+            {
+                if (value >= 0)
+                    costo = value;
+                else
+                    throw new Exception("El costo de la habitación debe ser positivo.");
+            }
+        }
 
         // constructor
         public Habitacion(  int pNumero, string pNombreHotel, string pDescripcion, 

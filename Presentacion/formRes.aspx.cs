@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Logica;
 using EntidadesCompartidas;
+using System.Web.UI.HtmlControls;
 
 public partial class formRes : System.Web.UI.Page
 {
@@ -82,16 +83,20 @@ public partial class formRes : System.Web.UI.Page
     protected void gvReserva_SelectedIndexChanged(object sender, EventArgs e)
     {
         try{
-           
+            
             pnlHabitacion.Visible = false;
-            string nombre_hotel = gvReserva.SelectedRow.Cells[1].Text;
+            string nombre_hotel = Server.HtmlDecode(gvReserva.SelectedRow.Cells[1].Text);
             var listHabitaciones = LogicaHabitacion.ListadoHabitaciones(nombre_hotel);
+
             lblHabitaciones.Visible = true;
             ddlHabitaciones.Visible = true;
             ddlHabitaciones.SelectedIndex = -1;
+            ddlHabitaciones.Items.Clear();
+            ddlHabitaciones.Items.Add("Seleccione una habitación");
 
             foreach (Habitacion hab in listHabitaciones) 
                 ddlHabitaciones.Items.Add(hab.Numero.ToString());
+
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
@@ -106,7 +111,7 @@ public partial class formRes : System.Web.UI.Page
             DateTime fechaIn = clnFechaIn.SelectedDate;
             DateTime fechaFin = clnFechaFin.SelectedDate;
             int dias = (int)(fechaFin - fechaIn).TotalDays+1;
-            string nombre_hotel = gvReserva.SelectedRow.Cells[1].Text;
+            string nombre_hotel = Server.HtmlDecode(gvReserva.SelectedRow.Cells[1].Text);
 
             Habitacion hab = LogicaHabitacion.ObtenerHabitacion(nombre_hotel, Convert.ToInt32(ddlHabitaciones.Text));
             decimal costo = dias * hab.Costo;
@@ -131,11 +136,11 @@ public partial class formRes : System.Web.UI.Page
 
 
                 pnlHabitacion.Visible = true;
-                string nombre_hotel = gvReserva.SelectedRow.Cells[1].Text;
+                string nombre_hotel = Server.HtmlDecode(gvReserva.SelectedRow.Cells[1].Text);
                 Habitacion hab = LogicaHabitacion.ObtenerHabitacion(nombre_hotel, Convert.ToInt32(ddlHabitaciones.Text));
                 tbNumero.Text = hab.Numero.ToString();
                 tbNombre.Text = hab.NombreHotel;
-                tbDesc.Text = hab.Descripcion;
+                tbDesc.InnerText = hab.Descripcion;
                 tbHues.Text = hab.CantHuesped.ToString();
                 tbCosto.Text = hab.Costo.ToString();
                 tbPiso.Text = hab.Piso.ToString();
@@ -165,7 +170,7 @@ public partial class formRes : System.Web.UI.Page
             if (dias < 0)
                 throw new Exception("La fecha de fin de la reserva debe ser posterior a la fecha de inicio.");
 
-            string nombre_hotel = gvReserva.SelectedRow.Cells[1].Text;
+            string nombre_hotel = Server.HtmlDecode(gvReserva.SelectedRow.Cells[1].Text);
 
             Habitacion hab = LogicaHabitacion.ObtenerHabitacion(nombre_hotel, Convert.ToInt32(ddlHabitaciones.Text));
 

@@ -55,7 +55,7 @@ create table Telefono_Clientes
 	nombre		varchar (100) not null,
 	telefono	varchar (100) not null,
 	primary key (nombre, telefono),
-	foreign key (nombre) references Usuarios(nombre)
+	foreign key (nombre) references Clientes(nombre)
 )
 go
 
@@ -108,16 +108,63 @@ go
 /******************************************/
 insert into Usuarios values('adm','adm','adm_uno')
 insert into Usuarios values('cli','cli','adm_uno')
-insert into Administradores values('adm','super_adm')
-insert into Clientes values('cli','jujuy',1234567891011123)
+insert into Usuarios values('Juan','juan','Juan Perez')
+insert into Usuarios values('Carlos','carlos','Carlos Lopez')
+insert into Usuarios values('Lucas','lucas','Lucas Martinez')
+insert into Usuarios values('Laura','laura','Laura Sanchez')
+insert into Usuarios values('Carla','carla','Carla Suarez')
+insert into Usuarios values('Sofia','sofia','Sofia Suarez')
 insert into Usuarios values('usr','usr','usr_hard')
+
+insert into Administradores values('adm','super_adm')
+insert into Administradores values('Carlos','Gerente')
+insert into Administradores values('Laura','Encargada')
+
+insert into Clientes values('Carla','Rondeau768',1234567891011123)
+insert into Clientes values('Lucas','Agraciada567',1234567891051123)
+insert into Clientes values('Sofia','Agraciada567',1234567891011823)
+insert into Clientes values('cli','jujuy',1234565291014123)
+insert into Clientes values('Juan','jujuy',1234537891011123)
 insert into Clientes values('usr','direccion','0123456789012345')
-insert into Telefono_Clientes values('usr','1122334455')
-insert into Hoteles values('hotel','calleH',123,'ciudadH',3,'123456789','012345678','imagenes/uno.jpg',1,1)
-insert into Hoteles values('hotel2','calleH2',321,'ciudadH2',5,'987654321','123456789','imagenes/dos.jpg',0,1)
-insert into Habitaciones values(100,'hotel','descripcionH1',2,2000,1)
-insert into Habitaciones values(101,'hotel2','descripcionH2',3,2200,1)
-insert into Habitaciones values(102,'hotel','descripcionH3',1,1400,1)
+
+insert into Telefono_Clientes values('Carla','1122334455')
+
+insert into Hoteles values('Europa','Uruguay',123,'Montevideo',2,'123456789','012345678','imagenes/uno.jpg',1,1)
+insert into Hoteles values('Radisson','Juncal',123,'Montevideo',3,'123456789','012345678','imagenes/uno.jpg',1,1)
+insert into Hoteles values('Sisai','Magallanes',123,'Montevideo',3,'123456789','012345678','imagenes/uno.jpg',1,1)
+insert into Hoteles values('La Foret','Mercedes',123,'Montevideo',3,'123456789','012345678','imagenes/uno.jpg',1,1)
+insert into Hoteles values('Resort&Spa','Colonia',321,'Punta Del Este',5,'987654321','123456789','imagenes/dos.jpg',0,1)
+insert into Hoteles values('Sol&Luna','Estados Unidos',321,'Montevideo',5,'987654321','123456789','imagenes/dos.jpg',0,1)
+insert into Hoteles values('Enjoy','Estados Unidos',321,'Punta Del Este',5,'987654321','123456789','imagenes/dos.jpg',0,1)
+insert into Hoteles values('Howard Johnson','Carrasco',321,'Montevideo',4,'987654321','123456789','imagenes/dos.jpg',0,1)
+insert into Hoteles values('Cottage','Miraflores',321,'Montevideo',4,'987654321','123456789','imagenes/dos.jpg',0,1)
+insert into Hoteles values('InterCity','Agraciada',321,'Montevideo',4,'987654321','123456789','imagenes/dos.jpg',0,1)
+
+insert into Habitaciones values(100,'Europa','Ideal habitacón para relajarse en familia.',2,2000,1)
+insert into Habitaciones values(105,'Europa','Ideal habitacón para relajarse en familia.',2,2000,1)
+insert into Habitaciones values(106,'Radisson','Hermosa habitación con vista al mar.',3,2200,1)
+insert into Habitaciones values(107,'Radisson','Hermosa habitación con vista al mar.',3,2200,1)
+insert into Habitaciones values(101,'Radisson','Hermosa habitación con vista al mar.',3,2200,1)
+insert into Habitaciones values(102,'InterCity','Linda habitación con salida a la piscina.',1,1400,1)
+insert into Habitaciones values(108,'InterCity','Linda habitación con salida a la piscina.',1,1400,1)
+insert into Habitaciones values(109,'Cottage','Ideal para vacacionar en familia.',1,1400,1)
+insert into Habitaciones values(110,'Howard Johnson','Ideal para vacacionar en familia.',1,1400,1)
+
+insert into Habitaciones values(103,'Cottage','Ideal para vacacionar en familia.',1,1400,1)
+insert into Habitaciones values(104,'Howard Johnson','Ideal para vacacionar en familia.',1,1400,1)
+insert into Habitaciones values(103,'Sol&Luna','Ideal para vacacionar en familia.',1,1400,1)
+insert into Habitaciones values(111,'Sol&Luna','Ideal para vacacionar en familia.',1,1400,1)
+
+
+insert into Reservas values('ACTIVA', '2018/04/12', '2018/04/15', 'Lucas', 100, 'Europa')
+insert into Reservas values('ACTIVA', '2018/04/19', '2018/04/20', 'Lucas', 102, 'InterCity')
+insert into Reservas values('ACTIVA', '2018/04/19', '2018/04/20', 'Lucas', 103, 'Cottage')
+
+insert into Reservas values('ACTIVA', '2018/05/19', '2018/05/20', 'Sofia', 103, 'Cottage')
+insert into Reservas values('ACTIVA', '2018/05/12', '2018/05/15', 'Sofia', 101, 'Radisson')
+
+
+
 go
 /******************************************/
 /*		Procedimientos de almacenado	  */
@@ -818,9 +865,9 @@ go
 --EXEC listarHabitacionesDeHotel 'hotel'
 --select * from Reservas
 DECLARE @resp int
-EXEC @resp = RealizarReserva  '20171002', '20171011', 'cli', 100, 'hotel'
-EXEC @resp = RealizarReserva  '20171102', '20171211', 'cli', 100, 'hotel'
-EXEC @resp = RealizarReserva  '20181002', '20181011', 'cli', 100, 'hotel'
+EXEC @resp = RealizarReserva  '20181002', '20181011', 'cli', 104, 'Howard Johnson'
+EXEC @resp = RealizarReserva  '20181102', '20181111', 'cli', 100, 'Europa'
+EXEC @resp = RealizarReserva  '20181002', '20181011', 'cli', 101, 'Radisson'
 IF @resp=-1
      PRINT 'El usuario no se encuentra registrado. No se pudo realizar la reserva.'
      

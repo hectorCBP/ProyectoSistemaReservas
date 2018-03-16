@@ -31,12 +31,39 @@ namespace EntidadesCompartidas
         public string Telefono
         {
             get { return telefono; }
-            set { telefono = value; }
+            set
+            {
+                double a;
+                string b = value;
+                
+                    if (double.TryParse(b, out a))
+                    {
+                        telefono = value;
+                    }
+                    else
+                    {
+                        throw new Exception("El teléfono sólo permite numeros");
+                    }
+                
+            }
         }
         public string Fax
         {
             get { return fax; }
-            set { fax = value; }
+            set
+            {
+                double a;
+                string b = value;
+
+                if (double.TryParse(b, out a))
+                {
+                    fax = value;
+                }
+                else
+                {
+                    throw new Exception("El fax sólo permite numeros");
+                }
+            }
         }
         public string UrlFoto
         {
@@ -47,12 +74,25 @@ namespace EntidadesCompartidas
         public int Numero
         {
             get { return numero;}
-            set { numero = value; }
+            set
+            {
+                if (value >= 0)
+                    numero = value;
+                else
+                    throw new Exception("El número de calle debe ser positivo.");
+            }
         }
         public int Categoria
         {
             get { return categoria; }
-            set { categoria = value; }
+            set {
+                if ((value == 1) || (value == 2) || (value == 3) || (value == 4) || (value == 5)) 
+                {
+                    categoria = value;
+                }
+                else
+                    throw new Exception("El número de categoría debe debe ser 1, 2, 3, 4 o 5.");
+            }
         }
 
         public bool Playa

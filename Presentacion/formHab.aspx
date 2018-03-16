@@ -78,7 +78,7 @@
                     </tr>
                     <tr>
                         <td align="center">
-                            <asp:Label ID="lblCostoHab" runat="server" Text="Costo por noche"></asp:Label>
+                            <asp:Label ID="lblCostoHab" runat="server" Text="Costo por día"></asp:Label>
                         </td>
                         <td align="center" colspan="2">
                             <asp:TextBox ID="txtCosto" runat="server" Width="90%"></asp:TextBox>

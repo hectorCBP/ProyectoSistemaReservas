@@ -150,7 +150,7 @@ namespace Persistencia
             SqlCommand cmd = new SqlCommand("eliminarHabitacion", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@nomHotel", nomHotel);
-            cmd.Parameters.AddWithValue("@numeroHab", Convert.ToUInt32(numeroHab));
+            cmd.Parameters.AddWithValue("@numeroHab", Convert.ToInt32(numeroHab));
 
             SqlParameter resSQL = new SqlParameter();
             resSQL.Direction = ParameterDirection.ReturnValue;

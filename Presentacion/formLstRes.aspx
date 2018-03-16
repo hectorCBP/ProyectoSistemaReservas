@@ -18,6 +18,7 @@
         .style13
         {
             width: 26px;
+            text-align: left;
         }
         .style15
         {
@@ -122,7 +123,7 @@
                                         </td>
                                         <td class="style13">
                                             <asp:TextBox ID="txtNum" runat="server" ontextchanged="TextBox1_TextChanged" 
-                                                style="text-align: center"></asp:TextBox>
+                                                style="text-align: left"></asp:TextBox>
                                         </td>
                                         <td class="style22" style="text-align: left">
                                             <asp:Label ID="lblNumHab" runat="server" style="text-align: left" Text="Número"></asp:Label>
@@ -169,8 +170,7 @@
                                             <asp:Label ID="lblDesc" runat="server" Text="Descripción"></asp:Label>
                                         </td>
                                         <td class="style16">
-                                            <asp:TextBox ID="txtDesc" runat="server"></asp:TextBox>
-                                        </td>
+                                            <textarea ID="tbDesc" runat="server" cols="20" name="S1" rows="2"></textarea></td>
                                         <td style="text-align: left">
                                             <asp:Label ID="lblNum2" runat="server" Text="Número"></asp:Label>
                                         </td>

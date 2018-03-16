@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Logica;
 using EntidadesCompartidas;
+using System.Web.UI.HtmlControls;
 
 public partial class formLstRes : System.Web.UI.Page
 {
@@ -55,7 +56,7 @@ public partial class formLstRes : System.Web.UI.Page
             txtCli.Text = res.Cli.Nombre;
             txtNumHab.Text = res.Hab.Numero.ToString();
             txtNomHot.Text = res.Hab.NombreHotel;
-            txtDesc.Text = res.Hab.Descripcion;
+            tbDesc.InnerHtml = res.Hab.Descripcion;
             txtCantidad.Text = res.Hab.CantHuesped.ToString();
             txtCosto.Text = res.Hab.Costo.ToString();
             txtPiso.Text = res.Hab.Piso.ToString();

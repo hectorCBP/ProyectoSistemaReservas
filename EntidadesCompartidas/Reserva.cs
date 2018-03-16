@@ -24,7 +24,12 @@ namespace EntidadesCompartidas
         public string EstadoRes
         {
             get { return estado_reserva; }
-            set { estado_reserva = value; }
+            set
+            {
+                if (value.Trim().ToUpper() == "ACTIVA" || value.Trim().ToUpper() == "CANCELADA" || value.Trim().ToUpper() == "FINALIZADA")
+                { estado_reserva = value; }
+                else throw new Exception("El valor ingresado no es válido. \n\tEl estado de la reserva debe ser CINTURON, ISOFIX O LATCH.");
+            }
         }
         public Cliente Cli
         { get { return cli; } }
@@ -35,12 +40,24 @@ namespace EntidadesCompartidas
         public DateTime FechaIni
         {
             get { return fechaIni; }
-            set { fechaIni = value; }
+            set
+            {
+                if (value >= DateTime.Today)
+                    fechaIni = value;
+                else
+                    throw new Exception("La fecha de inicio de la reserva no puede ser una fecha pasada.");
+            }
         }
         public DateTime FechaFin
         {
             get { return fechaFin; }
-            set { fechaFin = value; }
+            set
+            {
+                if (value >= DateTime.Today)
+                    fechaFin = value;
+                else
+                    throw new Exception("La fecha de fin de la reserva no puede ser una fecha pasada.");
+            }
         }
 
         // constructor

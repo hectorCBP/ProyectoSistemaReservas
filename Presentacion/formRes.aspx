@@ -115,8 +115,7 @@
                                 <asp:Label ID="lblDesc" runat="server" Text="Descripción"></asp:Label>
                             </td>
                             <td>
-                                <asp:TextBox ID="tbDesc" runat="server"></asp:TextBox>
-                            </td>
+                                <textarea ID="tbDesc" runat="server" cols="20" name="S1" rows="2"></textarea></td>
                         </tr>
                         <tr>
                             <td>
