@@ -86,7 +86,6 @@ namespace Persistencia
         {
             SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
 
-            // TO DO make a sp with phones insert!
             SqlCommand cmd = new SqlCommand("agregarCliente", cnn);
             cmd.CommandType = CommandType.StoredProcedure; 
             cmd.Parameters.AddWithValue("@nombre",cliente.Nombre);
@@ -95,22 +94,15 @@ namespace Persistencia
             cmd.Parameters.AddWithValue("@direccion",cliente.Direccion);
             cmd.Parameters.AddWithValue("@numeroTarjeta",cliente.Tarjeta);
 
-            SqlParameter resSQL = new SqlParameter();
-            resSQL.Direction = ParameterDirection.ReturnValue;
-            cmd.Parameters.Add(resSQL);
-
-            try 
-            { 
+            try
+            {
                 cnn.Open();
                 cmd.ExecuteNonQuery();
-                int resp = (int)resSQL.Value;
-
-                if (resp == -1)
-                    throw new Exception("Ya existe éste usuario");
-            } 
-            catch(Exception ex)
-            { throw ex; }
-            finally { cnn.Close(); }
+            }
+            catch(Exception)
+            { throw new Exception("Nombre de usuario ya exíste");}
+            finally 
+            { cnn.Close(); }
         }
 
         // THIS IS A BUG!!!!!!!

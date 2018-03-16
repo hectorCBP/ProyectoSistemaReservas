@@ -106,8 +106,8 @@ go
 /******************************************/
 /*			Insersiones de prueba		  */
 /******************************************/
-insert into Usuarios values('adm','adm','adm_uno')
-insert into Usuarios values('cli','cli','adm_uno')
+insert into Usuarios values('adm','adm123456','adm_uno')
+insert into Usuarios values('cli','cli123456','adm_uno')
 insert into Administradores values('adm','super_adm')
 insert into Clientes values('cli','jujuy',1234567891011123)
 insert into Usuarios values('usr','usr','usr_hard')
@@ -151,7 +151,7 @@ begin
 	
 	exec @usuario = buscarUsuario @nombre,@clave
 	
-	if (@usuario = 1)
+	if (@usuario > 0)
 		return -1 /*usuario ya existe*/
 		
 	begin tran
@@ -278,7 +278,7 @@ begin
 	
 	exec @usuario = buscarUsuario @nombre,@clave
 	
-	if (@usuario = 1)
+	if (@usuario > 0)
 		return -1 /*usuario ya existe*/	
 		
 	begin tran

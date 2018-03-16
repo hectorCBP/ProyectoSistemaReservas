@@ -88,8 +88,7 @@
                         Text="Número de tarjeta *"></asp:Label>
                 </td>
                 <td class="userForm" colspan="2" align="center">
-                    <asp:TextBox ID="txtTarj" runat="server" CssClass="txtBoxReg" 
-                        ontextchanged="txtTarj_TextChanged"></asp:TextBox>
+                    <asp:TextBox ID="txtTarj" runat="server" CssClass="txtBoxReg"></asp:TextBox>
                 </td>
             </tr>
             <tr>
