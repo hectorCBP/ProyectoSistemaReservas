@@ -19,8 +19,7 @@ namespace EntidadesCompartidas
         {
             get { return numero; }
             set { numero = value; }
-        }
-        
+        }       
         public string EstadoRes
         {
             get { return estado_reserva; }

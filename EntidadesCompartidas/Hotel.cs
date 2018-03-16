@@ -43,7 +43,6 @@ namespace EntidadesCompartidas
             get { return url_foto; }
             set { url_foto = value; }
         }
-
         public int Numero
         {
             get { return numero;}
@@ -54,7 +53,6 @@ namespace EntidadesCompartidas
             get { return categoria; }
             set { categoria = value; }
         }
-
         public bool Playa
         {
             get { return playa; }

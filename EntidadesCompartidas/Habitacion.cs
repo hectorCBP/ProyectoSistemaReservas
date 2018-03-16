@@ -38,7 +38,6 @@ namespace EntidadesCompartidas
             get { return piso; }
             set { piso = value; }
         }// TO DO control no negativo
-
         public decimal Costo
         {
             get { return costo; }

@@ -90,6 +90,9 @@ public partial class formRes : System.Web.UI.Page
             ddlHabitaciones.Visible = true;
             ddlHabitaciones.SelectedIndex = -1;
 
+            ddlHabitaciones.Items.Clear();
+            ddlHabitaciones.Items.Add("Seleccione una Habitacíon");
+
             foreach (Habitacion hab in listHabitaciones) 
                 ddlHabitaciones.Items.Add(hab.Numero.ToString());
         }
