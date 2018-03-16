@@ -197,8 +197,12 @@ begin
 	declare @resultado int
 	
 
-	if exists (select * from Usuarios where nombre=@nombre)
-	return -1--existe
+	if exists (select * from Administradores where nombre=@nombre)
+	return -1 --existe admin
+	else
+	
+	if exists (select * from Clientes where nombre=@nombre)
+	return -5 --existe cliente
 	else
 
 		
@@ -535,12 +539,14 @@ end
 go
 
 create proc listadoReservasCronologica
+--alter proc listadoReservasCronologica
 @nombreHotel varchar(100),
-@numeroHab int
+@numeroHab int,
+@filtro varchar(100)
 as
 begin
 	select * from Reservas 
-	where nombre_hotel = @nombreHotel and numero_hab = @numeroHab
+	where nombre_hotel = @nombreHotel and numero_hab = @numeroHab and estado_reserva like @filtro + '%'
 	order by fecha_inicio DESC
 end
 go
