@@ -68,7 +68,7 @@ namespace Persistencia
                 }
             }
             catch (Exception ex) { throw ex; }
-
+            finally { cnn.Close(); }
             return resp;
         }
 
@@ -169,6 +169,30 @@ namespace Persistencia
             catch (Exception ex) { throw ex; }
             finally { cnn.Close(); }
             return resp;
+        }
+
+        public static Administrador BuscarAdmin(string nombre)
+        {
+            
+            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlCommand cmd = new SqlCommand("BuscarAdmin", cnn); //le digo al comando que quiero traer ese sp
+            cmd.CommandType = CommandType.StoredProcedure; // es un sp
+            cmd.Parameters.AddWithValue("nombre", nombre);
+
+            Administrador a=null;
+            try
+            {
+                cnn.Open();
+                SqlDataReader dr = cmd.ExecuteReader(); //ejecuto 
+                if (dr.HasRows)
+                {
+                    dr.Read();
+                    a = new Administrador((string)dr[0], (string)dr[2], (string)dr[1], (string)dr[3]); // creo un admin con los datos del reader
+                }
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cnn.Close(); }
+            return a;
         }
     }
 }
