@@ -24,12 +24,7 @@ namespace Logica
         /*obtener habitacion de un hotel*/
         public static Habitacion ObtenerHabitacion(string nomHotel, int numeroHab) 
         {
-            Habitacion habitacion = PersistenciaHabitacion.ObtenerHabitacion(nomHotel, numeroHab);
-
-            if (habitacion == null)
-                throw new Exception("No existe número de habitación");
-
-            return habitacion;
+            return PersistenciaHabitacion.ObtenerHabitacion(nomHotel, numeroHab);
         }
 
         /*agregar una habitacion*/
