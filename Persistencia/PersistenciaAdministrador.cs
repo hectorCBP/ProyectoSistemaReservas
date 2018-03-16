@@ -97,7 +97,9 @@ namespace Persistencia
                     resp = true; //cambio el bool de respuesta a true
                 else if (ret == -1)
                     throw new Exception("Ya existe un Administrador con ese nombre.");
-                else 
+                else if (ret == -5)
+                    throw new Exception("Ese nombre corresponde a un usuario");
+                else
                     throw new Exception("Error con la base de datos");
 
             }

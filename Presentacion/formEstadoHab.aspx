@@ -68,6 +68,14 @@
                                 </tr>
                                 <tr>
                                     <td colspan="3">
+                                        <asp:DropDownList ID="ddlFiltro" runat="server" AutoPostBack="True" 
+                                            Height="18px" onselectedindexchanged="ddlFiltro_SelectedIndexChanged" 
+                                            Visible="False" Width="348px">
+                                            <asp:ListItem>Todas</asp:ListItem>
+                                            <asp:ListItem Value="Activa">Activas</asp:ListItem>
+                                            <asp:ListItem Value="Cancelada">Canceladas</asp:ListItem>
+                                            <asp:ListItem Value="Finalizada">Finalizadas</asp:ListItem>
+                                        </asp:DropDownList>
                                         <asp:GridView ID="gvResHab" runat="server" CellPadding="4" ForeColor="#333333" 
                                             GridLines="None" Visible="False" Width="100%">
                                            <AlternatingRowStyle BackColor="White" />

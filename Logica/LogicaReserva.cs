@@ -55,10 +55,10 @@ namespace Logica
 
         /*retorna el listado de reservas
         para una habitacion especifica*/
-        public static List<Reserva> ListarPorHabitacion(string numeroHab, string nombHotel)
+        public static List<Reserva> ListarPorHabitacion(string numeroHab, string nombHotel,string filtro)
         {
             List<Reserva> lstRes = new List<Reserva>();
-            lstRes = PersistenciaReserva.ListarPorHabitacion(numeroHab, nombHotel);
+            lstRes = PersistenciaReserva.ListarPorHabitacion(numeroHab, nombHotel,filtro);
 
             if (lstRes.Count == 0)
                 throw new Exception("No existen reservas en está habitación");
@@ -72,6 +72,7 @@ namespace Logica
         {
             PersistenciaReserva.FinalizarReserva(numero);
         }
+
 
     }
 }

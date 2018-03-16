@@ -44,17 +44,18 @@ public partial class formEstadoHab : System.Web.UI.Page
         {
             lblMsj.Text = String.Empty;
             gvResHab.Visible = false;
-
+            ddlFiltro.Visible = false;
             if (lstHoteles.SelectedValue == "-1")
                 throw new Exception("Debe seleccionar un Hotel");
 
             string numeroHab = gvEstadoHab.SelectedRow.Cells[3].Text;
-            List<Reserva> lstRes = LogicaReserva.ListarPorHabitacion(numeroHab, lstHoteles.Text);
+            List<Reserva> lstRes = LogicaReserva.ListarPorHabitacion(numeroHab, lstHoteles.Text,"");
 
             if (lstRes.Count == 0)
                 throw new Exception("No existen reservas para esta habitación");
             else
             {
+                ddlFiltro.Visible = true;
                 gvResHab.Visible = true;
                 gvResHab.AutoGenerateColumns = false;
                 gvResHab.DataSource = lstRes;
@@ -77,5 +78,18 @@ public partial class formEstadoHab : System.Web.UI.Page
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
+    }
+    protected void ddlFiltro_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
+        {
+
+            string numeroHab = gvEstadoHab.SelectedRow.Cells[3].Text;
+            string filtro = ddlFiltro.SelectedValue;
+            if (ddlFiltro.Text == "Todas") filtro = "";
+            gvResHab.DataSource = LogicaReserva.ListarPorHabitacion(numeroHab, lstHoteles.Text, filtro);
+            gvResHab.DataBind();
+        }
+        catch (Exception ex) { lblMsj.Text = ex.Message; }
     }
 }

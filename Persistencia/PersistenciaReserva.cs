@@ -179,7 +179,7 @@ namespace Persistencia
             return resp;
         }
 
-        public static List<Reserva> ListarPorHabitacion(string numeroHab, string nomHotel)
+        public static List<Reserva> ListarPorHabitacion(string numeroHab, string nomHotel, string filtro)
         {
             List<Reserva> lstRes = new List<Reserva>();
             SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
@@ -188,6 +188,7 @@ namespace Persistencia
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@numeroHab", Convert.ToInt32(numeroHab));
             cmd.Parameters.AddWithValue("@nombreHotel", nomHotel);
+            cmd.Parameters.AddWithValue("@filtro", filtro);
 
             try
             {
