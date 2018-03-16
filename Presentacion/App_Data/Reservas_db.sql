@@ -580,10 +580,8 @@ create proc obtenerHabitacionDeHotel
 @numeroHabitacion int
 as
 begin
-	select ha.* from Habitaciones ha join Hoteles ho
-	on ho.nombre = @nombreHotel
-	and ha.nombre_hotel = nombre_hotel
-	and ha.numero = @numeroHabitacion
+	select ha.* from Habitaciones ha, Hoteles ho 
+	where ha.nombre_hotel = ho.nombre and ha.nombre_hotel=@nombreHotel and ha.numero=@numeroHabitacion
 end
 go
 
@@ -867,7 +865,6 @@ go
 -- select * from Reservas
 -- select * from Habitaciones
 -- exec ListarAdmins
---EXEC listarHabitacionesDeHotel 'hotel'
 --select * from Reservas
 DECLARE @resp int
 EXEC @resp = RealizarReserva  '20181002', '20181011', 'cli', 104, 'Howard Johnson'
