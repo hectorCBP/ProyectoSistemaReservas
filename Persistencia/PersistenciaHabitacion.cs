@@ -17,7 +17,7 @@ namespace Persistencia
         public static List<Habitacion> ListadoHabitaciones(string nombreHotel)
         {
             List<Habitacion> lstHab = new List<Habitacion>();
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("listarHabitacionesDeHotel", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@nombre", nombreHotel);
@@ -51,7 +51,7 @@ namespace Persistencia
         public static Habitacion ObtenerHabitacion(string nomHotel, int numeroHab)
         {
             Habitacion habitacion = null;
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("obtenerHabitacionDeHotel", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@nombreHotel", nomHotel);
@@ -82,7 +82,7 @@ namespace Persistencia
          a un hotel especifico*/
         public static void Agregar(Habitacion habitacion)
         {
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
 
             SqlCommand cmd = new SqlCommand("agregarHabitacion", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -119,7 +119,7 @@ namespace Persistencia
          habitacion especifica*/
         public static void Modificar(Habitacion habitacion)
         {
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
 
             SqlCommand cmd = new SqlCommand("modificarHabitacion", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -155,7 +155,7 @@ namespace Persistencia
          especifico y todas sus reservas asociadas*/
         public static void Eliminar(string nomHotel, string numeroHab)
         {
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("eliminarHabitacion", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@nomHotel", nomHotel);

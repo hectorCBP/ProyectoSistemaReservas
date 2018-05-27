@@ -15,7 +15,7 @@ namespace Persistencia
         public static List<Reserva> Listado()
         {
             List<Reserva> resp = new List<Reserva>();
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("reservasActivas", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             try
@@ -48,7 +48,7 @@ namespace Persistencia
         public static int Agregar(Reserva pRes)
         {   
             int resp = -1;
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("RealizarReserva", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@F_fin", pRes.FechaFin);
@@ -86,7 +86,7 @@ namespace Persistencia
         public static int Cancelar(int num)
         {
             int resp = -1;
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("CancelarReserva", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@numero", num);
@@ -118,7 +118,7 @@ namespace Persistencia
         public static Reserva Buscar(int num)
         {
             Reserva resp = null;
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("BuscarReserva", cnn);
             cmd.Parameters.AddWithValue("@Numero", num);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -146,7 +146,7 @@ namespace Persistencia
         public static List<Reserva> ListadoCliente(string nombre_cliente)
         {
             List<Reserva> resp = new List<Reserva>();
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("reservasActivasCliente", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@nombre", nombre_cliente);
@@ -182,7 +182,7 @@ namespace Persistencia
         public static List<Reserva> ListarPorHabitacion(string numeroHab, string nomHotel, string filtro)
         {
             List<Reserva> lstRes = new List<Reserva>();
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
 
             SqlCommand cmd = new SqlCommand("listadoReservasCronologica", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -217,7 +217,7 @@ namespace Persistencia
 
         public static void FinalizarReserva(int numero)
         {
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("finalizarReserva", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", numero);

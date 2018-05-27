@@ -40,12 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseDeDatos.cs" />
     <Compile Include="PersistenciaAdministrador.cs" />
     <Compile Include="PersistenciaCliente.cs" />
     <Compile Include="PersistenciaHabitacion.cs" />
     <Compile Include="PersistenciaHotel.cs" />
     <Compile Include="PersistenciaReserva.cs" />
-    <Compile Include="PersistenciaUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

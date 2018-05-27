@@ -14,7 +14,7 @@ namespace Persistencia
     {
         public static Administrador InicioSesion(string pNombre, string pClave)
         {
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("buscarAdministrador", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@nombre", pNombre);
@@ -52,7 +52,7 @@ namespace Persistencia
 
             List<Administrador> resp = new List<Administrador>(); //creo una lista para guardar los admins que saque de la base
             Administrador a;
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("ListarAdmins", cnn); //le digo al comando que quiero traer ese sp
             cmd.CommandType = CommandType.StoredProcedure; // es un sp
             try
@@ -76,7 +76,7 @@ namespace Persistencia
         {
             bool resp = false;
 
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("agregarAdministrador", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             //le paso como parametros la devolucion de las propiedades del cliente que recibe
@@ -113,7 +113,7 @@ namespace Persistencia
         {
             bool resp = false;
 
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("modificarAdmin", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             //le paso como parametros la devolucion de las propiedades del administrador que recibe
@@ -146,7 +146,7 @@ namespace Persistencia
 
         public static bool EliminarAdmin(Administrador a) {
             bool resp = false;
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("eliminarAdmin", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             //le paso como parametros la devolucion de las propiedades del administrador que recibe
@@ -175,8 +175,8 @@ namespace Persistencia
 
         public static Administrador BuscarAdmin(string nombre)
         {
-            
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("BuscarAdmin", cnn); //le digo al comando que quiero traer ese sp
             cmd.CommandType = CommandType.StoredProcedure; // es un sp
             cmd.Parameters.AddWithValue("nombre", nombre);

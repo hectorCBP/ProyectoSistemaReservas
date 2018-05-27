@@ -14,7 +14,7 @@ namespace Persistencia
     {
         public static Cliente InicioSesion(string pNombre, string pClave)
         {
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("buscarCliente", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@nombre", pNombre);
@@ -51,7 +51,7 @@ namespace Persistencia
 
         public static Cliente BuscarCliente(string pNombre)
         {
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("buscarClienteNombre", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@nombre", pNombre);
@@ -86,8 +86,8 @@ namespace Persistencia
 
         public static bool nuevo( Cliente cliente )
         {
-            bool devuelvo = false;   
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            bool devuelvo = false;
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
 
             SqlCommand cmd = new SqlCommand("agregarCliente", cnn);
             cmd.CommandType = CommandType.StoredProcedure; 
@@ -121,7 +121,7 @@ namespace Persistencia
             tels = c.Telefonos;
             for (int i = 0; i < tels.Count; i++ )
             {
-                SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+                SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
                 SqlCommand cmd = new SqlCommand("agregarTelefono", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@nombre", c.Nombre);
@@ -152,7 +152,7 @@ namespace Persistencia
         {
             List<Cliente> resp = new List<Cliente>(); //creo una lista para guardar los clientes que saque de la base
             Cliente a;
-            SqlConnection cnn = new SqlConnection(Constantes.CONEXION);
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("ListarClientes", cnn); //le digo al comando que quiero traer ese sp
             cmd.CommandType = CommandType.StoredProcedure; // es un sp
             try

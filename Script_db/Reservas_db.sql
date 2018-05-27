@@ -8,11 +8,9 @@ begin
 end
 go
 
-
 --creo la base de datos
 create database Reservas_db
 go
-
 
 --selecciono la base de datos
 use Reservas_db
@@ -90,7 +88,6 @@ go
 
 create table Reservas
 (
-
 	numero			int identity not null,
 	estado_reserva	varchar(100) constraint CHK_estado_reserva check (estado_reserva ='ACTIVA' OR estado_reserva='CANCELADA' or estado_reserva='FINALIZADA'),
 	fecha_inicio	date,
@@ -193,18 +190,10 @@ create proc agregarAdministrador
 @cargo			varchar	(100)
 as
 begin
-	
 	declare @resultado int
-	
 
 	if exists (select * from Administradores where nombre=@nombre)
-	return -1 --existe admin
-	else
-	
-	if exists (select * from Clientes where nombre=@nombre)
-	return -5 --existe cliente
-	else
-
+		return -1 -- error ya existe admin
 		
 	begin tran
 		insert into Usuarios values (@nombre, @clave, @nombreCompleto)
@@ -524,20 +513,6 @@ BEGIN
 END
 GO
 
-create proc eliminarReservaCascada
-@nomHotel varchar(100)
-as 
-begin
-	declare @respuesta int
-	delete from Reservas where nombre_hotel = @nomHotel
-	set @respuesta = @@ERROR
-	if @respuesta <> 0
-		return -1 /*ERROR Eliminar reserva cascada*/
-	else
-		return 0 
-end
-go
-
 create proc listadoReservasCronologica
 --alter proc listadoReservasCronologica
 @nombreHotel varchar(100),
@@ -639,62 +614,28 @@ begin
 end
 go
 
-create proc eliminarHabitacionCascada
-@nomHotel varchar(100)
-as
-begin
-	begin tran
-		declare @reserva int 
-		exec @reserva = eliminarReservaCascada @nomHotel
-
-		if @reserva <> 0
-		begin
-			rollback
-			return -1 /* ERROR Eliminar reserva cascada*/
-		end
-	
-		declare @respuesta int
-		delete from Habitaciones 
-		where nombre_hotel = @nomHotel
-		set @respuesta = @@ERROR
-		if @respuesta <> 0
-		begin
-			rollback
-			return -2 /*ERROR Eliminar habitacion cascada*/
-		end
-		else 
-		begin
-			commit tran
-			return 0
-		end
-end
-go
-
 create proc eliminarHabitacion
 @nomHotel varchar(100),
 @numeroHab int
 as
 begin 
-	begin tran
-		if not exists (select nombre_hotel from Habitaciones where nombre_hotel = @nomHotel and numero = @numeroHab)
-			return -1 /*ERROR habitacion no existe*/
 
-		declare @resultado int
-		exec @resultado = eliminarReserva @nomHotel, @numeroHab
-		if @resultado <> 0
+	if not exists (select * from Habitaciones where nombre_hotel = @nomHotel and numero = @numeroHab)
+		return -1 -- error la habitacion no existe en el hotel
+
+	begin tran
+		delete from Reservas where nombre_hotel = @nomHotel and numero_hab = @numeroHab				
+		if (@@ERROR <> 0)
 		begin
 			rollback
-			return -2 /*ERROR Eliminar reserva*/
+			return -2 -- error al eliminar reserva
 		end
 		
-		declare @respuesta int
-		delete from Habitaciones 
-		where nombre_hotel = @nomHotel and numero = @numeroHab
-		set @respuesta = @@ERROR
-		if @respuesta <> 0
+		delete from Habitaciones where nombre_hotel = @nomHotel and numero = @numeroHab
+		if (@@ERROR <> 0)
 		begin
 			rollback
-			return -3 /*ERROR Eliminar habitacion*/
+			return -3 -- error al eliminar habitacion
 		end
 		else 
 		begin
@@ -732,8 +673,6 @@ begin
 	where estado_reserva = 'ACTIVA' and nombre_cli=@nombre
 end
 go
-
-
 
 create proc agregarHotel
 @nombre varchar(100),
@@ -794,28 +733,37 @@ create proc eliminarHotel
 as
 begin
 	
-	begin tran
-		declare @respuesta int, @habitacion int
-
-		exec @habitacion = eliminarHabitacionCascada @nomHotel
-		if @habitacion <> 0
+	if not exists(select * from Hoteles where nombre = @nomHotel)
+		return -1 -- error el hotel no existe
+	
+	begin tran		
+		-- elimino las reservas asociadas
+		delete from Reservas where nombre_hotel = @nomHotel
+		if(@@ERROR <> 0)
 		begin
 			rollback
-			return -1 /*ERROR Eliminar habitacion*/
+			return -2 -- error al eliminar reservas del hotel
 		end
-
-		delete from Hoteles where nombre = @nomHotel
-		set @respuesta = @@ERROR
-		if @respuesta <> 0
+		
+		delete from Habitaciones where nombre_hotel = @nomHotel
+		if(@@ERROR <> 0)
 		begin
 			rollback
-			return -2 /*ERROR Eliminar hotel*/
+			return -3 -- error al eliminar habitaciones del hotel
+		end
+		
+		delete from Hoteles where nombre = @nomHotel
+		if(@@ERROR <> 0)
+		begin
+			rollback
+			return -4 -- error al eliminar hotel
 		end
 		else
 		begin
 			commit tran
 			return 0
 		end
+		
 end
 go
 
@@ -826,8 +774,7 @@ create proc BuscarReserva
 @numero int
 as
 begin
-	select*from Reservas where @numero=numero
-	
+	select*from Reservas where @numero=numero	
 end
 go
 
