@@ -12,137 +12,125 @@ public partial class formCli : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        lblMsj.Text = "";
         try
         {
-            gvUsers.DataSource = LogicaAdministrador.ListarAdmins();
-            gvUsers.DataBind();
-        }
-        catch (Exception ex) { lblMsj.Text = ex.Message; }
-    }
-    
-    protected void gvUsers_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        try
-        {
-        vaciarCampos();
-        if (gvUsers.SelectedIndex == -1)
-        {
-            pnlModificar.Visible = false;
-            btnCancelAgreg.Text = "Nuevo Administrador";
-            //si no tiene nada seleccionado en la grilla saco el panel de modificacion
-        }
-        else
-        {
-            btnCancelAgreg.Text = "Cancelar";
-            gvUsers.Enabled = false;
-            btnEliminar.Visible = true;
-            pnlModificar.Visible = true;
-            
-            Administrador a = LogicaAdministrador.BuscarAdmin( Server.HtmlDecode(gvUsers.SelectedRow.Cells[0].Text));
-            txtNombre.Text = a.Nombre.ToString();
-            txtNombre.Enabled = false;
-            txtNomCompleto.Text = a.NombreCompleto.ToString();            
-            txtClave.Text = a.Clave.ToString();            
-            txtCargo.Text = a.Cargo.ToString();
-        }
+            if (!IsPostBack)
+                Limpiar();
+            lblMsj.Text = "";
         }
         catch (Exception ex) { lblMsj.Text = ex.Message; }
     }
 
-    void vaciarCampos() {
-        txtCargo.Text = "";
-        txtNomCompleto.Text = "";
-        txtNombre.Text = "";
-        txtClave.Text = "";
+    protected void btnBuscar_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            Administrador a = LogicaAdministrador.BuscarAdmin(txtNombre.Text);
+            Session["admin"] = a;
+            if (a == null)
+            {
+                Cliente c = LogicaCliente.Buscar(txtNombre.Text);
+                if (c == null)
+                    CamposAgregar();
+                else
+                    lblMsj.Text = "Existe un cliente con ese nombre";
+            }
+            else
+            {
+                txtNomCompleto.Text = a.NombreCompleto;
+                txtClave.Text = a.Clave;
+                txtCargo.Text = a.Cargo;
+                CamposModificarEliminar();
+            }
+        }
+        catch (Exception ex) { lblMsj.Text = ex.Message; }
+    }
+
+    protected void btnLimpiar_Click(object sender, EventArgs e)
+    {
+        Limpiar();
     }
 
     protected void btnEliminar_Click(object sender, EventArgs e)
     {
         try
         {
-            Administrador a = new Administrador(txtNombre.Text, txtNomCompleto.Text, txtClave.Text, txtCargo.Text);
-
-            if (a.Nombre != (string)Session["usuario"])
-            {
-                if (LogicaAdministrador.EliminarAdmin(a))
-                {
-                    lblMsj.Text = "Usuario eliminado correctamente";
-                    vaciarCampos();
-                    gvUsers.DataSource = LogicaAdministrador.ListarAdmins();
-                    gvUsers.DataBind();
-                }
-                
-            }
+            if (((Administrador)Session["admin"]).Nombre == ((Usuario)Session["usuario"]).Nombre)
+                throw new Exception("No puedes eliminar el usuario logueado actualmente");
             else
-                throw new Exception("No puedes borrar el Usuario logueado actualmente");
+            {
+                LogicaAdministrador.EliminarAdmin((Administrador)Session["admin"]);
+                lblMsj.Text = "Eliminado correctamente";
+                Limpiar();
+            }
         }
         catch (Exception ex) { lblMsj.Text = ex.Message; }
     }
 
-    protected void btnCancelar_Click(object sender, EventArgs e)
+    protected void btnModificar_Click(object sender, EventArgs e)
     {
         try
         {
-        if (btnCancelAgreg.Text == "Cancelar")
-        {
-            gvUsers.SelectedIndex = -1;
-            pnlModificar.Visible = false;
-            gvUsers.Enabled = true;
-            btnCancelAgreg.Text = "Nuevo Administrador";
+            ((Administrador)Session["admin"]).NombreCompleto = txtNomCompleto.Text;
+            ((Administrador)Session["admin"]).Cargo = txtCargo.Text;
+            ((Administrador)Session["admin"]).Clave = txtClave.Text;
+            LogicaAdministrador.ModificarAdmin((Administrador)Session["admin"]);
+            lblMsj.Text = "Modificado correctamente";
+            Limpiar();
         }
-        else if (btnCancelAgreg.Text == "Nuevo Administrador") 
+        catch (Exception ex) { lblMsj.Text = ex.Message; }
+    }
+    protected void btnAgregar_Click(object sender, EventArgs e)
+    {
+        try
         {
-            vaciarCampos();
-            btnEliminar.Visible = false;
-            btnCancelAgreg.Text = "Cancelar";
-            gvUsers.Enabled = false;
-            pnlModificar.Visible = true;
-            txtNombre.Enabled = true;
-        }
+            Session["admin"] = new Administrador(txtNombre.Text, txtNomCompleto.Text, txtClave.Text, txtCargo.Text);
+            LogicaAdministrador.AgregarAdmin(((Administrador)Session["admin"]));
+            lblMsj.Text = "Agregado correctamente";
+            Limpiar();
         }
         catch (Exception ex) { lblMsj.Text = ex.Message; }
     }
 
-    protected void btnGuardar_Click(object sender, EventArgs e)
+
+
+    protected void Limpiar()
     {
-        try{
-
-            foreach (Control campo in listaRequeridos())
-            {
-                if (String.IsNullOrEmpty(((TextBox)campo).Text))
-                    throw new Exception("Debe completar todos los campos!");
-            }
-
-        Administrador a = new Administrador(txtNombre.Text,txtNomCompleto.Text,txtClave.Text,txtCargo.Text);
-        if (gvUsers.SelectedIndex == -1)
-        {
-            if (LogicaAdministrador.AgregarAdmin(a))
-            {
-                lblMsj.Text = "Usuario agregado correctamente";
-                vaciarCampos();
-            }
-        }
-        else
-        {
-            if (LogicaAdministrador.ModificarAdmin(a))
-                lblMsj.Text = "Usuario modificado correctamente";
-        }
-        gvUsers.DataSource = LogicaAdministrador.ListarAdmins();
-        gvUsers.DataBind();
-        }
-        catch (Exception ex) { lblMsj.Text = ex.Message; }
+        txtNombre.Text = "";
+        txtNombre.Enabled = true;
+        btnBuscar.Enabled = true;
+        txtNomCompleto.Enabled = false;
+        txtNomCompleto.Text = "";
+        txtClave.Enabled = false;
+        txtClave.Text = "";
+        txtCargo.Text = "";
+        txtCargo.Enabled = false;
+        txtCargo.Text = "";
+        btnAgregar.Enabled = false;
+        btnModificar.Enabled = false;
+        btnEliminar.Enabled = false;
     }
-
-    List<Control> listaRequeridos()
+    protected void CamposAgregar()
     {
-        List<Control> requeridos = new List<Control>();
+        txtNombre.Enabled = false;
+        btnBuscar.Enabled = false;
+        txtNomCompleto.Enabled = true;
+        txtCargo.Enabled = true;
+        txtClave.Enabled = true;
+        btnAgregar.Enabled = true;
+        btnModificar.Enabled = false;
+        btnEliminar.Enabled = false;
+    }
+    protected void CamposModificarEliminar()
+    {
+        txtNombre.Enabled = false;
+        btnBuscar.Enabled = false;
+        txtNomCompleto.Enabled = true;
+        txtCargo.Enabled = true;
+        txtClave.Enabled = true;
+        btnAgregar.Enabled = false;
+        btnModificar.Enabled = true;
+        btnEliminar.Enabled = true;
 
-        requeridos.Add(txtNombre);
-        requeridos.Add(txtNomCompleto);
-        requeridos.Add(txtClave);
-        requeridos.Add(txtCargo);
-   
-        return requeridos;
     }
 }

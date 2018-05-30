@@ -27,16 +27,16 @@ public partial class _Default : System.Web.UI.Page
                 Response.Write("<script>alert('El usuario y/o la contraseña no son correctas');</script>");
             else
             {
-                Session["usuario"] = usuario.Nombre;
+                Session["usuario"] = usuario;
                 
                 if (usuario is Cliente)
                 {
-                    Session["tipoUsuario"] = "cliente";
+                    
                     Response.Redirect("formRes.aspx");
                 }
                 else
                 {
-                    Session["tipoUsuario"] = "administrador";
+                    
                     Response.Redirect("formAdmin.aspx");
                 }
             }

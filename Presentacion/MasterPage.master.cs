@@ -14,13 +14,13 @@ public partial class MasterPage : System.Web.UI.MasterPage
     {
         try
         {
-            string nombre = (string)Session["usuario"];
+            string nombre = ((Usuario)Session["usuario"]).Nombre;
             if (nombre == null)
                 Response.Redirect("Default.aspx");
 
             lblNombre.Text = nombre;
 
-             if ((string)Session["tipoUsuario"] == "cliente")
+             if ((Usuario)Session["usuario"] is Cliente)
             {
                 btnCrearRes.Visible = true;
                 btnLstRes.Visible = true;

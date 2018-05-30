@@ -124,6 +124,22 @@ table{
     color: White;
     background-color:#47d363;
 }
+.btnForm2
+{
+    border-style: none;
+    cursor: pointer;
+    font-family: Segoe UI; 
+    font-weight: bold;
+    letter-spacing: 1px;
+    height: 40px;
+    width: 120px;
+    margin: 0;
+}
+.btnForm2:hover
+{
+    color: White;
+    background-color:#47d363;
+}
 /*******************************************/
 /*               Slider                    */
 /*******************************************/
