@@ -25,11 +25,11 @@ public partial class formCli : System.Web.UI.Page
     {
         try
         {
-            Administrador a = LogicaAdministrador.BuscarAdmin(txtNombre.Text);
+            Administrador a = LogicaUsuario.BuscarAdmin(txtNombre.Text);
             Session["admin"] = a;
             if (a == null)
             {
-                Cliente c = LogicaCliente.Buscar(txtNombre.Text);
+                Cliente c = LogicaUsuario.BuscarCliente(txtNombre.Text);
                 if (c == null)
                     CamposAgregar();
                 else
@@ -59,7 +59,7 @@ public partial class formCli : System.Web.UI.Page
                 throw new Exception("No puedes eliminar el usuario logueado actualmente");
             else
             {
-                LogicaAdministrador.EliminarAdmin((Administrador)Session["admin"]);
+                LogicaUsuario.EliminarAdmin((Administrador)Session["admin"]);
                 lblMsj.Text = "Eliminado correctamente";
                 Limpiar();
             }
@@ -74,7 +74,7 @@ public partial class formCli : System.Web.UI.Page
             ((Administrador)Session["admin"]).NombreCompleto = txtNomCompleto.Text;
             ((Administrador)Session["admin"]).Cargo = txtCargo.Text;
             ((Administrador)Session["admin"]).Clave = txtClave.Text;
-            LogicaAdministrador.ModificarAdmin((Administrador)Session["admin"]);
+            LogicaUsuario.ModificarAdmin((Administrador)Session["admin"]);
             lblMsj.Text = "Modificado correctamente";
             Limpiar();
         }
@@ -85,7 +85,7 @@ public partial class formCli : System.Web.UI.Page
         try
         {
             Session["admin"] = new Administrador(txtNombre.Text, txtNomCompleto.Text, txtClave.Text, txtCargo.Text);
-            LogicaAdministrador.AgregarAdmin(((Administrador)Session["admin"]));
+            LogicaUsuario.AgregarAdmin(((Administrador)Session["admin"]));
             lblMsj.Text = "Agregado correctamente";
             Limpiar();
         }

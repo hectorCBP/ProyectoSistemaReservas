@@ -176,7 +176,7 @@ public partial class formRes : System.Web.UI.Page
             Habitacion hab = LogicaHabitacion.ObtenerHabitacion(nombre_hotel, Convert.ToInt32(ddlHabitaciones.Text));
 
             string nombre = ((Usuario)Session["usuario"]).Nombre;
-            Cliente cli = LogicaCliente.Buscar(nombre);
+            Cliente cli = LogicaUsuario.BuscarCliente(nombre);
 
             decimal costo = dias * hab.Costo;
             Reserva res = new Reserva(11, fechaIn, fechaFin, "activa", cli, hab);

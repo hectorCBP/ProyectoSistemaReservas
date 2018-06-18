@@ -192,8 +192,8 @@ as
 begin
 	declare @resultado int
 
-	if exists (select * from Administradores where nombre=@nombre)
-		return -1 -- error ya existe admin
+	if exists (select * from Usuarios where nombre=@nombre)
+		return -1 -- error ya existe usuario
 		
 	begin tran
 		insert into Usuarios values (@nombre, @clave, @nombreCompleto)

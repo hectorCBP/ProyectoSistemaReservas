@@ -25,7 +25,7 @@ namespace Persistencia
             {
                 cnn.Open();
                 SqlDataReader lector = cmd.ExecuteReader();
-                while (lector.Read())
+                while (lector.Read()) 
                 {
                     Habitacion habitacion = new Habitacion(
                         (int)lector["numero"],

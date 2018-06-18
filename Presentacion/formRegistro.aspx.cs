@@ -42,9 +42,9 @@ public partial class formRegistro : System.Web.UI.Page
             
 
             Cliente cliente = new Cliente(usuario, nombreComleto, clave, direccion, tarjeta,tels);
-            if (LogicaCliente.Agregar(cliente))
+            if (LogicaUsuario.AgregarCliente(cliente))
             {
-                if (LogicaCliente.AgregarTelefono(cliente))
+                if (LogicaUsuario.AgregarTelefono(cliente))
                 {
                     lblMsj.Text = "Cliente Agregado correctamente.";
                 }

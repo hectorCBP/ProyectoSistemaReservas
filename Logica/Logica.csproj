@@ -44,8 +44,6 @@
     <Compile Include="LogicaHotel.cs" />
     <Compile Include="LogicaReserva.cs" />
     <Compile Include="LogicaUsuario.cs" />
-    <Compile Include="LogicaAdministrador.cs" />
-    <Compile Include="LogicaCliente.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
