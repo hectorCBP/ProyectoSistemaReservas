@@ -175,7 +175,7 @@ public partial class formRes : System.Web.UI.Page
 
             Habitacion hab = LogicaHabitacion.ObtenerHabitacion(nombre_hotel, Convert.ToInt32(ddlHabitaciones.Text));
 
-            string nombre = (string)Session["usuario"];
+            string nombre = ((Usuario)Session["usuario"]).Nombre;
             Cliente cli = LogicaCliente.Buscar(nombre);
 
             decimal costo = dias * hab.Costo;

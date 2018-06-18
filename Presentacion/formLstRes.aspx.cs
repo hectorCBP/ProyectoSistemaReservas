@@ -17,7 +17,7 @@ public partial class formLstRes : System.Web.UI.Page
             if (!IsPostBack)
             {
                 
-                string nombre = (string)Session["usuario"];
+                string nombre = ((Usuario)Session["usuario"]).Nombre;
 
                 gvResActivas.DataSource = LogicaReserva.ListadoCliente(nombre);
                 gvResActivas.DataBind();

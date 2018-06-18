@@ -23,7 +23,6 @@ namespace EntidadesCompartidas
             get { return descripcion; }
             set { descripcion = value; }
         }
-
         public int Numero
         {
             get { return numero; }
@@ -58,8 +57,6 @@ namespace EntidadesCompartidas
                     throw new Exception("El piso de la habitación debe ser positivo.");
             }
         }
-
-
         public decimal Costo
         {
             get { return costo; }
