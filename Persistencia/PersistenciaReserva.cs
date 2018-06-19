@@ -19,7 +19,7 @@ namespace Persistencia
             SqlCommand cmd = new SqlCommand("reservasActivas", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             try
-            {       
+            {
                 cnn.Open();
                 SqlDataReader lector = cmd.ExecuteReader();
                 while (lector.Read())
@@ -37,6 +37,7 @@ namespace Persistencia
                     resp.Add(reserva);
 
                 }
+                lector.Close();
             }
             catch (Exception ex)
             { throw ex; }
@@ -46,8 +47,8 @@ namespace Persistencia
         }
 
         public static void Agregar(Reserva pRes)
-        {   
-            
+        {
+
             SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("RealizarReserva", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -71,7 +72,7 @@ namespace Persistencia
                     throw new Exception("Fecha de fin debe ser posterior a la fecha de inicio.");
                 if (resp == -3)
                     throw new Exception("Esta habitación ya se encuentra reservada en la fecha solicitada.");
-                
+
                 if ((resp < 0) && (resp != -1) && (resp != -2) && (resp != -3) && (resp != -4))
                     throw new Exception("ERROR de SQL.");
 
@@ -84,12 +85,12 @@ namespace Persistencia
 
         public static void Cancelar(int num)
         {
-            
+
             SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("CancelarReserva", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@numero", num);
-            
+
 
             SqlParameter prmRetorno = new SqlParameter();
             prmRetorno.Direction = ParameterDirection.ReturnValue;
@@ -101,7 +102,7 @@ namespace Persistencia
                 int resp = (int)prmRetorno.Value;
                 if (resp == 1)
                     throw new Exception("Reserva cancelada satisfactoriamente.");
-                
+
 
                 if ((resp < 0))
                     throw new Exception("ERROR de SQL.");
@@ -111,7 +112,7 @@ namespace Persistencia
             { throw ex; }
             finally
             { cnn.Close(); }
-            
+
         }
 
         public static Reserva Buscar(int num)
@@ -134,6 +135,7 @@ namespace Persistencia
                     resp = new Reserva((int)lector["numero"], (DateTime)lector["fecha_inicio"], (DateTime)lector["fecha_final"], (string)lector["estado_reserva"],
                          cli, hab);
                 }
+                lector.Close();
             }
             catch (Exception ex)
             { throw ex; }
@@ -151,8 +153,6 @@ namespace Persistencia
             cmd.Parameters.AddWithValue("@nombre", nombre_cliente);
             try
             {
-
-                //int numero_res=-1;
                 cnn.Open();
                 SqlDataReader lector = cmd.ExecuteReader();
                 while (lector.Read())
@@ -165,11 +165,10 @@ namespace Persistencia
                     Reserva r = new Reserva((int)lector["numero"], (DateTime)lector["fecha_inicio"], (DateTime)lector["fecha_final"], (string)lector["estado_reserva"],
                          cli, hab);
 
-                    //resp.Add(r);
-                    //numero_res = (int)lector["numero"];
                     resp.Add(r);
 
                 }
+                lector.Close();
             }
             catch (Exception ex)
             { throw ex; }
@@ -198,9 +197,9 @@ namespace Persistencia
                     Cliente cliente = PersistenciaCliente.BuscarCliente((string)lector["nombre_cli"]);
                     Habitacion habitacion = PersistenciaHabitacion.ObtenerHabitacion((string)lector["nombre_hotel"], (int)lector["numero_hab"]);
                     Reserva reserva = new Reserva(
-                        (int)lector["numero"], 
-                        (DateTime)lector["fecha_inicio"], 
-                        (DateTime)lector["fecha_final"], 
+                        (int)lector["numero"],
+                        (DateTime)lector["fecha_inicio"],
+                        (DateTime)lector["fecha_final"],
                         (string)lector["estado_reserva"],
                          cliente,
                          habitacion);

@@ -66,6 +66,7 @@ namespace Persistencia
                     resp.Add(a);
 
                 }
+                dr.Close();
             }
             catch (Exception ex) { throw ex; }
             finally { cnn.Close(); }
@@ -180,6 +181,7 @@ namespace Persistencia
                     dr.Read();
                     a = new Administrador((string)dr[0], (string)dr[2], (string)dr[1], (string)dr[3]); // creo un admin con los datos del reader
                 }
+                dr.Close();
             }
             catch (Exception ex) { throw ex; }
             finally { cnn.Close(); }

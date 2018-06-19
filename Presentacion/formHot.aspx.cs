@@ -75,9 +75,9 @@ public partial class formHot : System.Web.UI.Page
             if (String.IsNullOrEmpty(txtBuscarH.Text))
                 throw new Exception("El campo de busqueda se encuetra vacío");
 
-            Hotel hotel = LogicaHotel.Buscar(txtBuscarH.Text.Trim());
+            Session["hotel"] = LogicaHotel.Buscar(txtBuscarH.Text.Trim());
 
-            if (hotel != null)
+            if ((Hotel)Session["hotel"] != null)
             {
                 foreach (Control item in listOfCtrls())
                 {
@@ -91,16 +91,16 @@ public partial class formHot : System.Web.UI.Page
                 chkPiscinaH.Enabled = true;
                 chkPlayaH.Enabled = true;
 
-                txtHotel.Text = hotel.Nombre;
-                txtCategoriaH.Text = hotel.Categoria.ToString();
-                txtCalleH.Text = hotel.Calle;
-                txtNumeroH.Text = hotel.Numero.ToString();
-                txtCuidadH.Text = hotel.Ciudad;
-                txtTelH.Text = hotel.Telefono;
-                txtFaxH.Text = hotel.Fax;
-                chkPlayaH.Checked = hotel.Playa;
-                chkPiscinaH.Checked = hotel.Piscina;
-                imgFotoH.ImageUrl = hotel.UrlFoto;
+                txtHotel.Text = ((Hotel)Session["hotel"]).Nombre;
+                txtCategoriaH.Text = ((Hotel)Session["hotel"]).Categoria.ToString();
+                txtCalleH.Text = ((Hotel)Session["hotel"]).Calle;
+                txtNumeroH.Text = ((Hotel)Session["hotel"]).Numero.ToString();
+                txtCuidadH.Text = ((Hotel)Session["hotel"]).Ciudad;
+                txtTelH.Text = ((Hotel)Session["hotel"]).Telefono;
+                txtFaxH.Text = ((Hotel)Session["hotel"]).Fax;
+                chkPlayaH.Checked = ((Hotel)Session["hotel"]).Playa;
+                chkPiscinaH.Checked = ((Hotel)Session["hotel"]).Piscina;
+                imgFotoH.ImageUrl = ((Hotel)Session["hotel"]).UrlFoto;
             }
             else
             {
@@ -143,11 +143,11 @@ public partial class formHot : System.Web.UI.Page
                 throw new Exception("La imagen del Hotel es requerida");
 
             string rutaImg = "imagenes/hoteles/" + txtFotoH.FileName;
-            Hotel hotel = new Hotel(txtHotel.Text, txtCalleH.Text, Convert.ToInt32(txtNumeroH.Text), txtCuidadH.Text,
+            Session["hotel"] = new Hotel(txtHotel.Text, txtCalleH.Text, Convert.ToInt32(txtNumeroH.Text), txtCuidadH.Text,
                                     Convert.ToInt32(txtCategoriaH.Text), txtTelH.Text, txtFaxH.Text, rutaImg,
                                     chkPlayaH.Checked, chkPiscinaH.Checked);
 
-            LogicaHotel.Agregar(hotel);
+            LogicaHotel.Agregar((Hotel)Session["hotel"]);
             txtFotoH.SaveAs(Server.MapPath(rutaImg));
             lblMsj.Text = "Hotel agregado correctamente";
             
@@ -169,11 +169,11 @@ public partial class formHot : System.Web.UI.Page
             }
             string rutaImg = txtFotoH.FileName !=  "" ? "imagenes/hoteles/" + txtFotoH.FileName : imgFotoH.ImageUrl;
 
-            Hotel hotel = new Hotel(txtHotel.Text, txtCalleH.Text, Convert.ToInt32(txtNumeroH.Text), txtCuidadH.Text,
+            Session["hotel"] = new Hotel(txtHotel.Text, txtCalleH.Text, Convert.ToInt32(txtNumeroH.Text), txtCuidadH.Text,
                                     Convert.ToInt32(txtCategoriaH.Text), txtTelH.Text, txtFaxH.Text, rutaImg,
                                     chkPlayaH.Checked, chkPiscinaH.Checked);
 
-            LogicaHotel.Modificar(hotel);
+            LogicaHotel.Modificar(((Hotel)Session["hotel"]));
             
             if(txtFotoH.FileName != "")
                 txtFotoH.SaveAs(Server.MapPath(rutaImg));
@@ -189,7 +189,7 @@ public partial class formHot : System.Web.UI.Page
     {
         try
         {
-            LogicaHotel.Eliminar(txtHotel.Text);
+            LogicaHotel.Eliminar((Hotel)Session["hotel"]);
 
             lblMsj.Text = "Hotel eliminado correctamente con sus dependecias";
 

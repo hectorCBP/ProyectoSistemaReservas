@@ -41,6 +41,7 @@ namespace Persistencia
                                         (bool)lector["piscina"]);
                     listaHoteles.Add(hotel);
                 }
+                lector.Close();
             }
             catch(Exception ex)
             { throw ex; }
@@ -78,6 +79,7 @@ namespace Persistencia
                                         (bool)lector["piscina"]);
                     listaCat1.Add(hotel);
                 }
+                lector.Close();
             }
             catch (Exception ex)
             { throw ex; }
@@ -112,6 +114,7 @@ namespace Persistencia
                                         (bool)lector["playa"],
                                         (bool)lector["piscina"]);
                 }
+                lector.Close();
             }
             catch (Exception ex)
             { throw ex; }
@@ -191,13 +194,13 @@ namespace Persistencia
             { cnn.Close(); }       
         }
         /*ELIMINAR*/
-        public static void Eliminar(string nombre)
+        public static void Eliminar(Hotel pHotel)
         {
             SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
 
             SqlCommand cmd = new SqlCommand("eliminarHotel", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@nomHotel", nombre);
+            cmd.Parameters.AddWithValue("@nomHotel", pHotel.Nombre);
 
             SqlParameter resSQL = new SqlParameter();
             resSQL.Direction = ParameterDirection.ReturnValue;

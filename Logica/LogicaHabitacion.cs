@@ -22,7 +22,7 @@ namespace Logica
         }
 
         /*obtener habitacion de un hotel*/
-        public static Habitacion ObtenerHabitacion(string nomHotel, int numeroHab) 
+        public static Habitacion ObtenerHabitacion(string nomHotel, int numeroHab) //preguntar si esto esta bien asi
         {
             return PersistenciaHabitacion.ObtenerHabitacion(nomHotel, numeroHab);
         }

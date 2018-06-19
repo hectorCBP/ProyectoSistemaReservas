@@ -75,5 +75,15 @@ namespace EntidadesCompartidas
             hab = pHab;           
             EstadoRes = pEstadoRes;
         }
+
+        //operaciones
+        public decimal CalcularCosto() { 
+            decimal resp;
+
+            int dias = (int)(fechaFin - fechaIni).TotalDays + 1;
+            resp = dias * hab.Costo;
+
+            return resp;
+        }
     }
 }

@@ -45,9 +45,9 @@ namespace Logica
             PersistenciaHotel.Modificar(hotel);
         }
 
-        public static void Eliminar(string nombre)
+        public static void Eliminar(Hotel pHotel)
         {
-            PersistenciaHotel.Eliminar(nombre);
+            PersistenciaHotel.Eliminar(pHotel);
         }
     }
 }

@@ -36,6 +36,7 @@ namespace Persistencia
                         (int)lector["piso"]);
                     lstHab.Add(habitacion);
                 }
+                lector.Close();
             }
             catch (Exception ex)
             { throw ex; }
@@ -70,6 +71,7 @@ namespace Persistencia
                         (decimal)lector["costo"],
                         (int)lector["piso"]);
                 }
+                lector.Close();
             }
              catch (Exception e)
             { throw e; }

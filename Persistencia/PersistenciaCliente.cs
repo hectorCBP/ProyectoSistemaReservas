@@ -164,6 +164,7 @@ namespace Persistencia
                     resp.Add(a);
 
                 }
+                dr.Close();
             }
             catch (Exception ex) { throw ex; }
 

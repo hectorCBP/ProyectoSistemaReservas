@@ -25,7 +25,7 @@
             </td>
             <td align="center" width="33%" colspan="2">
                 <asp:DropDownList ID="lstCategoria" runat="server" Width="100%" 
-                    AutoPostBack="True" onselectedindexchanged="lstCategoria_SelectedIndexChanged">
+                    AutoPostBack="True">
                     <asp:ListItem Selected="True" Value="-1">Seleccionar Categoria</asp:ListItem>
                 </asp:DropDownList>
             </td>
@@ -45,7 +45,7 @@
             </td>
                                 </tr>
                                 <tr>
-            <td align="center" colspan="4">
+            <td align="center" colspan="4" style="margin-left: 40px">
                 <asp:GridView ID="gvReserva" runat="server" Width="100%" CellPadding="4" 
                     ForeColor="#333333" GridLines="None" AutoGenerateSelectButton="True" 
                                             
