@@ -106,17 +106,7 @@ public partial class formRes : System.Web.UI.Page
 
         try
         {
-            DateTime fechaIn = clnFechaIn.SelectedDate;
-            DateTime fechaFin = clnFechaFin.SelectedDate;
-
-            int dias = (int)(fechaFin - fechaIn).TotalDays + 1;
-
-            if (dias < 0)
-                throw new Exception("La fecha de fin de la reserva debe ser posterior a la fecha de inicio.");
-
-            string nombre = ((Usuario)Session["usuario"]).Nombre;
-            Cliente cli = LogicaUsuario.BuscarCliente(nombre);
-            Reserva res = new Reserva(11, fechaIn, fechaFin, "activa", cli, ((Habitacion)Session["habReserva"]));
+            Reserva res = new Reserva(11, clnFechaIn.SelectedDate, clnFechaFin.SelectedDate, "activa", (Cliente)Session["usuario"], ((Habitacion)Session["habReserva"]));
             Session["reserva"] = res;
 
             lblCosto2.Visible = true;

@@ -47,6 +47,9 @@ namespace EntidadesCompartidas
                     fechaIni = value;
                 else
                     throw new Exception("La fecha de inicio de la reserva no puede ser una fecha pasada.");
+                 * 
+                 * 
+                 * 
                  */
             }
         }
@@ -55,13 +58,12 @@ namespace EntidadesCompartidas
             get { return fechaFin; }
             set
             {
-                fechaFin = value;
-                /*
-                if (value >= DateTime.Today)
-                    fechaFin = value;
+                int dias = (int)(value - fechaIni).TotalDays + 1;
+
+                if (dias < 0)
+                    throw new Exception("La fecha de fin de la reserva debe ser posterior a la fecha de inicio.");
                 else
-                    throw new Exception("La fecha de fin de la reserva no puede ser una fecha pasada.");
-                 */
+                fechaFin = value;
             }
         }
 
