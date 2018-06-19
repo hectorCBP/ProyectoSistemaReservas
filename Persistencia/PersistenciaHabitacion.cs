@@ -29,7 +29,7 @@ namespace Persistencia
                 {
                     Habitacion habitacion = new Habitacion(
                         (int)lector["numero"],
-                        (string)lector["nombre_hotel"],
+                        PersistenciaHotel.Buscar((string)lector["nombre_hotel"]),
                         (string)lector["descripcion"],
                         (int)lector["cant_huesped"],
                         (decimal)lector["costo"],
@@ -64,7 +64,7 @@ namespace Persistencia
                 {
                     habitacion = new Habitacion(
                         (int)lector["numero"],
-                        (string)lector["nombre_hotel"],
+                        PersistenciaHotel.Buscar((string)lector["nombre_hotel"]),
                         (string)lector["descripcion"],
                         (int)lector["cant_huesped"],
                         (decimal)lector["costo"],
@@ -87,7 +87,7 @@ namespace Persistencia
             SqlCommand cmd = new SqlCommand("agregarHabitacion", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@numero", habitacion.Numero);
-            cmd.Parameters.AddWithValue("@nombreHotel",habitacion.NombreHotel);
+            cmd.Parameters.AddWithValue("@nombreHotel",habitacion.Hotel.Nombre);
             cmd.Parameters.AddWithValue("@descripcion",habitacion.Descripcion);
             cmd.Parameters.AddWithValue("@cantHuesped",habitacion.CantHuesped);
             cmd.Parameters.AddWithValue("@costo",habitacion.Costo);
@@ -124,7 +124,7 @@ namespace Persistencia
             SqlCommand cmd = new SqlCommand("modificarHabitacion", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@numero", habitacion.Numero);
-            cmd.Parameters.AddWithValue("@nombreHotel", habitacion.NombreHotel);
+            cmd.Parameters.AddWithValue("@nombreHotel", habitacion.Hotel.Nombre);
             cmd.Parameters.AddWithValue("@descripcion", habitacion.Descripcion);
             cmd.Parameters.AddWithValue("@cantHuesped", habitacion.CantHuesped);
             cmd.Parameters.AddWithValue("@costo", habitacion.Costo);
@@ -153,13 +153,13 @@ namespace Persistencia
 
         /*Elimina una habitacion de un hotel
          especifico y todas sus reservas asociadas*/
-        public static void Eliminar(string nomHotel, string numeroHab)
+        public static void Eliminar(Habitacion pHabitacion)
         {
             SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("eliminarHabitacion", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@nomHotel", nomHotel);
-            cmd.Parameters.AddWithValue("@numeroHab", Convert.ToInt32(numeroHab));
+            cmd.Parameters.AddWithValue("@nomHotel", pHabitacion.Hotel.Nombre);
+            cmd.Parameters.AddWithValue("@numeroHab", pHabitacion.Numero);
 
             SqlParameter resSQL = new SqlParameter();
             resSQL.Direction = ParameterDirection.ReturnValue;

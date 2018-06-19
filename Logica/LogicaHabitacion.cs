@@ -40,9 +40,9 @@ namespace Logica
         }
 
         /*eliminar una habitacion*/
-        public static void Eliminar(string nomHotel, string numeroHab)
+        public static void Eliminar(Habitacion pHabitacion)
         {
-            PersistenciaHabitacion.Eliminar(nomHotel, numeroHab);
+            PersistenciaHabitacion.Eliminar(pHabitacion);
         }
 
     }

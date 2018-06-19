@@ -42,16 +42,10 @@ public partial class formRegistro : System.Web.UI.Page
             
 
             Cliente cliente = new Cliente(usuario, nombreComleto, clave, direccion, tarjeta,tels);
-            if (LogicaUsuario.AgregarCliente(cliente))
-            {
-                if (LogicaUsuario.AgregarTelefono(cliente))
-                {
-                    lblMsj.Text = "Cliente Agregado correctamente.";
-                }
-                else
-                {
-                    lblMsj.Text = "Se creo el cliente pero hubo problemas al cargar su telefono/s";
-                }
+            LogicaUsuario.AgregarCliente(cliente);
+            LogicaUsuario.AgregarTelefono(cliente);
+            lblMsj.Text = "Cliente Agregado correctamente.";
+          
                 txtNomUsr.Text = "";
                 txtNomCom.Text = "";
                 txtTarj.Text = "";
@@ -59,9 +53,7 @@ public partial class formRegistro : System.Web.UI.Page
                 txtTel.Text = "";
                 txtSegTel.Text = "";
                 txtMovil.Text = "";
-            }
-            else
-                lblMsj.Text = "No se pudo agregar el cliente.";
+
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }

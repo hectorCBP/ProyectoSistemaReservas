@@ -140,7 +140,7 @@ public partial class formRes : System.Web.UI.Page
                 string nombre_hotel = Server.HtmlDecode(gvReserva.SelectedRow.Cells[1].Text);
                 Habitacion hab = LogicaHabitacion.ObtenerHabitacion(nombre_hotel, Convert.ToInt32(ddlHabitaciones.Text));
                 tbNumero.Text = hab.Numero.ToString();
-                tbNombre.Text = hab.NombreHotel;
+                tbNombre.Text = hab.Hotel.Nombre;
                 tbDesc.InnerText = hab.Descripcion;
                 tbHues.Text = hab.CantHuesped.ToString();
                 tbCosto.Text = hab.Costo.ToString();
@@ -181,7 +181,7 @@ public partial class formRes : System.Web.UI.Page
             decimal costo = dias * hab.Costo;
             Reserva res = new Reserva(11, fechaIn, fechaFin, "activa", cli, hab);
 
-            int nuevoID = LogicaReserva.Agregar(res);
+            LogicaReserva.Agregar(res);
             lblMsj.Text = "Reserva realizada correctamente";
         }
         catch (Exception ex)

@@ -30,19 +30,19 @@ namespace Logica
             return lista;
         }
 
-        public static bool AgregarAdmin(Administrador a)
+        public static void AgregarAdmin(Administrador a)
         {
-            return PersistenciaAdministrador.AgregarAdmin(a);
+            PersistenciaAdministrador.AgregarAdmin(a);
         }
 
-        public static bool ModificarAdmin(Administrador a)
+        public static void ModificarAdmin(Administrador a)
         {
-            return PersistenciaAdministrador.ModificarAdmin(a);
+            PersistenciaAdministrador.ModificarAdmin(a);
         }
 
-        public static bool EliminarAdmin(Administrador a)
+        public static void EliminarAdmin(Administrador a)
         {
-            return PersistenciaAdministrador.EliminarAdmin(a);
+            PersistenciaAdministrador.EliminarAdmin(a);
         }
 
         public static Administrador BuscarAdmin(string nombre)
@@ -51,9 +51,9 @@ namespace Logica
         }
 
         //CLIENTE
-        public static bool AgregarCliente(Cliente cliente)
+        public static void AgregarCliente(Cliente cliente)
         {
-            return PersistenciaCliente.nuevo(cliente);
+            PersistenciaCliente.nuevo(cliente);
 
         }
 
@@ -71,9 +71,9 @@ namespace Logica
             return lista;
         }
 
-        public static bool AgregarTelefono(Cliente cliente)
+        public static void AgregarTelefono(Cliente cliente)
         {
-            return PersistenciaCliente.TelefonosCliente(cliente);
+            PersistenciaCliente.TelefonosCliente(cliente);
         }
     }
 }

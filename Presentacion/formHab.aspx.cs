@@ -73,9 +73,9 @@ public partial class formHab : System.Web.UI.Page
             if(String.IsNullOrEmpty(txtNumeroHab.Text) || lstHoteles.SelectedIndex == -1)
                 throw new Exception("Debe completar todos los campos de busqueda");
 
-            Habitacion habitacion = LogicaHabitacion.ObtenerHabitacion(lstHoteles.Text, Convert.ToInt32(txtNumeroHab.Text));
+            Session["habitacion"] = LogicaHabitacion.ObtenerHabitacion(lstHoteles.Text, Convert.ToInt32(txtNumeroHab.Text)); // esto pasarlo a session
 
-            if (habitacion != null)
+            if ((Habitacion)Session["habitacion"] != null)
             {
                 foreach (Control item in listaRequeridos())
                 {
@@ -86,10 +86,10 @@ public partial class formHab : System.Web.UI.Page
                 btnModificarHab.Enabled = true;
                 btnEliminarHab.Enabled = true;
 
-                txtHuespedHab.Text = habitacion.CantHuesped.ToString();
-                txtPisoHab.Text = habitacion.Piso.ToString();
-                txtDescripcionHab.Text = habitacion.Descripcion;
-                txtCosto.Text = habitacion.Costo.ToString();
+                txtHuespedHab.Text = ((Habitacion)Session["habitacion"]).CantHuesped.ToString();
+                txtPisoHab.Text = ((Habitacion)Session["habitacion"]).Piso.ToString();
+                txtDescripcionHab.Text = ((Habitacion)Session["habitacion"]).Descripcion;
+                txtCosto.Text = ((Habitacion)Session["habitacion"]).Costo.ToString();
             }
             else 
             {
@@ -128,15 +128,15 @@ public partial class formHab : System.Web.UI.Page
                 }
             }
 
-            Habitacion habitacion = new Habitacion(
+            Session["habitacion"] = new Habitacion(
                 Convert.ToInt32(txtNumeroHab.Text.Trim()),
-                lstHoteles.Text.Trim(),
+                LogicaHotel.Buscar(lstHoteles.Text.Trim()),
                 txtDescripcionHab.Text.Trim(),
                 Convert.ToInt32(txtHuespedHab.Text.Trim()),
                 Convert.ToDecimal(txtCosto.Text.Trim()),
                 Convert.ToInt32(txtPisoHab.Text.Trim()));
 
-            LogicaHabitacion.Agregar(habitacion);
+            LogicaHabitacion.Agregar((Habitacion)Session["habitacion"]);
             lblMsj.Text = "Se agrego correctamente";
             LimpiarFormulario();
         }
@@ -163,15 +163,14 @@ public partial class formHab : System.Web.UI.Page
                 }
             }
 
-            Habitacion habitacion = new Habitacion(
-                Convert.ToInt32(txtNumeroHab.Text),
-                (string)lstHoteles.Text,
-                (string)txtDescripcionHab.Text,
-                Convert.ToInt32(txtHuespedHab.Text),
-                Convert.ToDecimal(txtCosto.Text),
-                Convert.ToInt32(txtPisoHab.Text));
+                ((Habitacion)Session["habitacion"]).Numero = Convert.ToInt32(txtNumeroHab.Text);
+                ((Habitacion)Session["habitacion"]).Hotel = LogicaHotel.Buscar((string)lstHoteles.Text);
+                ((Habitacion)Session["habitacion"]).Descripcion= (string)txtDescripcionHab.Text;
+                ((Habitacion)Session["habitacion"]).CantHuesped= Convert.ToInt32(txtHuespedHab.Text);
+                ((Habitacion)Session["habitacion"]).Costo = Convert.ToDecimal(txtCosto.Text);
+                ((Habitacion)Session["habitacion"]).Piso = Convert.ToInt32(txtPisoHab.Text);
 
-            LogicaHabitacion.Modificar(habitacion);
+            LogicaHabitacion.Modificar(((Habitacion)Session["habitacion"]) );
             lblMsj.Text = "Se modificó correctamente";
             LimpiarFormulario();
         }
@@ -186,7 +185,7 @@ public partial class formHab : System.Web.UI.Page
             if (String.IsNullOrEmpty(txtNumeroHab.Text) || lstHoteles.SelectedValue == "-1")
                 throw new Exception("ERROR - Sin completar número de Habitación o nombre de Hotel");
 
-            LogicaHabitacion.Eliminar(lstHoteles.Text, txtNumeroHab.Text);
+            LogicaHabitacion.Eliminar(((Habitacion)Session["habitacion"])); //hay que construir el objeto habitacion al buscarlo y pasarlo a session, luego para eliminar usar ese
             lblMsj.Text = "Se eliminó correctamente";
             LimpiarFormulario();
         }

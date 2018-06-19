@@ -84,11 +84,10 @@ namespace Persistencia
             return cliente;
         }
 
-        public static bool nuevo( Cliente cliente )
+        public static void nuevo( Cliente cliente )
         {
-            bool devuelvo = false;
-            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
 
+            SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("agregarCliente", cnn);
             cmd.CommandType = CommandType.StoredProcedure; 
             cmd.Parameters.AddWithValue("@nombre",cliente.Nombre);
@@ -106,17 +105,17 @@ namespace Persistencia
                 cnn.Open();
                 cmd.ExecuteNonQuery();
                 int resp = (int)ret.Value;
-                if (resp == 1)
-                    devuelvo = true;
+                if (resp != 1)
+                    throw new Exception("Ya existe éste usuario");
             } 
-            catch(Exception)
-            { throw new Exception("Ya existe éste usuario"); }
+            catch(Exception ex)
+            { throw ex; }
             finally { cnn.Close(); }
-            return devuelvo;
+            
         }
 
-        public static bool TelefonosCliente(Cliente c) {
-            bool devuelvo = false;
+        public static void TelefonosCliente(Cliente c) {
+            
             List<string> tels = new List<string>();
             tels = c.Telefonos;
             for (int i = 0; i < tels.Count; i++ )
@@ -133,11 +132,8 @@ namespace Persistencia
                     cnn.Open();
                     cmd.ExecuteNonQuery();
                     int ret = (int)retorno.Value;
-                    if (ret == 1)
-                        devuelvo = true;
-                    else if (ret == -1)
+                    if (ret == -1)
                     {
-                        devuelvo = false;
                         throw new Exception("No existe el cliente para asignar este telefono");
                     }
                 }
@@ -145,7 +141,7 @@ namespace Persistencia
                 finally { cnn.Close(); }
                 
             }
-            return devuelvo;
+            
         }
 
         public static List<Cliente> ListarClientes()

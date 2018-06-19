@@ -72,10 +72,9 @@ namespace Persistencia
             return resp;
         }
 
-        public static bool AgregarAdmin(Administrador a)
+        public static void AgregarAdmin(Administrador a)
         {
-            bool resp = false;
-
+            
             SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("agregarAdministrador", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -93,9 +92,7 @@ namespace Persistencia
                 cnn.Open();
                 cmd.ExecuteNonQuery();
                 int ret = (int)pReturn.Value; //paso el retorno a un int para tenerlo mas facil
-                if (ret == 1) //si es 1 se agrego correctamente
-                    resp = true; //cambio el bool de respuesta a true
-                else if (ret == -1)
+                if (ret == -1)
                     throw new Exception("Ya existe un Administrador con ese nombre.");
                 else if (ret == -5)
                     throw new Exception("Ese nombre corresponde a un usuario");
@@ -106,13 +103,10 @@ namespace Persistencia
             catch (Exception ex) { throw ex; }
             finally { cnn.Close(); }
 
-            return resp;
         }
 
-        public static bool ModificarAdmin(Administrador a)
+        public static void ModificarAdmin(Administrador a)
         {
-            bool resp = false;
-
             SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("modificarAdmin", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -130,9 +124,7 @@ namespace Persistencia
                 cnn.Open();
                 cmd.ExecuteNonQuery();
                 int ret = (int)pReturn.Value; //paso el retorno a un int para tenerlo mas facil
-                if (ret == 1) //si es 1 se modifico correctamente
-                    resp = true; //cambio el bool de respuesta a true
-                else if (ret == -1)
+                if (ret == -1)
                     throw new Exception("No existe un Administrador con ese nombre.");
                 else 
                     throw new Exception("Error con la base de datos");
@@ -141,11 +133,10 @@ namespace Persistencia
             catch (Exception ex) { throw ex; }
             finally { cnn.Close(); }
 
-            return resp;
         }
 
-        public static bool EliminarAdmin(Administrador a) {
-            bool resp = false;
+        public static void EliminarAdmin(Administrador a) {
+
             SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("eliminarAdmin", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -160,9 +151,7 @@ namespace Persistencia
                 cnn.Open();
                 cmd.ExecuteNonQuery();
                 int ret = (int)pReturn.Value; //paso el retorno a un int para tenerlo mas facil
-                if (ret == 1) //si es 1 se elimino correctamente
-                    resp = true; //cambio el bool de respuesta a true
-                else if (ret == -1)
+                if (ret == -1)
                     throw new Exception("No existe un Administrador con ese nombre.");
                 else
                     throw new Exception("Error con la base de datos");
@@ -170,7 +159,7 @@ namespace Persistencia
             }
             catch (Exception ex) { throw ex; }
             finally { cnn.Close(); }
-            return resp;
+           
         }
 
         public static Administrador BuscarAdmin(string nombre)

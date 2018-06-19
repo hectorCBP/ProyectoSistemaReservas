@@ -47,7 +47,7 @@ public partial class formLstRes : System.Web.UI.Page
             res=LogicaReserva.Buscar(num);
             
             
-            Hotel hot = LogicaHotel.Buscar(res.Hab.NombreHotel);
+            Hotel hot = LogicaHotel.Buscar(res.Hab.Hotel.Nombre);
             
             txtNum.Text = res.Numero.ToString();
             txtEstado.Text = res.EstadoRes;
@@ -55,7 +55,7 @@ public partial class formLstRes : System.Web.UI.Page
             txtFechaFin.Text = res.FechaFin.ToString();
             txtCli.Text = res.Cli.Nombre;
             txtNumHab.Text = res.Hab.Numero.ToString();
-            txtNomHot.Text = res.Hab.NombreHotel;
+            txtNomHot.Text = res.Hab.Hotel.Nombre;
             tbDesc.InnerHtml = res.Hab.Descripcion;
             txtCantidad.Text = res.Hab.CantHuesped.ToString();
             txtCosto.Text = res.Hab.Costo.ToString();
@@ -96,7 +96,7 @@ public partial class formLstRes : System.Web.UI.Page
             pnlDatosRes.Visible = false;
             int num_res = Convert.ToInt32(gvResActivas.SelectedRow.Cells[1].Text);
 
-            int resp = LogicaReserva.Cancelar(num_res);
+            LogicaReserva.Cancelar(num_res);
             
             Response.Redirect("formLstRes.aspx");
             

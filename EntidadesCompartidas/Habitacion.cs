@@ -8,15 +8,22 @@ namespace EntidadesCompartidas
     public class Habitacion
     {
         // atributos
-        private string nombre_hotel, descripcion;
+        private string descripcion;
         private int numero, cant_huesped, piso;
         private decimal costo;
+        Hotel hotel;
 
         // propiedades
-        public string NombreHotel
+        public Hotel Hotel
         { 
-            get { return nombre_hotel; }
-            set { nombre_hotel = value; }
+            get { return hotel; }
+            set
+            {
+                if (value == null)
+                    throw new Exception("La habitacion debe tener un hotel");
+                else
+                    hotel = value; 
+            }
         }
         public string Descripcion
         {
@@ -70,11 +77,11 @@ namespace EntidadesCompartidas
         }
 
         // constructor
-        public Habitacion(  int pNumero, string pNombreHotel, string pDescripcion, 
+        public Habitacion(  int pNumero, Hotel photel, string pDescripcion, 
                             int pCantHuesped, decimal pCosto, int pPiso) 
         {
             Numero = pNumero;
-            NombreHotel = pNombreHotel;
+            Hotel = photel;
             Descripcion = pDescripcion;
             CantHuesped = pCantHuesped;
             Costo = pCosto;

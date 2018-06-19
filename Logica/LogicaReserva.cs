@@ -36,15 +36,15 @@ namespace Logica
         }
 
         /**/
-        public static int Agregar(Reserva pRes)
+        public static void Agregar(Reserva pRes)
         {
-            return PersistenciaReserva.Agregar(pRes);
+            PersistenciaReserva.Agregar(pRes);
         }
         
         /**/
-        public static int Cancelar(int num)
+        public static void Cancelar(int num)
         {
-            return PersistenciaReserva.Cancelar(num);
+            PersistenciaReserva.Cancelar(num);
         }
         
         /**/

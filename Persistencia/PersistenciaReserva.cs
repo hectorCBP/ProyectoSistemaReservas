@@ -45,9 +45,9 @@ namespace Persistencia
             return resp;
         }
 
-        public static int Agregar(Reserva pRes)
+        public static void Agregar(Reserva pRes)
         {   
-            int resp = -1;
+            
             SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("RealizarReserva", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -55,7 +55,7 @@ namespace Persistencia
             cmd.Parameters.AddWithValue("@F_inicio", pRes.FechaIni);
             cmd.Parameters.AddWithValue("@Nombre_Cli", pRes.Cli.Nombre);
             cmd.Parameters.AddWithValue("@Numero_Hab", pRes.Hab.Numero);
-            cmd.Parameters.AddWithValue("@Nombre_Hotel", pRes.Hab.NombreHotel);
+            cmd.Parameters.AddWithValue("@Nombre_Hotel", pRes.Hab.Hotel.Nombre);
 
             SqlParameter prmRetorno = new SqlParameter();
             prmRetorno.Direction = ParameterDirection.ReturnValue;
@@ -64,7 +64,7 @@ namespace Persistencia
             {
                 cnn.Open();
                 cmd.ExecuteNonQuery();
-                resp = (int)prmRetorno.Value;
+                int resp = (int)prmRetorno.Value;
                 if (resp == -1)
                     throw new Exception("No existe el cliente ingresado.");
                 if (resp == -2)
@@ -80,12 +80,11 @@ namespace Persistencia
             { throw ex; }
             finally
             { cnn.Close(); }
-            return resp;
         }
 
-        public static int Cancelar(int num)
+        public static void Cancelar(int num)
         {
-            int resp = -1;
+            
             SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("CancelarReserva", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -99,7 +98,7 @@ namespace Persistencia
             {
                 cnn.Open();
                 cmd.ExecuteNonQuery();
-                resp = (int)prmRetorno.Value;
+                int resp = (int)prmRetorno.Value;
                 if (resp == 1)
                     throw new Exception("Reserva cancelada satisfactoriamente.");
                 
@@ -112,7 +111,7 @@ namespace Persistencia
             { throw ex; }
             finally
             { cnn.Close(); }
-            return resp;
+            
         }
 
         public static Reserva Buscar(int num)
