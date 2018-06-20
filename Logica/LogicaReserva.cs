@@ -42,9 +42,9 @@ namespace Logica
         }
         
         /**/
-        public static void Cancelar(int num)
+        public static void Cancelar(Reserva pRes)
         {
-            PersistenciaReserva.Cancelar(num);
+            PersistenciaReserva.Cancelar(pRes);
         }
         
         /**/
@@ -68,7 +68,7 @@ namespace Logica
 
         /*actualiza el estado de una reserva
          a finalizado*/
-        public static void FinalizarReszerva(int numero) 
+        public static void FinalizarReszerva(int numero) ////////////arreglar esto
         {
             PersistenciaReserva.FinalizarReserva(numero);
         }

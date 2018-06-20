@@ -16,10 +16,7 @@ public partial class formLstRes : System.Web.UI.Page
         {
             if (!IsPostBack)
             {
-                
-                string nombre = ((Usuario)Session["usuario"]).Nombre;
-
-                gvResActivas.DataSource = LogicaReserva.ListadoCliente(nombre);
+                gvResActivas.DataSource = LogicaReserva.ListadoCliente(((Usuario)Session["usuario"]).Nombre);
                 gvResActivas.DataBind();
             }
             
@@ -45,7 +42,7 @@ public partial class formLstRes : System.Web.UI.Page
             pnlDatosRes.Visible = true;
             int num = Convert.ToInt32(gvResActivas.SelectedRow.Cells[1].Text);
             res=LogicaReserva.Buscar(num);
-            
+            Session["reservaActiva"] = res;
             
             Hotel hot = LogicaHotel.Buscar(res.Hab.Hotel.Nombre);
             
@@ -96,9 +93,10 @@ public partial class formLstRes : System.Web.UI.Page
             pnlDatosRes.Visible = false;
             int num_res = Convert.ToInt32(gvResActivas.SelectedRow.Cells[1].Text);
 
-            LogicaReserva.Cancelar(num_res);
-            
-            Response.Redirect("formLstRes.aspx");
+            LogicaReserva.Cancelar((Reserva)Session["reservaActiva"]);
+
+            gvResActivas.DataSource = LogicaReserva.ListadoCliente(((Usuario)Session["usuario"]).Nombre);
+            gvResActivas.DataBind();
             
             
         }

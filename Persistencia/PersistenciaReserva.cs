@@ -83,13 +83,13 @@ namespace Persistencia
             { cnn.Close(); }
         }
 
-        public static void Cancelar(int num)
+        public static void Cancelar(Reserva pRes)
         {
 
             SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("CancelarReserva", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@numero", num);
+            cmd.Parameters.AddWithValue("@numero", pRes.Numero);
 
 
             SqlParameter prmRetorno = new SqlParameter();
