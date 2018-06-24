@@ -31,10 +31,27 @@ namespace EntidadesCompartidas
             }
         }
         public Cliente Cli
-        { get { return cli; } }
+        {
+            set {
+                if (value == null)
+                    throw new Exception("La reserva debe tener cliente");
+                else
+                    cli = value;
+            }
+            get { return cli; } 
+        }
 
         public Habitacion Hab
-        { get { return hab; } }
+        {
+            set
+            {
+                if (value == null)
+                    throw new Exception("La reserva debe tener habitacion");
+                else
+                    hab = value;
+            }
+            get { return hab; }
+        }
 
         public DateTime FechaIni
         {
@@ -70,8 +87,8 @@ namespace EntidadesCompartidas
             Numero = pNumero;
             FechaIni = pFechaIni;
             FechaFin = pFechaFin;
-            cli = pCli;
-            hab = pHab;           
+            Cli = pCli;
+            Hab = pHab;           
             EstadoRes = pEstadoRes;
         }
 
