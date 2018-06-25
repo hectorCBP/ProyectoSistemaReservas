@@ -49,8 +49,8 @@ public partial class formEstadoHab : System.Web.UI.Page
             if (lstHoteles.SelectedValue == "-1")
                 throw new Exception("Debe seleccionar un Hotel");
 
-            string numeroHab = gvEstadoHab.SelectedRow.Cells[3].Text;
-            List<Reserva> lstRes = LogicaReserva.ListarPorHabitacion(numeroHab, lstHoteles.Text,"");
+            Habitacion hab = LogicaHabitacion.ObtenerHabitacion(lstHoteles.Text, Convert.ToInt32(gvEstadoHab.SelectedRow.Cells[3].Text));
+            List<Reserva> lstRes = LogicaReserva.ListarPorHabitacion(hab,"");
 
             if (lstRes.Count == 0)
                 throw new Exception("No existen reservas para esta habitación");
@@ -83,12 +83,12 @@ public partial class formEstadoHab : System.Web.UI.Page
     protected void ddlFiltro_SelectedIndexChanged(object sender, EventArgs e)
     {
         try
-        {
-
-            string numeroHab = gvEstadoHab.SelectedRow.Cells[3].Text;
+        {   
             string filtro = ddlFiltro.SelectedValue;
+            Habitacion hab = LogicaHabitacion.ObtenerHabitacion(lstHoteles.Text, Convert.ToInt32(gvEstadoHab.SelectedRow.Cells[3].Text));
+
             if (ddlFiltro.Text == "Todas") filtro = "";
-            gvResHab.DataSource = LogicaReserva.ListarPorHabitacion(numeroHab, lstHoteles.Text, filtro);
+            gvResHab.DataSource = LogicaReserva.ListarPorHabitacion(hab, filtro);
             gvResHab.DataBind();
         }
         catch (Exception ex) { lblMsj.Text = ex.Message; }

@@ -177,15 +177,15 @@ namespace Persistencia
             return resp;
         }
 
-        public static List<Reserva> ListarPorHabitacion(string numeroHab, string nomHotel, string filtro)
+        public static List<Reserva> ListarPorHabitacion(Habitacion hab, string filtro)
         {
             List<Reserva> lstRes = new List<Reserva>();
             SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
 
             SqlCommand cmd = new SqlCommand("listadoReservasCronologica", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@numeroHab", Convert.ToInt32(numeroHab));
-            cmd.Parameters.AddWithValue("@nombreHotel", nomHotel);
+            cmd.Parameters.AddWithValue("@numeroHab", Convert.ToInt32(hab.Numero));
+            cmd.Parameters.AddWithValue("@nombreHotel", hab.Hotel.Nombre);
             cmd.Parameters.AddWithValue("@filtro", filtro);
 
             try
@@ -213,12 +213,12 @@ namespace Persistencia
             return lstRes;
         }
 
-        public static void FinalizarReserva(int numero)
+        public static void FinalizarReserva(Reserva pRes)
         {
             SqlConnection cnn = new SqlConnection(BaseDeDatos.CONEXION);
             SqlCommand cmd = new SqlCommand("finalizarReserva", cnn);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@id", numero);
+            cmd.Parameters.AddWithValue("@id", pRes.Numero);
 
             SqlParameter resSQL = new SqlParameter();
             resSQL.Direction = ParameterDirection.ReturnValue;

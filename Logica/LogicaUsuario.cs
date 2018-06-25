@@ -65,7 +65,7 @@ namespace Logica
             return cli;
         }
 
-        public static object ListarClientes()
+        public static List<Cliente> ListarClientes()
         {
             List<Cliente> lista = PersistenciaCliente.ListarClientes();
             return lista;

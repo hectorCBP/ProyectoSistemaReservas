@@ -26,8 +26,8 @@ public partial class formResAdmin : System.Web.UI.Page
     {
         try
         {
-            int numero = Convert.ToInt32(gvResActivas.SelectedRow.Cells[1].Text);
-            LogicaReserva.FinalizarReszerva(numero);
+            Reserva res = LogicaReserva.Buscar(Convert.ToInt32(gvResActivas.SelectedRow.Cells[1].Text));
+            LogicaReserva.FinalizarReszerva(res);
             Response.Redirect("formResAdmin.aspx");
         }
         catch (Exception ex)
