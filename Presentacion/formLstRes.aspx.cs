@@ -14,11 +14,13 @@ public partial class formLstRes : System.Web.UI.Page
     {
         try
         {
-            if (!IsPostBack)
-            {
+           // if (!IsPostBack)
+            //{
+                gvResActivas.Visible = true;
+                gvResActivas.AutoGenerateColumns = false;
                 gvResActivas.DataSource = LogicaReserva.ListadoCliente(((Usuario)Session["usuario"]).Nombre);
                 gvResActivas.DataBind();
-            }
+            //}
             
         }
         catch (Exception ex)
@@ -97,6 +99,7 @@ public partial class formLstRes : System.Web.UI.Page
 
             gvResActivas.DataSource = LogicaReserva.ListadoCliente(((Usuario)Session["usuario"]).Nombre);
             gvResActivas.DataBind();
+            Response.Redirect("formLstRes.aspx");
             
             
         }

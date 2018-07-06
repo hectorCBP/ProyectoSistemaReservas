@@ -76,17 +76,24 @@
                 <asp:Label ID="lblRegistradas" runat="server" Text=" Reservas Registradas" 
                     CssClass="subtitulo" ForeColor="#47D363"></asp:Label>
                 <hr />
-                <table class="style7" align="center" width="100%">
+                <table align="center" width="100%">
                     <tr>
                         <td class="style10" style="text-align: left">
                             <table style="width:100%;">
                                 <tr>
                                     <td>
                             <asp:GridView ID="gvResActivas" runat="server" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" 
-                                CellPadding="4" ForeColor="Black" GridLines="Horizontal" Width="100%" 
-                                            onselectedindexchanged="gvResActivas_SelectedIndexChanged1">
+                                CellPadding="4" ForeColor="Black" GridLines="None" Width="100%" 
+                                            onselectedindexchanged="gvResActivas_SelectedIndexChanged1" 
+                                            AutoGenerateColumns="False">
                                 <Columns>
                                     <asp:CommandField ShowSelectButton="True" />
+                                    <asp:BoundField DataField="numero" HeaderText="Numero" />
+                                    <asp:BoundField DataField="EstadoRes" HeaderText="Estado" />
+                                    <asp:BoundField DataField="FechaIni" HeaderText="Check In" />
+                                    <asp:BoundField DataField="FechaFin" HeaderText="Check Out" />
+                                    <asp:BoundField DataField="Hab.Numero" HeaderText="Nro Habitacion" />
+                                    <asp:BoundField DataField="Hab.Hotel.Nombre" HeaderText="Nombre Hotel" />
                                 </Columns>
                                 <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
                                 <PagerStyle BackColor="#666666" />
@@ -298,7 +305,7 @@
                                             <asp:Label ID="lblFoto" runat="server" Text="Foto"></asp:Label>
                                         </td>
                                         <td>
-                                            &nbsp;<asp:Image ID="imgFtoHotel" runat="server" Width="170px" 
+                                            &nbsp;<asp:Image ID="imgFtoHotel" runat="server" Width="100%" 
                                                 CssClass="foto2"/>
                                         </td>
                                     </tr>

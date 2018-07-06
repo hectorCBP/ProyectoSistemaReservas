@@ -68,7 +68,7 @@ namespace Logica
 
         /*actualiza el estado de una reserva
          a finalizado*/
-        public static void FinalizarReszerva(Reserva pRes) ////////////arreglar esto
+        public static void FinalizarReszerva(Reserva pRes) ////////////arreglar esto (solucionado en BD queda en Logica)
         {
             PersistenciaReserva.FinalizarReserva(pRes);
         }

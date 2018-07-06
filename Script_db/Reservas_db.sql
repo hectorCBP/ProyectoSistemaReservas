@@ -443,6 +443,10 @@ create proc finalizarReserva
 as
 begin
 	declare @respuesta int
+	declare @fechaFin date
+	SELECT @fechaFin = fecha_final from Reservas where numero=@id
+	if(GETDATE()<@fechaFin)
+		return -2
 	update Reservas 
 	set estado_reserva = 'FINALIZADA'
 	where numero = @id

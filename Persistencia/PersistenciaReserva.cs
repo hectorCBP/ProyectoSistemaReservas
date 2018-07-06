@@ -231,6 +231,8 @@ namespace Persistencia
                 int res = (int)resSQL.Value;
                 if (res == -1)
                     throw new Exception("ERROR - No se completo la actualización");
+                if (res == -2)
+                    throw new Exception("No se puede finalizar reserva, aún no culminó.");
             }
             catch (Exception ex)
             { throw ex; }

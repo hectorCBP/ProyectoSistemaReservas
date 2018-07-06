@@ -42,7 +42,7 @@
                         <asp:BoundField DataField="FechaFin" HeaderText="Check Out" />
                         <asp:BoundField DataField="Cli.Nombre" HeaderText="Cliente" />
                         <asp:BoundField DataField="Hab.Numero" HeaderText="Nro Habitación" />
-                        <asp:BoundField DataField="Hab.NombreHotel" HeaderText="Nombre Hotel" />
+                        <asp:BoundField DataField="Hab.Hotel.Nombre" HeaderText="Nombre Hotel" />
                     </Columns>
                     <EditRowStyle BackColor="#7C6F57" />
                     <FooterStyle BackColor="#1C5E55" ForeColor="White" Font-Bold="True" />
