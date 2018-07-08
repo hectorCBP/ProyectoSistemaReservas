@@ -171,18 +171,38 @@ go
 /***********************
 	SP DE USUARIO
 ************************/
-create proc buscarUsuario
+
+-- RETORNA UN ADMINISTRADOR POR NOMBRE Y CLAVE
+-- usado en login
+create proc buscarAdministrador
 @nombre varchar(100),
 @clave	varchar(100)
 as
-begin
-	select COUNT(nombre)
-	from Usuarios
-	where nombre = @nombre
-	and	clave = @clave		
+begin 
+	select a.*, u.nombre_completo, u.clave from Administradores a join Usuarios u
+	on u.nombre = @nombre
+	and u.clave = @clave
+	and u.nombre = a.nombre
 end
 go
 
+-- RETORNA UN ADMINISTRADOR POR NOMBRE
+-- utilizado en la pagina de agregar 
+-- administrador
+create proc BuscarAdmin
+@nombre varchar(100)
+as
+begin
+	select	u.nombre as 'nombre',
+			u.clave as 'clave',
+			u.nombre_completo as 'nombre_completo',
+			a.cargo as 'cargo' 
+	from usuarios u join administradores a 
+	on (u.nombre = a.nombre) and a.nombre=@nombre
+end
+go
+
+-- INSERTA UN ADMINISTRADOR
 create proc agregarAdministrador
 @nombre			varchar (100), 
 @clave			varchar (100),
@@ -219,6 +239,7 @@ end
 
 go
 
+-- MODIFICA UN ADMINISTRADOR
 create proc modificarAdmin
 @nombre			varchar (100), 
 @clave			varchar (100),
@@ -257,6 +278,7 @@ end
 
 go
 
+-- ELIMINA UN REGISTRO FISICO DE ADMINISTRADOR
 create proc eliminarAdmin
 --alter proc eliminarAdmin
 @nombre varchar(100)
@@ -292,6 +314,23 @@ begin
 end
 go
 
+-- RETORNA UNA LISTA DE ADMINISTRADORES
+create proc ListarAdmins
+--alter proc ListarAdmins
+as
+begin
+	select	u.nombre as 'nombre',
+		u.clave as 'clave',
+		u.nombre_completo as 'nombre_completo',
+		a.cargo as 'cargo' 
+	from usuarios u join administradores a 
+	on (u.nombre = a.nombre)
+end
+go
+
+/**************************************/
+
+-- INSERTA UN CLIENTE
 create proc agregarCliente
 @nombre varchar(100),
 @clave	varchar(100),
@@ -333,6 +372,7 @@ begin
 end
 go
 
+-- INSERTA TELEFONO DE UN CLEINTE
 create proc agregarTelefono
 --alter proc agregarTelefono
 @nombre varchar(100),
@@ -352,36 +392,28 @@ declare @errorAux int
 end
 go
 
-create proc buscarAdministrador
-@nombre varchar(100),
-@clave	varchar(100)
-as
-begin 
-	select a.*, u.nombre_completo, u.clave from Administradores a join Usuarios u
-	on u.nombre = @nombre
-	and u.clave = @clave
-	and u.nombre = a.nombre
-end
-go
-
+-- RETORNA UN CLIENTE POR NOMBRE Y CLAVE
+-- usado en login
 create proc buscarCliente
 --alter proc buscarCliente
 @nombre varchar(100),
 @clave varchar(100)
 as
 begin
-	select c.*, u.nombre_completo, u.clave/*, t.telefono */from Clientes c join Usuarios u
+	select c.*, u.nombre_completo, u.clave from Clientes c join Usuarios u
 	on u.nombre = @nombre
 	and u.clave = @clave
 	and u.nombre = c.nombre
-	/*
-	join Telefono_Clientes t
-	on c.nombre = t.nombre
-	*/
+
 end
---EXEC buscarClienteNombre 'cli'
 go
 
+-- RETORNA UN CLIENTE POR NOMBRE
+-- usado en la pagina de administrador
+-- cuando el sp BuscarAdmin retorna null
+-- verifica a traves de este sp que el
+-- nombre de usuario a agregar no exista
+-- como cliente
 create proc buscarClienteNombre
 --alter proc buscarCliente
 @nombre varchar(100)
@@ -393,31 +425,23 @@ begin
 end
 go
 
-create proc ListarAdmins
---alter proc ListarAdmins
-as
-begin
-	select u.nombre as 'nombre',u.clave as 'clave',u.nombre_completo as 'nombre_completo',a.cargo as 'cargo' from usuarios u join administradores a on (u.nombre = a.nombre)
-end
-go
-
-create proc BuscarAdmin
-@nombre varchar(100)
-as
-begin
-	select u.nombre as 'nombre',u.clave as 'clave',u.nombre_completo as 'nombre_completo',a.cargo as 'cargo' from usuarios u join administradores a on (u.nombre = a.nombre) and a.nombre=@nombre
-end
-go
-
+-- RETORNA UNA LISTA DE CLIENTES
 create proc ListarClientes
 --alter proc ListarClientes
 as
 begin
-	select u.nombre as 'nombre',u.clave as 'clave',u.nombre_completo as 'nombre_completo', c.direccion as 'direccion', c.numero_tarjeta_credito as 'tarjeta de credito' from usuarios u join Clientes c on (u.nombre = c.nombre)
+	select	u.nombre as 'nombre',
+			u.clave as 'clave',
+			u.nombre_completo as 'nombre_completo', 
+			c.direccion as 'direccion', 
+			c.numero_tarjeta_credito as 'tarjeta de credito' 
+	from usuarios u join Clientes c 
+	on (u.nombre = c.nombre)
 end
 go
 
-create proc TelefonosCliente --pasando el nombre de usuario devuelve los telefonos del mismo
+-- RETORNA UNA LISTA DE TELEFONOS DE UN CLIENTE
+create proc TelefonosCliente 
 @nombre varchar(100)
 as
 begin
@@ -429,6 +453,19 @@ go
 /************************
 	SP DE RESERVAS
 *************************/
+
+-- BUSCA RESERVAS POR SU NUMERO
+--exec BuscarReserva 1
+create proc BuscarReserva
+--alter proc BuscarReserva
+@numero int
+as
+begin
+	select*from Reservas where @numero=numero	
+end
+go
+
+-- RETORNA LISTA DE RESERVAS ACTIVAS
 --exec reservasActivas
 create proc reservasActivas
 as
@@ -438,6 +475,18 @@ begin
 end
 go
 
+-- RETORNA LISTA DE RESERVAS ACTIVAS POR CLIENTE
+--exec reservasActivasCliente 'cli'
+create procedure reservasActivasCliente
+@nombre varchar(100)
+as
+begin 
+	select * from Reservas
+	where estado_reserva = 'ACTIVA' and nombre_cli=@nombre
+end
+go
+
+-- FINALIZA UNA RESERVA
 create proc finalizarReserva
 @id int
 as
@@ -458,6 +507,22 @@ begin
 end
 go
 
+-- CANCELA UNA RESERVA
+create proc CancelarReserva
+--alter proc BuscarReserva
+@numero int
+as
+begin
+	declare @aux int
+	UPDATE Reservas SET estado_reserva='CANCELADA' WHERE numero=@numero
+	SET @aux=@@ERROR
+	IF @aux=0 
+	RETURN 1;
+	ELSE RETURN @aux
+end
+go
+
+-- BUSCA UNA RESERVA POR FECHA
 CREATE PROCEDURE buscarFecha
 --ALTER PROCEDURE buscarFecha
 @Num_hab int,
@@ -473,6 +538,7 @@ BEGIN
 END
 GO
 
+-- INSERTA UNA RESERVA
 CREATE PROCEDURE RealizarReserva
 --ALTER PROCEDURE RealizarReserva
 
@@ -517,6 +583,7 @@ BEGIN
 END
 GO
 
+-- RETORNA UNA LISTA DE RESERVAS POR ESTADO
 create proc listadoReservasCronologica
 --alter proc listadoReservasCronologica
 @nombreHotel varchar(100),
@@ -530,6 +597,7 @@ begin
 end
 go
 
+-- ELIMINA EL REGISTRO FISICO DE UNA RESERVA
 create proc eliminarReserva
 @nomHotel varchar(100),
 @numeroHab int
@@ -550,6 +618,8 @@ go
 /**************************
 	SP DE HABITACIONES
 ***************************/
+
+-- RETORNA UNA LISTA DE HABITACIONES DE UN HOTEL
 create proc listarHabitacionesDeHotel
 @nombre varchar(100)
 as
@@ -560,6 +630,7 @@ begin
 end
 go
 
+-- RETORNA UNA HABITACION DE UN HOTEL
 create proc obtenerHabitacionDeHotel
 @nombreHotel varchar(100),
 @numeroHabitacion int
@@ -570,6 +641,7 @@ begin
 end
 go
 
+-- INSERTA UNA HABITACION
 create proc agregarHabitacion
 @numero int,
 @nombreHotel varchar(100),
@@ -592,6 +664,7 @@ begin
 end 
 go
 
+-- MODIFCA UNA HABITACION
 create proc modificarHabitacion
 @numero int,
 @nombreHotel varchar(100),
@@ -618,6 +691,7 @@ begin
 end
 go
 
+-- ELIMINA EL REGISTRO FISICO DE UNA HABITACION
 create proc eliminarHabitacion
 @nomHotel varchar(100),
 @numeroHab int
@@ -653,6 +727,8 @@ go
 /***********************
 	SP DE HOTELES
 ***********************/
+
+-- RETORNA UNA LISTA DE HOTELES
 create proc obtenerHoteles
 as
 begin
@@ -660,6 +736,7 @@ begin
 end 
 go
 
+-- RETORNA UN HOTEL
 create proc buscarHotel
 @nombre varchar(100)
 as
@@ -668,16 +745,7 @@ begin
 end
 go
 
---exec reservasActivasCliente 'cli'
-create procedure reservasActivasCliente
-@nombre varchar(100)
-as
-begin 
-	select * from Reservas
-	where estado_reserva = 'ACTIVA' and nombre_cli=@nombre
-end
-go
-
+-- INSERTA UN HOTEL
 create proc agregarHotel
 @nombre varchar(100),
 @calle varchar(100),
@@ -701,6 +769,7 @@ begin
 end
 go
 
+-- MODIFICA UN HOTEL
 create proc modificarHotel
 @nombre varchar(100),
 @calle varchar(100),
@@ -732,6 +801,7 @@ begin
 end 
 go
 
+-- ELIMINIA UN HOTEL
 create proc eliminarHotel
 @nomHotel varchar(100)
 as
@@ -740,7 +810,8 @@ begin
 	if not exists(select * from Hoteles where nombre = @nomHotel)
 		return -1 -- error el hotel no existe
 	
-	begin tran		
+	begin tran
+			
 		-- elimino las reservas asociadas
 		delete from Reservas where nombre_hotel = @nomHotel
 		if(@@ERROR <> 0)
@@ -749,6 +820,7 @@ begin
 			return -2 -- error al eliminar reservas del hotel
 		end
 		
+		-- elimino las habitaciones asociadas
 		delete from Habitaciones where nombre_hotel = @nomHotel
 		if(@@ERROR <> 0)
 		begin
@@ -756,6 +828,7 @@ begin
 			return -3 -- error al eliminar habitaciones del hotel
 		end
 		
+		-- elimino el hotel
 		delete from Hoteles where nombre = @nomHotel
 		if(@@ERROR <> 0)
 		begin
@@ -771,30 +844,7 @@ begin
 end
 go
 
-
---exec BuscarReserva 1
-create proc BuscarReserva
---alter proc BuscarReserva
-@numero int
-as
-begin
-	select*from Reservas where @numero=numero	
-end
-go
-
-create proc CancelarReserva
---alter proc BuscarReserva
-@numero int
-as
-begin
-	declare @aux int
-	UPDATE Reservas SET estado_reserva='CANCELADA' WHERE numero=@numero
-	SET @aux=@@ERROR
-	IF @aux=0 
-	RETURN 1;
-	ELSE RETURN @aux
-end
-go
+-- RETORNA UNA LISTA DE HOTELES POR CATEGORIA
 --exec ListarCategoria 3
 create proc ListarCategoria
 @cat int

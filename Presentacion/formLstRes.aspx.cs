@@ -14,28 +14,16 @@ public partial class formLstRes : System.Web.UI.Page
     {
         try
         {
-           // if (!IsPostBack)
-            //{
-                gvResActivas.Visible = true;
-                gvResActivas.AutoGenerateColumns = false;
-                gvResActivas.DataSource = LogicaReserva.ListadoCliente(((Usuario)Session["usuario"]).Nombre);
-                gvResActivas.DataBind();
-            //}
-            
+            gvResActivas.Visible = true;
+            gvResActivas.AutoGenerateColumns = false;
+            gvResActivas.DataSource = LogicaReserva.ListadoCliente(((Usuario)Session["usuario"]).Nombre);
+            gvResActivas.DataBind();         
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
     }
 
     protected void gvResActivas_SelectedIndexChanged(object sender, EventArgs e)
-    {
-
-    }
-    protected void TextBox1_TextChanged(object sender, EventArgs e)
-    {
-
-    }
-    protected void gvResActivas_SelectedIndexChanged1(object sender, EventArgs e)
     {
         try
         {

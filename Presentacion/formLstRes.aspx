@@ -84,7 +84,7 @@
                                     <td>
                             <asp:GridView ID="gvResActivas" runat="server" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" 
                                 CellPadding="4" ForeColor="Black" GridLines="None" Width="100%" 
-                                            onselectedindexchanged="gvResActivas_SelectedIndexChanged1" 
+                                            onselectedindexchanged="gvResActivas_SelectedIndexChanged" 
                                             AutoGenerateColumns="False">
                                 <Columns>
                                     <asp:CommandField ShowSelectButton="True" />
@@ -129,8 +129,7 @@
                                             <asp:Label ID="lblNum" runat="server" Text="Número"></asp:Label>
                                         </td>
                                         <td class="style13">
-                                            <asp:TextBox ID="txtNum" runat="server" ontextchanged="TextBox1_TextChanged" 
-                                                style="text-align: left"></asp:TextBox>
+                                            <asp:TextBox ID="txtNum" runat="server" style="text-align: left"></asp:TextBox>
                                         </td>
                                         <td class="style22" style="text-align: left">
                                             <asp:Label ID="lblNumHab" runat="server" style="text-align: left" Text="Número"></asp:Label>
