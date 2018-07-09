@@ -38,6 +38,7 @@ namespace Logica
         /**/
         public static void Agregar(Reserva pRes)
         {
+            //var lst = Listado();
             PersistenciaReserva.Agregar(pRes);
         }
         
@@ -68,8 +69,11 @@ namespace Logica
 
         /*actualiza el estado de una reserva
          a finalizado*/
-        public static void FinalizarReszerva(Reserva pRes) ////////////arreglar esto (solucionado en BD queda en Logica)
+        public static void FinalizarReszerva(Reserva pRes) 
         {
+
+            if (DateTime.Today < pRes.FechaFin)
+                throw new Exception("No se puede finalizar reserva, aún no culminó.");
             PersistenciaReserva.FinalizarReserva(pRes);
         }
 

@@ -22,7 +22,6 @@ public partial class formRes : System.Web.UI.Page
             if (lstCategoria.SelectedIndex == 0)
             { btnCargarCat.Enabled = false; }
             else { btnCargarCat.Enabled = true;}
-            
             int[] categorias = { 1, 2, 3, 4, 5 };
             if (!IsPostBack)
             {

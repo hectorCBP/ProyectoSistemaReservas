@@ -14,10 +14,11 @@ public partial class formLstRes : System.Web.UI.Page
     {
         try
         {
-            gvResActivas.Visible = true;
-            gvResActivas.AutoGenerateColumns = false;
-            gvResActivas.DataSource = LogicaReserva.ListadoCliente(((Usuario)Session["usuario"]).Nombre);
-            gvResActivas.DataBind();         
+                gvResActivas.Visible = true;
+                gvResActivas.AutoGenerateColumns = false;
+                gvResActivas.DataSource = LogicaReserva.ListadoCliente(((Usuario)Session["usuario"]).Nombre);
+                gvResActivas.DataBind();
+                
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }
@@ -82,11 +83,13 @@ public partial class formLstRes : System.Web.UI.Page
         {
             pnlDatosRes.Visible = false;
             int num_res = Convert.ToInt32(gvResActivas.SelectedRow.Cells[1].Text);
-
+            gvResActivas.Columns.Clear();
+            Response.CacheControl = "no-cache";
             LogicaReserva.Cancelar((Reserva)Session["reservaActiva"]);
-
+            
             gvResActivas.DataSource = LogicaReserva.ListadoCliente(((Usuario)Session["usuario"]).Nombre);
             gvResActivas.DataBind();
+            
             Response.Redirect("formLstRes.aspx");
             
             
