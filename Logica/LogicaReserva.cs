@@ -38,7 +38,16 @@ namespace Logica
         /**/
         public static void Agregar(Reserva pRes)
         {
-            //var lst = Listado();
+            var lst = Listado();
+            if (pRes.FechaFin < DateTime.Today) { throw new Exception("La fecha de fin debe ser porsterior o igual a la fecha actual"); }
+            if (pRes.FechaFin < pRes.FechaIni) { throw new Exception("La fecha de fin debe ser porsterior o igual a la fecha de inicio"); }
+            if (pRes.FechaIni < DateTime.Today) { throw new Exception("La fecha de inicio debe ser porsterior o igual a la fecha actual"); }
+
+            foreach(Reserva res in lst){
+                if((pRes.Hab.Numero==res.Hab.Numero && pRes.Hab.Hotel.Nombre==res.Hab.Hotel.Nombre)&&((pRes.FechaIni>=res.FechaIni && pRes.FechaIni<=res.FechaFin)||(pRes.FechaFin>=res.FechaIni && pRes.FechaFin<=res.FechaFin)||(pRes.FechaIni<=res.FechaIni && pRes.FechaFin>=res.FechaFin))){
+                    throw new Exception("Esta habitación ya se encuentra reservada en la fecha solicitada.");
+                }
+            }
             PersistenciaReserva.Agregar(pRes);
         }
         

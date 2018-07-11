@@ -59,12 +59,7 @@ namespace EntidadesCompartidas
             set
             {
                 fechaIni = value;
-                /*
-                if (value >= DateTime.Today)
-                    fechaIni = value;
-                else
-                    throw new Exception("La fecha de inicio de la reserva no puede ser una fecha pasada.");                 
-                 */
+
             }
         }
         public DateTime FechaFin

@@ -562,7 +562,7 @@ BEGIN
 	IF (SELECT DATEDIFF(DAY,@F_inicio,@F_fin))<0
 	RETURN -2
 	
-	--Controlo que el vehículo se encuentre disponible en la fecha ingresada.
+	--Controlo que la habitacion se encuentre disponible en la fecha ingresada.
 	EXEC @aux=BuscarFecha @Numero_Hab, @Nombre_Hotel, @F_inicio, @F_fin
 	IF @aux=-3
 	RETURN @aux

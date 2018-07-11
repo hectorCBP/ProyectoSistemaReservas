@@ -154,7 +154,8 @@ public partial class formRes : System.Web.UI.Page
     {
         try
         {
-            LogicaReserva.Agregar((Reserva)Session["reserva"]);
+            Reserva res = new Reserva(11, clnFechaIn.SelectedDate, clnFechaFin.SelectedDate, "activa", (Cliente)Session["usuario"], ((Habitacion)Session["habReserva"]));
+            LogicaReserva.Agregar(res);
             lblMsj.Text = "Reserva realizada correctamente";
         }
         catch (Exception ex)
