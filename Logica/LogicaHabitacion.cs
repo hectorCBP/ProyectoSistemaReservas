@@ -30,13 +30,30 @@ namespace Logica
         /*agregar una habitacion*/
         public static void Agregar(Habitacion habitacion)
         {
-            PersistenciaHabitacion.Agregar(habitacion);
+            try
+            {
+                if (habitacion.Costo <= 0)
+                    throw new Exception("El costo de habitción debe ser mayor a cero");
+
+                PersistenciaHabitacion.Agregar(habitacion);
+            }
+            catch (Exception ex)
+            { throw ex; }
+
         }
 
         /*modificar una habitacion*/
         public static void Modificar(Habitacion habitacion)
         {
-            PersistenciaHabitacion.Modificar(habitacion);
+            try
+            {
+                if (habitacion.Costo <= 0)
+                    throw new Exception("El costo de habitción debe ser mayor a cero");
+                    
+                PersistenciaHabitacion.Modificar(habitacion);
+            }
+            catch (Exception ex)
+            { throw ex; }
         }
 
         /*eliminar una habitacion*/

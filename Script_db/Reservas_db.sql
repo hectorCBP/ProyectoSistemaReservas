@@ -637,7 +637,7 @@ create proc obtenerHabitacionDeHotel
 as
 begin
 	select ha.* from Habitaciones ha, Hoteles ho 
-	where ha.nombre_hotel = ho.nombre and ha.nombre_hotel=@nombreHotel and ha.numero=@numeroHabitacion
+	where ho.nombre = @nombreHotel and ho.nombre = ha.nombre_hotel and ha.numero = @numeroHabitacion
 end
 go
 

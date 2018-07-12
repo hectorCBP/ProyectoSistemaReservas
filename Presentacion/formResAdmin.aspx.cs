@@ -12,6 +12,12 @@ public partial class formResAdmin : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (!IsPostBack && Session["usuario"] == null)
+            Response.Redirect("Default.aspx");
+
+        if (!IsPostBack && Session["usuario"] is Cliente)
+            Response.Redirect("formRes.aspx");
+
         try
         {
             gvResActivas.Visible = true;

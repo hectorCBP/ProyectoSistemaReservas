@@ -63,9 +63,10 @@ namespace Persistencia
                 SqlDataReader lector = cmd.ExecuteReader();
                 while(lector.Read())
                 {
+                    Hotel hotel = PersistenciaHotel.Buscar((string)lector["nombre_hotel"]);
                     habitacion = new Habitacion(
                         (int)lector["numero"],
-                        PersistenciaHotel.Buscar((string)lector["nombre_hotel"]),
+                        hotel,
                         (string)lector["descripcion"],
                         (int)lector["cant_huesped"],
                         (decimal)lector["costo"],
