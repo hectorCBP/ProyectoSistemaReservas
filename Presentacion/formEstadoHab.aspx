@@ -43,10 +43,17 @@
                                 <tr>
                                     <td colspan="3">
                 <asp:GridView ID="gvEstadoHab" runat="server" Width="100%" CellPadding="4" 
-                    ForeColor="#333333" GridLines="None" onselectedindexchanged="gvEstadoHab_SelectedIndexChanged">
+                    ForeColor="#333333" GridLines="None" onselectedindexchanged="gvEstadoHab_SelectedIndexChanged" 
+                                            AutoGenerateColumns="False">
                     <AlternatingRowStyle BackColor="White" HorizontalAlign="Center" />
                     <Columns>
                         <asp:CommandField ShowSelectButton="True" />
+                        <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" />
+                        <asp:BoundField DataField="Numero" HeaderText="Número" />
+                        <asp:BoundField DataField="Hotel.Nombre" HeaderText="Nombre Hotel" />
+                        <asp:BoundField DataField="Costo" HeaderText="Costo" />
+                        <asp:BoundField DataField="Piso" HeaderText="Piso" />
+                        <asp:BoundField DataField="CantHuesped" HeaderText="Cantidad Huespedes" />
                     </Columns>
                     <EditRowStyle BackColor="#7C6F57" />
                     <FooterStyle BackColor="#1C5E55" ForeColor="White" Font-Bold="True" />
@@ -85,7 +92,7 @@
                                                 <asp:BoundField DataField="FechaFin" HeaderText="Check Out" />
                                                 <asp:BoundField DataField="Cli.Nombre" HeaderText="Cliente" />
                                                 <asp:BoundField DataField="Hab.Numero" HeaderText="Nro Habitación" />
-                                                <asp:BoundField DataField="Hab.NombreHotel" HeaderText="Nombre Hotel" />
+                                                <asp:BoundField DataField="Hab.Hotel.Nombre" HeaderText="Nombre Hotel" />
                                                 <asp:BoundField DataField="numero" HeaderText="Número" />
                                             </Columns>
                                             <EditRowStyle BackColor="#7C6F57" />

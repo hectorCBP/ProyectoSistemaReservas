@@ -69,9 +69,9 @@ namespace Logica
         {
             List<Reserva> lstRes = new List<Reserva>();
             lstRes = PersistenciaReserva.ListarPorHabitacion(hab, filtro);
-
+            
             if (lstRes.Count == 0)
-                throw new Exception("No existen reservas en está habitación");
+                throw new Exception("No existen reservas en está habitación.");
 
             return lstRes;
         }

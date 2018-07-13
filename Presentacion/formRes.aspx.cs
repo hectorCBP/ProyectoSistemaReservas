@@ -12,6 +12,7 @@ public partial class formRes : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        
         if (!IsPostBack && Session["usuario"] == null)
             Response.Redirect("Default.aspx");
 
@@ -37,16 +38,6 @@ public partial class formRes : System.Web.UI.Page
                     lstCategoria.Items.Add(cat.ToString());
                 }
             }
-        }
-        catch (Exception ex)
-        { lblMsj.Text = ex.Message; }
-    }
-
-    protected void btnLstRes_Click(object sender, EventArgs e)
-    {
-        try
-        {
-            Response.Redirect("formLstRes.aspx");
         }
         catch (Exception ex)
         { lblMsj.Text = ex.Message; }

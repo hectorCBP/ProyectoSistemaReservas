@@ -192,6 +192,8 @@ namespace Persistencia
             {
                 cnn.Open();
                 SqlDataReader lector = cmd.ExecuteReader();
+                
+
                 while (lector.Read())
                 {
                     Cliente cliente = PersistenciaCliente.BuscarCliente((string)lector["nombre_cli"]);

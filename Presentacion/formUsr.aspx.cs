@@ -14,7 +14,7 @@ public partial class formCli : System.Web.UI.Page
     {
         if (!IsPostBack && Session["usuario"] == null)
             Response.Redirect("Default.aspx");
-
+        
         if (!IsPostBack && Session["usuario"] is Cliente)
             Response.Redirect("formRes.aspx");
 
