@@ -188,11 +188,20 @@ namespace Persistencia
             cmd.Parameters.AddWithValue("@nombreHotel", hab.Hotel.Nombre);
             cmd.Parameters.AddWithValue("@filtro", filtro);
 
+            SqlParameter prmRetorno = new SqlParameter();
+            prmRetorno.Direction = ParameterDirection.ReturnValue;
+            cmd.Parameters.Add(prmRetorno);
+
             try
             {
                 cnn.Open();
                 SqlDataReader lector = cmd.ExecuteReader();
-                
+                if(prmRetorno.Value!=null)
+                {
+                    int resp = (int)prmRetorno.Value;
+                    if (resp == -1)
+                        throw new Exception("No existen reservas para esta habitación con el filtro seleccionado.");
+                }
 
                 while (lector.Read())
                 {

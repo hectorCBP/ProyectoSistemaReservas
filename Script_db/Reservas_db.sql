@@ -591,6 +591,9 @@ create proc listadoReservasCronologica
 @filtro varchar(100)
 as
 begin
+	if(@filtro<>''and (select COUNT (numero) from Reservas 
+	where nombre_hotel = @nombreHotel and numero_hab = @numeroHab and estado_reserva=@filtro)=0 )
+	return -1
 	select * from Reservas 
 	where nombre_hotel = @nombreHotel and numero_hab = @numeroHab and estado_reserva like @filtro + '%'
 	order by fecha_inicio DESC
