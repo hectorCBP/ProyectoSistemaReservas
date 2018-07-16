@@ -28,10 +28,7 @@ namespace Logica
         {
             List<Reserva> lstRes = new List<Reserva>();
             lstRes = PersistenciaReserva.ListadoCliente(nombre);
-
-            if (lstRes.Count == 0)
-                throw new Exception("No existen reservas activas");
-
+            
             return lstRes;
         }
 

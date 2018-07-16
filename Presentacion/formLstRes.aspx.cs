@@ -95,6 +95,7 @@ public partial class formLstRes : System.Web.UI.Page
             
             gvResActivas.DataSource = LogicaReserva.ListadoCliente(((Usuario)Session["usuario"]).Nombre);
             gvResActivas.DataBind();
+            gvResActivas.SelectedIndex = -1;
             
             Response.Redirect("formLstRes.aspx");
             

@@ -100,10 +100,6 @@ namespace Persistencia
                 cnn.Open();
                 cmd.ExecuteNonQuery();
                 int resp = (int)prmRetorno.Value;
-                if (resp == 1)
-                    throw new Exception("Reserva cancelada satisfactoriamente.");
-
-
                 if ((resp < 0))
                     throw new Exception("ERROR de SQL.");
 
