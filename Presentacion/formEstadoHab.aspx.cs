@@ -76,6 +76,7 @@ public partial class formEstadoHab : System.Web.UI.Page
             gvEstadoHab.DataSource = null;
             gvEstadoHab.DataBind();
             gvEstadoHab.Visible = false;
+            ddlFiltro.Visible = false;
             gvResHab.Visible = false;
         }
         catch (Exception ex)
