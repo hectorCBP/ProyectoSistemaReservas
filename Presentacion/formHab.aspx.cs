@@ -73,7 +73,7 @@ public partial class formHab : System.Web.UI.Page
             if(String.IsNullOrEmpty(txtNumeroHab.Text) || lstHoteles.SelectedIndex == -1)
                 throw new Exception("Debe completar todos los campos de busqueda");
 
-            Session["habitacion"] = LogicaHabitacion.ObtenerHabitacion(lstHoteles.Text, Convert.ToInt32(txtNumeroHab.Text)); // esto pasarlo a session
+            Session["habitacion"] = LogicaHabitacion.ObtenerHabitacion(lstHoteles.Text, Convert.ToInt32(txtNumeroHab.Text));
 
             if ((Habitacion)Session["habitacion"] != null)
             {
@@ -185,7 +185,7 @@ public partial class formHab : System.Web.UI.Page
             if (String.IsNullOrEmpty(txtNumeroHab.Text) || lstHoteles.SelectedValue == "-1")
                 throw new Exception("ERROR - Sin completar número de Habitación o nombre de Hotel");
 
-            LogicaHabitacion.Eliminar(((Habitacion)Session["habitacion"])); //hay que construir el objeto habitacion al buscarlo y pasarlo a session, luego para eliminar usar ese
+            LogicaHabitacion.Eliminar(((Habitacion)Session["habitacion"]));
             lblMsj.Text = "Se eliminó correctamente";
             LimpiarFormulario();
         }

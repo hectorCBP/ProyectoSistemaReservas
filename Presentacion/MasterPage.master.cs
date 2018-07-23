@@ -12,29 +12,25 @@ public partial class MasterPage : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        try
+        if ((Usuario)Session["usuario"] == null)
+            Response.Redirect("Default.aspx");
+
+        lblNombre.Text = ((Usuario)Session["usuario"]).Nombre;
+
+        if ((Usuario)Session["usuario"] is Cliente)
         {
-            string nombre = ((Usuario)Session["usuario"]).Nombre;
-            if (nombre == null)
-                Response.Redirect("Default.aspx");
-
-            lblNombre.Text = nombre;
-
-             if ((Usuario)Session["usuario"] is Cliente)
-            {
-                btnCrearRes.Visible = true;
-                btnLstRes.Visible = true;
-            }
-            else
-            {
-                btnHab.Visible = true;
-                btnHot.Visible = true;
-                btnUsr.Visible = true;
-                btnReserva.Visible = true;
-            }
+            // hace visible botones de cliente
+            btnCrearRes.Visible = true;
+            btnLstRes.Visible = true;
         }
-        catch (Exception ex)
-        { lblMsj.Text = ex.Message; }
+        else
+        {
+            // hace visible botones de administrador
+            btnHab.Visible = true;
+            btnHot.Visible = true;
+            btnUsr.Visible = true;
+            btnReserva.Visible = true;
+        }
     }
     protected void btnSalir_Click(object sender, EventArgs e)
     {
